@@ -1,16 +1,30 @@
-// src/BootstrapComponent.js
+import React, { useState } from 'react';
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
+import MainContent from './MainContent';
+import Footer from './Footer';
+import MapComponent from '.s/MapComponent';
 
-import React from 'react';
+function App() {
+  const [selectedState, setSelectedState] = useState('NY');
 
-function BootstrapComponent() {
+  const handleStateChange = (state) => {
+    setSelectedState(state);
+  };
+
   return (
-    <div className="container">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch Modal
-        </button>
-        sfds
+    <div>
+      <Navbar onStateChange={handleStateChange} />
+      <div className="container-fluid mt-4">
+        <div className="row">
+          <Sidebar />
+          <MainContent selectedState={selectedState} />
+        </div>
+      </div>
+      <MapComponent selectedState={selectedState} />
+      <Footer />
     </div>
   );
 }
 
-export default BootstrapComponent;
+export default App;
