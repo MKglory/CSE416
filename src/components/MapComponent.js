@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import nyData from '../assets/data/ny_districts.json';
-//import arData from '../assets/data/ar_districts.geojson';
+import nyData from '../data/ny_districts.json';
+//import arData from '../data/ar_districts.geojson';
 import L from 'leaflet';
 //import './MapComponent.css';
 
