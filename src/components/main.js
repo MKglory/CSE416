@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import MainContent from './MainContent';
 import Footer from './Footer';
-import MapComponent from '.s/MapComponent';
+import MapComponent from './MapComponent';
 
 function App() {
   const [selectedState, setSelectedState] = useState('NY');

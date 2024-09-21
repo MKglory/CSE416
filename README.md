@@ -1,6 +1,7 @@
 # Instruction
 
-for bootstrap
+# intall node modules
+npm install
 
 npm install bootstrap
 
@@ -15,10 +16,3 @@ npm install chart.js react-chartjs-2
 shapefiles to geojson
 
 https://mapshaper.org/
-
-
-# Intall bootstrap
-npm install bootstrap
-
-# intall node modules
-npm install
