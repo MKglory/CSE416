@@ -1,11 +1,15 @@
 # Instruction
+
 for bootstrap
 npm install bootstrap
-# for map
+
+for map
 npm install leaflet react-leaflet
-# for table
+
+for table
 npm install chart.js react-chartjs-2
-# shapefiles to geojson
+
+shapefiles to geojson
 https://mapshaper.org/
 
 
