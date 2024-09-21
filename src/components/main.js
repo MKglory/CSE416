@@ -4,8 +4,11 @@ import Sidebar from './Sidebar';
 import MainContent from './MainContent';
 import Footer from './Footer';
 import MapComponent from './MapComponent';
+import '../stylesheets/styles.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'leaflet/dist/leaflet.css';
 
-function App() {
+function Main() {
   const [selectedState, setSelectedState] = useState('NY');
 
   const handleStateChange = (state) => {
@@ -27,4 +30,4 @@ function App() {
   );
 }
 
-export default App;
+export default Main;
