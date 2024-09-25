@@ -84,6 +84,7 @@ function MapComponent({ selectedState }) {
         maxZoom={12}
         minZoom={5}
         scrollWheelZoom={true}
+        preferCanvas={true}
       >
         <ChangeMapView center={mapCenter} />
         <TileLayer
@@ -94,6 +95,7 @@ function MapComponent({ selectedState }) {
           <GeoJSON data={geoData} style={style} onEachFeature={onEachFeature} />
         )}
       </MapContainer>
+  
     </div>
   );
 }
