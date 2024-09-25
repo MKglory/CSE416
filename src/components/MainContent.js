@@ -55,12 +55,38 @@ function MainContent({ selectedState }) {
     },
   };
 
+  // Function to render district drawing process information
+  const getDistrictDrawingProcess = (state) => {
+    switch (state) {
+      case 'NY':
+        return (
+          <p>
+            New York's district drawing process is handled by an independent commission. The commission is tasked with drawing
+            fair and competitive districts based on demographic data and public input to ensure balanced representation.
+          </p>
+        );
+      case 'AR':
+        return (
+          <p>
+            In Arkansas, the district drawing process is managed by the state's Board of Apportionment. This board consists of
+            the Governor, Secretary of State, and Attorney General, and they ensure that district boundaries are drawn in
+            compliance with state and federal guidelines.
+          </p>
+        );
+      default:
+        return <p>Select a state to view its district drawing process.</p>;
+    }
+  };
+
   return (
     <div className="col-12 col-md-9 col-lg-9">
-      <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} main contain</h2>
+      <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} Main Content</h2>
       <p>
-        here is the population distribution and election result of {selectedState === 'NY' ? 'New York' : 'Arkansas'} .
+        Here is the population distribution and election result of {selectedState === 'NY' ? 'New York' : 'Arkansas'}.
       </p>
+
+      {/* Render district drawing process information */}
+      {getDistrictDrawingProcess(selectedState)}
 
       <Bar data={data} options={options} />
     </div>
