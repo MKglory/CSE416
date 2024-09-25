@@ -1,4 +1,3 @@
-// src/components/Navbar.js
 import React from 'react';
 
 function Navbar({ onStateChange }) {
@@ -7,7 +6,7 @@ function Navbar({ onStateChange }) {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
         <a className="navbar-brand" href="#">project</a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
