@@ -13,6 +13,10 @@ for table
 
 npm install chart.js react-chartjs-2
 
+npm install react-router-dom
+
+
 shapefiles to geojson
 
 https://mapshaper.org/
+

@@ -7,7 +7,6 @@ import MapComponent from './MapComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'leaflet/dist/leaflet.css';
 
-import '../stylesheets/styles.css';
 
 function Main() {
   const [selectedState, setSelectedState] = useState('NY');
