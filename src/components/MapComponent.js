@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap  } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import nyData from '../data/ny_districts.json';
-import arData from '../data/ar_Boundaries_ELECTION_PRECINCTS_polygon.json';
+//import arData from '../data/ar_Boundaries_ELECTION_PRECINCTS_polygon.json';
 import L from 'leaflet';
 //import './MapComponent.css';
 import { memo } from 'react';
@@ -25,9 +25,9 @@ function MapComponent({ selectedState }) {
     if (selectedState === 'NY') {
       setGeoData(nyData);
     }
-    else if (selectedState === 'AR') {
-      setGeoData(arData);
-    }
+    // else if (selectedState === 'AR') {
+    //   setGeoData(arData);
+    // }
   }, [selectedState]);
 
   const onEachFeature = (feature, layer) => {
