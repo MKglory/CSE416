@@ -1,6 +1,11 @@
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Navbar({ onStateChange, onTabChange }) {
+  const navigate = useNavigate(); // Use React Router for navigation
+  const location = useLocation(); // Get the current location
+  const isMainPage = location.pathname === '/main'; // Check if we are on the main page
+
   const handleSelect = (event) => {
     onStateChange(event.target.value);
   };
@@ -18,7 +23,7 @@ function Navbar({ onStateChange, onTabChange }) {
           data-bs-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
-          aria-label="切换导航"
+          aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon">test</span>
         </button>
@@ -26,10 +31,14 @@ function Navbar({ onStateChange, onTabChange }) {
           <ul className="navbar-nav ms-auto">
             {/* Navigation List Items */}
             <li className="nav-item">
-              <a className="nav-link" href="#home">Home</a>
+              <button className="nav-link btn btn-link" onClick={() => navigate('/main')}>
+                Home
+              </button>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#about">About</a>
+              <button className="nav-link btn btn-link" onClick={() => navigate('/about')}>
+                About
+              </button>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#services">Services</a>
@@ -51,12 +60,14 @@ function Navbar({ onStateChange, onTabChange }) {
             </li>
 
             {/* Dropdown for State Selection */}
-            <li className="nav-item dropdown">
-              <select className="form-select" onChange={handleSelect} defaultValue="NY">
-                <option value="NY">New York (NY)</option>
-                <option value="AR">Arkansas (Arkansas)</option>
-              </select>
-            </li>
+            {isMainPage && ( // Only render if on the main page
+              <li className="nav-item dropdown">
+                <select className="form-select" onChange={handleSelect} defaultValue="NY">
+                  <option value="NY">New York (NY)</option>
+                  <option value="AR">Arkansas (AR)</option>
+                </select>
+              </li>
+            )}
           </ul>
         </div>
       </div>
