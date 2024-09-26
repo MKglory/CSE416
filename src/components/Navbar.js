@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Navbar({ onStateChange,onTabChange  }) {
+function Navbar({ onStateChange, onTabChange }) {
   const handleSelect = (event) => {
     onStateChange(event.target.value);
   };
@@ -11,21 +11,21 @@ function Navbar({ onStateChange,onTabChange  }) {
         <button className="navbar-brand" type="button" style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.25rem' }}>
           project
         </button>
-        <button 
-          className="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
-          data-bs-target="#navbarNav" 
-          aria-controls="navbarNav" 
-          aria-expanded="false" 
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
           aria-label="切换导航"
         >
           <span className="navbar-toggler-icon">test</span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
-                        {/* Navigation List Items */}
-                        <li className="nav-item">
+            {/* Navigation List Items */}
+            <li className="nav-item">
               <a className="nav-link" href="#home">Home</a>
             </li>
             <li className="nav-item">
@@ -37,7 +37,7 @@ function Navbar({ onStateChange,onTabChange  }) {
             <li className="nav-item">
               <a className="nav-link" href="#contact">Contact</a>
             </li>
-            
+
             {/* Graph and Map Tabs */}
             <li className="nav-item">
               <button className="nav-link btn btn-link" onClick={() => onTabChange('map')}>

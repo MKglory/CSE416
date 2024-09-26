@@ -8,7 +8,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import raceEthnicityData from '../data/Race_and_Ethnicity_2022.json'; // Import race and ethnicity data
+import nyRaceEthnicityData from '../data/NY_Race_and_Ethnicity_2022.json'; // Import New York race and ethnicity data
+import arRaceEthnicityData from '../data/AR_Race_and_Ethnicity_2022.json'; // Import Arkansas race and ethnicity data
 
 // Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
@@ -17,10 +18,19 @@ function RaceEthnicityContent({ selectedState }) {
   const [filteredRaceData, setFilteredRaceData] = useState([]);
 
   useEffect(() => {
-    // Filter the data based on selectedState (e.g., 'New York' or 'Arkansas')
-    const filteredData = raceEthnicityData.filter(
-      (item) => item.Geography === (selectedState === 'NY' ? 'New York' : 'Arkansas')
-    );
+    let filteredData = [];
+
+    // Filter the data based on selectedState (e.g., 'NY' or 'AR')
+    if (selectedState === 'NY') {
+      filteredData = nyRaceEthnicityData.filter(
+        (item) => item.Geography === 'New York'
+      );
+    } else if (selectedState === 'AR') {
+      filteredData = arRaceEthnicityData.filter(
+        (item) => item.Geography === 'Arkansas'
+      );
+    }
+
     setFilteredRaceData(filteredData);
   }, [selectedState]);
 

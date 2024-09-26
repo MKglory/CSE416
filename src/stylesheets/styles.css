@@ -67,12 +67,19 @@ footer {
 }
 
 .fade-in {
-  animation: fadeIn 0.5s forwards; /* Fade-in animation */
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
 }
 
 .fade-out {
-  animation: fadeOut 0.5s forwards; /* Fade-out animation */
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
 }
+
+.d-none {
+  display: none; /* Hide element while fading out */
+}
+
 
 @keyframes fadeIn {
   from {
@@ -101,3 +108,78 @@ footer {
   margin-bottom: 20px;
 }
 
+/* Add to your CSS file */
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out; /* Adjust duration to match timeout in JS */
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out; /* Same as above */
+}
+
+.content {
+  transition: opacity 0.5s ease-in-out; /* Ensure content transitions smoothly */
+}
+
+/* styles.css */
+
+/* Ensure the transition effect applies */
+.container-fluid {
+  transition: transform 0.3s ease-in-out; /* Transition for slide effect */
+}
+
+/* Apply the slide out effect */
+.slide-out {
+  transform: translateX(-100%); /* Slide out to the left */
+}
+
+/* You may want to add this for smooth entry effect if needed */
+.slide-in {
+  transform: translateX(100%); /* Slide in from the right */
+  opacity: 0; /* Start invisible */
+  animation: fadeInSlideIn 0.3s forwards; /* Animation for the entry */
+}
+
+@keyframes fadeInSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Slide-in and slide-out animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%); /* Start from the right */
+    opacity: 0; /* Start invisible */
+  }
+  to {
+    transform: translateX(0); /* End at the original position */
+    opacity: 1; /* End visible */
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0); /* Start at the original position */
+    opacity: 1; /* Start visible */
+  }
+  to {
+    transform: translateX(-100%); /* Slide out to the left */
+    opacity: 0; /* End invisible */
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.5s forwards; /* Duration and apply forwards */
+}
+
+.slide-out {
+  animation: slideOut 0.5s forwards; /* Duration and apply forwards */
+}

@@ -7,7 +7,7 @@ function Sidebar({ onContentChange }) {
 
   return (
     <div className="sidebar">
-      <h3>Sidebar</h3>
+      <h3>General Information</h3>
       <ul className="list-group">
         <li className="list-group-item">
           <select className="form-select" onChange={handleSelect} defaultValue="mainContent">
