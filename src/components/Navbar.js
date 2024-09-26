@@ -8,9 +8,18 @@ function Navbar({ onStateChange }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">project</a>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-          aria-controls="navbarNav" aria-expanded="false" aria-label="切换导航">
+        <button className="navbar-brand" type="button" style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.25rem' }}>
+          project
+        </button>
+        <button 
+          className="navbar-toggler" 
+          type="button" 
+          data-bs-toggle="collapse" 
+          data-bs-target="#navbarNav" 
+          aria-controls="navbarNav" 
+          aria-expanded="false" 
+          aria-label="切换导航"
+        >
           <span className="navbar-toggler-icon">test</span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
