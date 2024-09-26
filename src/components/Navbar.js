@@ -41,24 +41,15 @@ function Navbar({ onStateChange, onTabChange }) {
               </button>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#services">Services</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#contact">Contact</a>
-            </li>
-
-            {/* Graph and Map Tabs */}
-            <li className="nav-item">
-              <button className="nav-link btn btn-link" onClick={() => onTabChange('map')}>
-                Map
+              <button className="nav-link btn btn-link" onClick={() => navigate('/services')}>
+                Services
               </button>
             </li>
             <li className="nav-item">
-              <button className="nav-link btn btn-link" onClick={() => onTabChange('graph')}>
-                Graph
+              <button className="nav-link btn btn-link" onClick={() => navigate('/contact')}>
+                Contact
               </button>
             </li>
-
             {/* Dropdown for State Selection */}
             {isMainPage && ( // Only render if on the main page
               <li className="nav-item dropdown">
