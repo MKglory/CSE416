@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import nyData from '../data/NY_entity.json';
-// import arData from '../data/ar_Boundaries_ELECTION_PRECINCTS_polygon.json';
+//import nyData from '../data/ny_districts.json';
+import nyData from '../data/NY_2022.json';
+import arData from '../data/tl_2022_05_bg.json';
 import { memo } from 'react';
 
 const nyCenter = [42.965, -76.0167];
@@ -14,7 +15,7 @@ const usBounds = [
 ];
 
 function MapComponent({ selectedState }) {
-  const [geoData, setGeoData] = useState(null);
+  const [geoData, setGeoData] = useState(nyData);
 
 
   function ChangeMapView({ center }) {
@@ -26,13 +27,13 @@ function MapComponent({ selectedState }) {
   }
 
   // useCallback to cache getColor function avoing rerender
-  const getColor = useCallback((result) => {
+  const getColor = (result) => {
     return result === 'Republican'
       ? '#ff0000'//red
       : result === 'Democratic'
       ? '#0000ff'//blue
       : '#00ff00';//green
-  }, []);
+  };
 
   
   // useCallback to cache style fucntion
@@ -40,7 +41,6 @@ function MapComponent({ selectedState }) {
     const democratic_vote = feature.properties.Gov_DEM;
     const republican_vote = feature.properties.Gov_REP;
     const ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
-  
     // Return the style object
     return {
       fillColor: getColor(ELECTION_RESULT),
@@ -50,17 +50,21 @@ function MapComponent({ selectedState }) {
       dashArray: '3',
       fillOpacity: 0.7
     };
-  }, [getColor]);
+  };
   
 
 
 
   //useCallback to cache click data
-  const onEachFeature = (feature, layer) => {
-    const democratic_vote = feature.properties.Gov_DEM;
-    const republican_vote = feature.properties.Gov_REP;
-    const ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
-    console.log(ELECTION_RESULT);
+
+  const onEachFeature = useCallback((feature, layer) => {
+    let democratic_vote = 0;
+    let republican_vote = 0;
+    let ELECTION_RESULT = 'Unknown';
+
+    democratic_vote = feature.properties.Gov_DEM;
+    republican_vote = feature.properties.Gov_REP;
+    ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
     if (feature.properties) {
       const popupContent = `
         <h5>District: ${feature.properties.CountyName}</h5>
@@ -71,34 +75,40 @@ function MapComponent({ selectedState }) {
       `;
       layer.bindPopup(popupContent);
     }
-  };
+  }, [selectedState]);
 
   // use useMemo to cache
   const geoJsonComponent = useMemo(() => {
-    if (!geoData) return null;
+    console.log("sssdfsdafsdfa")
+    console.log(geoData)
     return (
-      <GeoJSON data={geoData} style={style} onEachFeature={onEachFeature}/>
+      <>
+      <GeoJSON data={nyData} style={style} />
+      <GeoJSON data={arData} style={style} />
+      </>
+     // <GeoJSON data={geoData} style={style} onEachFeature={onEachFeature} />
     );
-  }, [geoData, style, onEachFeature]);
+  }, [geoData]);
 
   // loading specific GeoJSON date depending on the state
   useEffect(() => {
+
     if (selectedState === 'NY') {
       setGeoData(nyData);
     }
     else if (selectedState === 'AR') {
       setGeoData(null);
     }
+ 
   }, [selectedState]);
 
   const mapCenter = selectedState === 'NY' ? nyCenter : arCenter;
-
+  
   return (
     <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
       <MapContainer 
         center={mapCenter}
         bounds={usBounds}
-        //maxBounds={usBounds}
         maxZoom={12}
         minZoom={5}
         scrollWheelZoom={true}
