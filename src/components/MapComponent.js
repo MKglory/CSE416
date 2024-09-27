@@ -83,7 +83,7 @@ function MapComponent({ selectedState }) {
       <MapContainer 
         center={mapCenter}
         bounds={usBounds}
-
+        //maxBounds={usBounds}
         maxZoom={12}
         minZoom={5}
         scrollWheelZoom={true}
