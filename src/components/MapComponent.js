@@ -37,11 +37,10 @@ function MapComponent({ selectedState }) {
 
   
   // useCallback to cache style fucntion
-  const style = (feature) => {
-    const democratic_vote = feature.properties.GOV_DVOTE_;
-    const republican_vote = feature.properties.GOV_RVOTE_;
-        const ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
-    
+  const style = useCallback((feature) => {
+    const democratic_vote = feature.properties.Gov_DEM;
+    const republican_vote = feature.properties.Gov_REP;
+    const ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
     // Return the style object
     return {
       fillColor: getColor(ELECTION_RESULT),
@@ -57,18 +56,21 @@ function MapComponent({ selectedState }) {
 
 
   //useCallback to cache click data
+
   const onEachFeature = useCallback((feature, layer) => {
     let democratic_vote = 0;
     let republican_vote = 0;
     let ELECTION_RESULT = 'Unknown';
 
-    democratic_vote = feature.properties.GOV_DVOTE_;
-    republican_vote = feature.properties.GOV_RVOTE_;
+    democratic_vote = feature.properties.Gov_DEM;
+    republican_vote = feature.properties.Gov_REP;
     ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
     if (feature.properties) {
       const popupContent = `
-        <h5>District: ${feature.properties.NAME10}</h5>
+        <h5>District: ${feature.properties.CountyName}</h5>
         <p>Population: ${feature.properties.POP100}</p>
+        <p>Democratic votes: ${democratic_vote}</p>
+        <p>Republican votes: ${republican_vote}</p>
         <p>Election Result: ${ELECTION_RESULT}</p>
       `;
       layer.bindPopup(popupContent);
@@ -80,12 +82,10 @@ function MapComponent({ selectedState }) {
     console.log("sssdfsdafsdfa")
     console.log(geoData)
     return (
-      //<GeoJSON data={geoData} style={style} />
       <>
       <GeoJSON data={nyData} style={style} />
       <GeoJSON data={arData} style={style} />
       </>
-
      // <GeoJSON data={geoData} style={style} onEachFeature={onEachFeature} />
     );
   }, [geoData]);
@@ -97,7 +97,7 @@ function MapComponent({ selectedState }) {
       setGeoData(nyData);
     }
     else if (selectedState === 'AR') {
-      setGeoData(arData);
+      setGeoData(null);
     }
  
   }, [selectedState]);
