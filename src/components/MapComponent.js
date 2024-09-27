@@ -17,7 +17,6 @@ const usBounds = [
 function MapComponent({ selectedState }) {
   const [geoData, setGeoData] = useState(nyData);
 
-
   function ChangeMapView({ center }) {
     const map = useMap();
     useEffect(() => {
@@ -32,7 +31,7 @@ function MapComponent({ selectedState }) {
       ? '#ff0000'//red
       : result === 'Democratic'
       ? '#0000ff'//blue
-      : '#00ff00';//green
+      : '#00ff00'//green
   };
 
   
@@ -50,13 +49,9 @@ function MapComponent({ selectedState }) {
       dashArray: '3',
       fillOpacity: 0.7
     };
-  };
-  
-
-
+  });
 
   //useCallback to cache click data
-
   const onEachFeature = useCallback((feature, layer) => {
     let democratic_vote = 0;
     let republican_vote = 0;
