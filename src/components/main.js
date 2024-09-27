@@ -4,6 +4,8 @@ import Sidebar from './Sidebar';
 import MainContent from './MainContent';
 import RaceEthnicityContent from './RaceEthnicityContent'; // Keep this import to use it later
 import ElectionVotesContent from './ElectionVotesContent'; 
+import NYHouseEthnicityContent from './NYHouseEthnicityContent'; // Import the NYHouseEthnicityContent component
+
 import Footer from './Footer';
 import MapComponent from './MapComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -50,6 +52,8 @@ function Main() {
         return <RaceEthnicityContent selectedState={selectedState} />; // Only show RaceEthnicityContent
       case 'electionVotes':
         return <ElectionVotesContent selectedState={selectedState} />; // Updated to use selectedState
+      case 'nyHouseEthnicity': // New case for NY House of Representatives Ethnicity
+        return <NYHouseEthnicityContent selectedState={selectedState} />; // Renders content for NY House Ethnicity
       default:
         return <MainContent selectedState={selectedState} />; // Default to MainContent
     }
