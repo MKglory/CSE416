@@ -1,4 +1,4 @@
-
+/* Navbar styling */
 .navbar {
   background-color: #272727 !important;
 }
@@ -11,14 +11,175 @@
   color: #dddddd !important;
 }
 
-
+/* Footer styling */
 footer {
   background-color: #272727;
   padding: 0;
 }
 
-
+/* Map container styles */
 .leaflet-container {
   width: 100%;
   height: calc(100vh - 100px);
+  border-radius: 15px; /* Rounded edges for the map */
+}
+
+/* Custom layout styling */
+.left-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.map-content {
+  height: 100%; /* Ensures the map takes up full height */
+}
+
+/* Add rounded edges and spacing */
+.rounded-section {
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Custom class for sidebar spacing if needed */
+.sidebar {
+  margin-right: 20px;
+}
+
+/* Custom layout styling */
+.left-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure it takes up full height */
+}
+
+.sidebar {
+  height: 20%; /* Sidebar takes 20% of the height */
+  overflow: auto; /* Add scrolling if needed */
+}
+
+.content {
+  height: 80%; /* Content takes 80% of the height */
+  overflow: auto; /* Add scrolling if needed */
+  position: relative; /* Ensure content positioning works for transitions */
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.d-none {
+  display: none; /* Hide element while fading out */
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
+/* Add rounded edges and spacing */
+.rounded-section {
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Add to your CSS file */
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out; /* Adjust duration to match timeout in JS */
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out; /* Same as above */
+}
+
+.content {
+  transition: opacity 0.5s ease-in-out; /* Ensure content transitions smoothly */
+}
+
+/* styles.css */
+
+/* Ensure the transition effect applies */
+.container-fluid {
+  transition: transform 0.3s ease-in-out; /* Transition for slide effect */
+}
+
+/* Apply the slide out effect */
+.slide-out {
+  transform: translateX(-100%); /* Slide out to the left */
+}
+
+/* You may want to add this for smooth entry effect if needed */
+.slide-in {
+  transform: translateX(100%); /* Slide in from the right */
+  opacity: 0; /* Start invisible */
+  animation: fadeInSlideIn 0.3s forwards; /* Animation for the entry */
+}
+
+@keyframes fadeInSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Slide-in and slide-out animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%); /* Start from the right */
+    opacity: 0; /* Start invisible */
+  }
+  to {
+    transform: translateX(0); /* End at the original position */
+    opacity: 1; /* End visible */
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0); /* Start at the original position */
+    opacity: 1; /* Start visible */
+  }
+  to {
+    transform: translateX(-100%); /* Slide out to the left */
+    opacity: 0; /* End invisible */
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.5s forwards; /* Duration and apply forwards */
+}
+
+.slide-out {
+  animation: slideOut 0.5s forwards; /* Duration and apply forwards */
 }

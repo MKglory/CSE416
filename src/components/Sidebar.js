@@ -1,13 +1,21 @@
 import React from 'react';
 
-function Sidebar() {
+function Sidebar({ onContentChange }) {
+  const handleSelect = (event) => {
+    onContentChange(event.target.value); // Pass the selected content type back to the parent
+  };
+
   return (
-    <div className="col-12 col-md-3 col-lg-3 mb-4">
-      <h3>side bar</h3>
+    <div className="sidebar">
+      <h3>General Information</h3>
       <ul className="list-group">
-        <li className="list-group-item"> 1</li>
-        <li className="list-group-item"> 2</li>
-        <li className="list-group-item"> 3</li>
+        <li className="list-group-item">
+          <select className="form-select" onChange={handleSelect} defaultValue="mainContent">
+            <option value="mainContent">Main Content</option>
+            <option value="raceEthnicity">Race & Ethnicity</option>
+            <option value="electionVotes">Election Votes</option>
+          </select>
+        </li>
       </ul>
     </div>
   );
