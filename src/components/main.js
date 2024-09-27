@@ -9,6 +9,9 @@ import DistrictComparisonContent from './DistrictComparisonContent'; // Import t
 
 import NYHouseEthnicityContent from './NYHouseEthnicityContent'; // Import the NYHouseEthnicityContent component
 
+import VoteGapAnalysisContent from './VoteGapAnalysisContent'; // Import the VoteGapAnalysisContent component
+
+
 import Footer from './Footer';
 import MapComponent from './MapComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -61,6 +64,8 @@ function Main() {
         return <CandidatesContent selectedState={selectedState} />; // Renders content for Candidates
       case 'districtComparison': // New case for District Comparison content
         return <DistrictComparisonContent selectedState={selectedState} />; // Renders content for District Comparison
+      case 'voteGapAnalysis': // New case for Vote Gap Analysis content
+        return <VoteGapAnalysisContent selectedState={selectedState} />; // Renders content for Vote Gap Analysis
       default:
         return <MainContent selectedState={selectedState} />; // Default to MainContent
     }
