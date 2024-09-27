@@ -15,7 +15,8 @@ function Sidebar({ onContentChange }) {
             <option value="raceEthnicity">Race & Ethnicity</option>
             <option value="electionVotes">Election Votes</option>
             <option value="nyHouseEthnicity">NY House of Representatives Ethnicity</option>
-            <option value="candidates">Candidates</option> {/* New option for candidates */}
+            <option value="candidates">Candidates</option> {/* Option for candidates */}
+            <option value="districtComparison">District Comparison</option> {/* New option for district comparison */}
           </select>
         </li>
       </ul>

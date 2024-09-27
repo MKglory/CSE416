@@ -5,6 +5,7 @@ import MainContent from './MainContent';
 import RaceEthnicityContent from './RaceEthnicityContent'; // Keep this import to use it later
 import ElectionVotesContent from './ElectionVotesContent'; 
 import CandidatesContent from './CandidatesContent'; // Import the CandidatesContent component
+import DistrictComparisonContent from './DistrictComparisonContent'; // Import the DistrictComparisonContent component
 
 import NYHouseEthnicityContent from './NYHouseEthnicityContent'; // Import the NYHouseEthnicityContent component
 
@@ -58,6 +59,8 @@ function Main() {
         return <NYHouseEthnicityContent selectedState={selectedState} />; // Renders content for NY House Ethnicity
       case 'candidates': // New case for Candidates content
         return <CandidatesContent selectedState={selectedState} />; // Renders content for Candidates
+      case 'districtComparison': // New case for District Comparison content
+        return <DistrictComparisonContent selectedState={selectedState} />; // Renders content for District Comparison
       default:
         return <MainContent selectedState={selectedState} />; // Default to MainContent
     }
