@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import nyData from '../data/ny_districts.json';
-import arData from '../data/ar_Boundaries_ELECTION_PRECINCTS_polygon.json';
+import nyData from '../data/NY_entity.json';
+// import arData from '../data/ar_Boundaries_ELECTION_PRECINCTS_polygon.json';
 import { memo } from 'react';
 
 const nyCenter = [42.965, -76.0167];
@@ -37,10 +37,10 @@ function MapComponent({ selectedState }) {
   
   // useCallback to cache style fucntion
   const style = useCallback((feature) => {
-    const democratic_vote = feature.properties.GOV_DVOTE_;
-    const republican_vote = feature.properties.GOV_RVOTE_;
-        const ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
-    
+    const democratic_vote = feature.properties.Gov_DEM;
+    const republican_vote = feature.properties.Gov_REP;
+    const ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
+  
     // Return the style object
     return {
       fillColor: getColor(ELECTION_RESULT),
@@ -57,13 +57,16 @@ function MapComponent({ selectedState }) {
 
   //useCallback to cache click data
   const onEachFeature = (feature, layer) => {
-    const democratic_vote = feature.properties.GOV_DVOTE_;
-    const republican_vote = feature.properties.GOV_RVOTE_;
+    const democratic_vote = feature.properties.Gov_DEM;
+    const republican_vote = feature.properties.Gov_REP;
     const ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
+    console.log(ELECTION_RESULT);
     if (feature.properties) {
       const popupContent = `
-        <h5>District: ${feature.properties.NAME10}</h5>
+        <h5>District: ${feature.properties.CountyName}</h5>
         <p>Population: ${feature.properties.POP100}</p>
+        <p>Democratic votes: ${democratic_vote}</p>
+        <p>Republican votes: ${republican_vote}</p>
         <p>Election Result: ${ELECTION_RESULT}</p>
       `;
       layer.bindPopup(popupContent);
@@ -74,7 +77,7 @@ function MapComponent({ selectedState }) {
   const geoJsonComponent = useMemo(() => {
     if (!geoData) return null;
     return (
-      <GeoJSON data={geoData} style={style} onEachFeature={onEachFeature} />
+      <GeoJSON data={geoData} style={style} onEachFeature={onEachFeature}/>
     );
   }, [geoData, style, onEachFeature]);
 
@@ -84,7 +87,7 @@ function MapComponent({ selectedState }) {
       setGeoData(nyData);
     }
     else if (selectedState === 'AR') {
-      setGeoData(arData);
+      setGeoData(null);
     }
   }, [selectedState]);
 
