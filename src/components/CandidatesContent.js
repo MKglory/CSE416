@@ -1,80 +1,149 @@
 import React, { useEffect, useState } from 'react';
-import { Pie } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
-  ArcElement,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
   Tooltip,
   Legend,
 } from 'chart.js';
-//import candidatesDataNY from '../data/NY_candidates_votes_2022.json'; // Import New York candidates votes data
-//import candidatesDataAR from '../data/AR_candidates_votes_2022.json'; // Import Arkansas candidates votes data
-
-import candidatesDataNY from '../data/NY_party_votes_distribution.json'; // Import New York party votes data
-import candidatesDataAR from '../data/AR_party_votes_distribution.json'; // Import Arkansas party votes data
 
 // Register Chart.js components
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 function CandidatesContent({ selectedState }) {
-  const [filteredVotesData, setFilteredVotesData] = useState([]);
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    let votes = {};
-
-    // Use appropriate data based on the selected state
-    if (selectedState === 'NY') {
-      votes = candidatesDataNY;
-    } else if (selectedState === 'AR') {
-      votes = candidatesDataAR;
-    }
-
-    // Convert votes to an array format
-    const filteredData = Object.entries(votes).map(([candidate, count]) => ({
-      Candidate: candidate,
-      Votes: count,
-    }));
-
-    setFilteredVotesData(filteredData);
-  }, [selectedState]);
-
-  const data = {
-    labels: filteredVotesData.map((item) => item.Candidate), // Extract candidate names
-    datasets: [
+    // Dummy data to simulate support distribution for ethnicities across different candidates
+    const dummyData = [
       {
-        label: 'Votes',
-        data: filteredVotesData.map((item) => item.Votes), // Extract votes data
-        backgroundColor: [
-          'rgba(54, 162, 235, 0.6)', // Blue
-          'rgba(255, 99, 132, 0.6)', // Red
-          'rgba(75, 192, 192, 0.6)', // Green
-          'rgba(153, 102, 255, 0.6)', // Purple
-          'rgba(255, 206, 86, 0.6)', // Yellow
+        candidate: 'Person 1',
+        data: [
+          {
+            ethnicity: 'Indian',
+            values: [1, 2, 3, 4, 5, 4, 3, 2, 1],
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+          },
+          {
+            ethnicity: 'East Asian',
+            values: [3, 4, 5, 6, 7, 6, 5, 4, 3],
+            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+          },
+          {
+            ethnicity: 'Non-Asian',
+            values: [5, 6, 7, 8, 9, 8, 7, 6, 5],
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+          },
         ],
       },
-    ],
-  };
+      {
+        candidate: 'Person 2',
+        data: [
+          {
+            ethnicity: 'Indian',
+            values: [2, 4, 6, 8, 10, 8, 6, 4, 2],
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+          },
+          {
+            ethnicity: 'East Asian',
+            values: [1, 2, 3, 4, 5, 4, 3, 2, 1],
+            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+          },
+          {
+            ethnicity: 'Non-Asian',
+            values: [3, 4, 5, 6, 7, 6, 5, 4, 3],
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+          },
+        ],
+      },
+      {
+        candidate: 'Person 3',
+        data: [
+          {
+            ethnicity: 'Indian',
+            values: [3, 6, 9, 12, 15, 12, 9, 6, 3],
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+          },
+          {
+            ethnicity: 'East Asian',
+            values: [2, 4, 6, 8, 10, 8, 6, 4, 2],
+            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+          },
+          {
+            ethnicity: 'Non-Asian',
+            values: [1, 2, 3, 4, 5, 4, 3, 2, 1],
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+          },
+        ],
+      },
+    ];
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: `${selectedState === 'NY' ? 'New York' : 'Arkansas'} Candidates Votes Distribution`,
-      },
-    },
-  };
+    setChartData(dummyData);
+  }, [selectedState]);
 
   return (
     <div className="col-12 col-md-9 col-lg-9">
-      <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} Candidates Votes Distribution</h2>
-      <p>
-        Below is the vote distribution for candidates in {selectedState === 'NY' ? 'New York' : 'Arkansas'}.
-      </p>
+      <h2>Support Distribution for Candidates</h2>
+      <p>Below is the support distribution for Person 1, Person 2, and Person 3 based on ethnicity.</p>
 
-      <Pie data={data} options={options} /> {/* Display the data as a pie chart */}
+      {chartData.map((person) => (
+        <div key={person.candidate}>
+          <h3>Support for {person.candidate}</h3>
+          <Line
+            data={{
+              labels: ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1.0'],
+              datasets: person.data.map((ethnicityData) => ({
+                label: ethnicityData.ethnicity,
+                data: ethnicityData.values,
+                fill: true,
+                backgroundColor: ethnicityData.backgroundColor,
+                borderColor: ethnicityData.borderColor,
+                tension: 0.4, // Smooth curves
+              })),
+            }}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'top',
+                },
+                title: {
+                  display: true,
+                  text: `Support for ${person.candidate}`,
+                },
+              },
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: 'Support Probability',
+                  },
+                  type: 'linear',
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: 'Probability Density',
+                  },
+                  beginAtZero: true,
+                },
+              },
+            }}
+          />
+        </div>
+      ))}
     </div>
   );
 }
