@@ -34,29 +34,41 @@ function MapComponent({ selectedState }) {
       : '#00ff00';//green
   }, []);
 
+  
   // useCallback to cache style fucntion
-  const style = useCallback((feature) => ({
-    fillColor: getColor(feature.properties.ELECTION_RESULT),
-    weight: 2,
-    opacity: 1,
-    color: 'grey',
-    dashArray: '3',
-    fillOpacity: 0.7
-  }), [getColor]);
+  const style = useCallback((feature) => {
+    const democratic_vote = feature.properties.GOV_DVOTE_;
+    const republican_vote = feature.properties.GOV_RVOTE_;
+        const ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
+    
+    // Return the style object
+    return {
+      fillColor: getColor(ELECTION_RESULT),
+      weight: 2,
+      opacity: 10,
+      color: 'grey',
+      dashArray: '3',
+      fillOpacity: 0.7
+    };
+  }, [getColor]);
+  
 
 
 
   //useCallback to cache click data
-  const onEachFeature = useCallback((feature, layer) => {
+  const onEachFeature = (feature, layer) => {
+    const democratic_vote = feature.properties.GOV_DVOTE_;
+    const republican_vote = feature.properties.GOV_RVOTE_;
+    const ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
     if (feature.properties) {
       const popupContent = `
-        <h5>District: ${feature.properties.DISTRICT}</h5>
-        <p>Population: ${feature.properties.POPULATION}</p>
-        <p>Election Result: ${feature.properties.ELECTION_RESULT}</p>
+        <h5>District: ${feature.properties.NAME10}</h5>
+        <p>Population: ${feature.properties.POP100}</p>
+        <p>Election Result: ${ELECTION_RESULT}</p>
       `;
       layer.bindPopup(popupContent);
     }
-  }, []);
+  };
 
   // use useMemo to cache
   const geoJsonComponent = useMemo(() => {
@@ -96,8 +108,6 @@ function MapComponent({ selectedState }) {
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         />
         {geoJsonComponent}
-
-
 
       </MapContainer>
     </div>
