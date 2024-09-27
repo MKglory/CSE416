@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 //import nyData from '../data/ny_districts.json';
-import nyData from '../data/NY_2022.json';
+import nyData from '../data/NY_entity.json';
 import arData from '../data/tl_2022_05_bg.json';
 import { memo } from 'react';
 
@@ -63,7 +63,6 @@ function MapComponent({ selectedState }) {
     if (feature.properties) {
       const popupContent = `
         <h5>District: ${feature.properties.CountyName}</h5>
-        <p>Population: ${feature.properties.POP100}</p>
         <p>Democratic votes: ${democratic_vote}</p>
         <p>Republican votes: ${republican_vote}</p>
         <p>Election Result: ${ELECTION_RESULT}</p>
@@ -78,7 +77,7 @@ function MapComponent({ selectedState }) {
     console.log(geoData)
     return (
       <>
-      <GeoJSON data={nyData} style={style} />
+      <GeoJSON data={nyData} style={style} onEachFeature={onEachFeature}/>
       <GeoJSON data={arData} style={style} />
       </>
      // <GeoJSON data={geoData} style={style} onEachFeature={onEachFeature} />
