@@ -4,14 +4,6 @@ import Sidebar from './Sidebar';
 import MainContent from './MainContent';
 import RaceEthnicityContent from './RaceEthnicityContent'; // Keep this import to use it later
 import ElectionVotesContent from './ElectionVotesContent'; 
-import CandidatesContent from './CandidatesContent'; // Import the CandidatesContent component
-import DistrictComparisonContent from './DistrictComparisonContent'; // Import the DistrictComparisonContent component
-
-import NYHouseEthnicityContent from './NYHouseEthnicityContent'; // Import the NYHouseEthnicityContent component
-
-import VoteGapAnalysisContent from './VoteGapAnalysisContent'; // Import the VoteGapAnalysisContent component
-
-
 import Footer from './Footer';
 import MapComponent from './MapComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -58,14 +50,6 @@ function Main() {
         return <RaceEthnicityContent selectedState={selectedState} />; // Only show RaceEthnicityContent
       case 'electionVotes':
         return <ElectionVotesContent selectedState={selectedState} />; // Updated to use selectedState
-      case 'nyHouseEthnicity':
-        return <NYHouseEthnicityContent selectedState={selectedState} />; // Renders content for NY House Ethnicity
-      case 'candidates': // New case for Candidates content
-        return <CandidatesContent selectedState={selectedState} />; // Renders content for Candidates
-      case 'districtComparison': // New case for District Comparison content
-        return <DistrictComparisonContent selectedState={selectedState} />; // Renders content for District Comparison
-      case 'voteGapAnalysis': // New case for Vote Gap Analysis content
-        return <VoteGapAnalysisContent selectedState={selectedState} />; // Renders content for Vote Gap Analysis
       default:
         return <MainContent selectedState={selectedState} />; // Default to MainContent
     }
