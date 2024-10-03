@@ -5,6 +5,9 @@ npm install
 
 npm install bootstrap
 
+npm install react-bootstrap
+
+
 for map
 
 npm install leaflet react-leaflet
