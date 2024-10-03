@@ -24,7 +24,6 @@ function MapComponent({ selectedState }) {
   const [mapType, setMapType] = useState('counties'); // State to manage map type
 
   const handleSelect = (eventKey) => {
-    console.log(eventKey);
     // Update the selected map type
     setMapType(eventKey);
   };
@@ -64,7 +63,9 @@ function MapComponent({ selectedState }) {
   }, [getColor]);
 
   //useCallback to cache click data
-  const onEachFeature = useCallback((feature, layer) => {
+  const onEachFeature = (type) => (feature, layer) => {
+    console.log(type);
+    console.log('fd')
     let democratic_vote = 0;
     let republican_vote = 0;
     let ELECTION_RESULT = 'Unknown';
@@ -73,42 +74,70 @@ function MapComponent({ selectedState }) {
     republican_vote = feature.properties.Republican_votes;
     ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
     if (feature.properties) {
-      const popupContent = `
-        <h5>County: ${feature.properties.NAME}</h5>
-        <p>Population: ${feature.properties.Total_population}</p>
-        <p>Democratic votes: ${democratic_vote}</p>
-        <p>Republican votes: ${republican_vote}</p>
-        <p>Election Result: ${ELECTION_RESULT}</p>
-      `;
+      let popupContent = ""
+      if (mapType === 'counties'){
+        popupContent = `
+          <h5>County: ${feature.properties.NAME}</h5>
+          <p>Population: ${feature.properties.Total_population}</p>
+          <p>Democratic votes: ${democratic_vote}</p>
+          <p>Republican votes: ${republican_vote}</p>
+          <p>Election Result: ${ELECTION_RESULT}</p>
+        `;
+      }
+      else if (mapType === 'district'){
+        // EDIE repesents the district ID
+        popupContent = `
+          <h5>District: ${feature.properties.EDID}</h5>
+          <p>Democratic votes: ${democratic_vote}</p>
+          <p>Republican votes: ${republican_vote}</p>
+          <p>Election Result: ${ELECTION_RESULT}</p>
+        `;
+      }
+      else if (mapType === 'congressional district'){
+        popupContent = `
+          <h5>Congress District: ${feature.properties.NAME}</h5>
+          <p>Population: ${feature.properties.Total_population}</p>
+          <p>Democratic votes: ${democratic_vote}</p>
+          <p>Republican votes: ${republican_vote}</p>
+          <p>Election Result: ${ELECTION_RESULT}</p>
+        `;
+      }
+
       layer.bindPopup(popupContent);
     }
-  }, [selectedState]);
+  };
 
   // use useMemo to cache
   const geoJsonComponent = useMemo(() => {
-    console.log(mapType);
-    return (
-      <>
-      {mapType === 'counties' ? (
-        <>
-          <GeoJSON data={nyCounties} style={style} onEachFeature={onEachFeature}/>
-          <GeoJSON data={arCounties} style={style} onEachFeature={onEachFeature}/>
-        </>
-      ) : mapType === 'district' ? (
-        <>
-          <GeoJSON data={nyDistrict} style={style} onEachFeature={onEachFeature}/>
-          <GeoJSON data={arDistrict} style={style} onEachFeature={onEachFeature}/>
-        </>
-      ) : mapType === 'congressional district' ? (
-        <>
-          <GeoJSON data={nyCongressDistrict} style={style} onEachFeature={onEachFeature}/>
-          <GeoJSON data={arCongressDistrict} style={style} onEachFeature={onEachFeature}/>
-        </>
-      ): null}
-      </>
-    //  <GeoJSON data={geoData} style={style} onEachFeature={onEachFeature} />
-    );
-  }, [geoData, mapType, style, onEachFeature]);
+    const dataMap = {
+      'counties': {
+        data: [nyCounties, arCounties],
+        handler: 'countiesDistrictOnEachFeature',
+      },
+      'district': {
+        data: [nyDistrict, arDistrict],
+        handler: 'districtOnEachFeature',
+      },
+      'congressional district': {
+        data: [nyCongressDistrict, arCongressDistrict],
+        handler: 'congressionalDistrictOnEachFeature',
+      },
+    };
+  
+    const selectedData = dataMap[mapType];
+  
+    if (!selectedData) return null;
+  
+    return selectedData.data.map((data, index) => (
+      <GeoJSON
+        key={index}
+        data={data}
+        style={style}
+        onEachFeature={onEachFeature(mapType)}
+      />
+    ));
+  }, [mapType, style, onEachFeature]);
+  
 
   // loading specific GeoJSON date depending on the state
   useEffect(() => {
