@@ -2,21 +2,20 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 //import nyData from '../data/ny_districts.json';
-import nyData from '../data/NY_entity.json';
-import arData from '../data/tl_2022_05_bg.json';
+import nyCounties from '../data/NewYork/ny_congress_district.json';
+import arCounties from '../data/Arkansas/dummy_arkansas_counties_with_votes.json';
 import { memo } from 'react';
 
 const nyCenter = [42.965, -76.0167];
 const arCenter = [34.7465, -92.2896];
-
 const usBounds = [
   [24.396308, -124.848974], // Southwest
   [49.384358, -66.885444]   // Northeast
 ];
 
 function MapComponent({ selectedState }) {
-  const [geoData, setGeoData] = useState(nyData);
-
+  const [geoData, setGeoData] = useState(nyCounties);
+  const [showMapType, setShowMapType] = useState('counties');
   function ChangeMapView({ center }) {
     const map = useMap();
     useEffect(() => {
@@ -37,8 +36,8 @@ function MapComponent({ selectedState }) {
   
   // useCallback to cache style fucntion
   const style = useCallback((feature) => {
-    const democratic_vote = feature.properties.Gov_DEM;
-    const republican_vote = feature.properties.Gov_REP;
+    const democratic_vote = feature.properties.Democratic_votes;
+    const republican_vote = feature.properties.Republican_votes;
     const ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
     // Return the style object
     return {
@@ -46,7 +45,7 @@ function MapComponent({ selectedState }) {
       weight: 2,
       opacity: 10,
       color: 'grey',
-      dashArray: '3',
+      dashArray: null,
       fillOpacity: 0.7
     };
   });
@@ -57,12 +56,13 @@ function MapComponent({ selectedState }) {
     let republican_vote = 0;
     let ELECTION_RESULT = 'Unknown';
 
-    democratic_vote = feature.properties.Gov_DEM;
-    republican_vote = feature.properties.Gov_REP;
+    democratic_vote = feature.properties.Democratic_votes;
+    republican_vote = feature.properties.Republican_votes;
     ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
     if (feature.properties) {
       const popupContent = `
-        <h5>District: ${feature.properties.CountyName}</h5>
+        <h5>County: ${feature.properties.NAME}</h5>
+        <p>Population: ${feature.properties.Total_population}</p>
         <p>Democratic votes: ${democratic_vote}</p>
         <p>Republican votes: ${republican_vote}</p>
         <p>Election Result: ${ELECTION_RESULT}</p>
@@ -73,25 +73,28 @@ function MapComponent({ selectedState }) {
 
   // use useMemo to cache
   const geoJsonComponent = useMemo(() => {
-    console.log("sssdfsdafsdfa")
-    console.log(geoData)
     return (
       <>
-      <GeoJSON data={nyData} style={style} onEachFeature={onEachFeature}/>
-      <GeoJSON data={arData} style={style} />
+      {showMapType === "counties" ?
+        (<>
+          <GeoJSON data={nyCounties} style={style} onEachFeature={onEachFeature}/>
+          <GeoJSON data={arCounties} style={style} onEachFeature={onEachFeature}/>
+        </>)
+        : 
+        null
+      }
       </>
-     // <GeoJSON data={geoData} style={style} onEachFeature={onEachFeature} />
+    //  <GeoJSON data={geoData} style={style} onEachFeature={onEachFeature} />
     );
   }, [geoData]);
 
   // loading specific GeoJSON date depending on the state
   useEffect(() => {
-
     if (selectedState === 'NY') {
-      setGeoData(nyData);
+      setGeoData(nyCounties);
     }
     else if (selectedState === 'AR') {
-      setGeoData(null);
+      setGeoData(arCounties);
     }
  
   }, [selectedState]);
@@ -111,7 +114,7 @@ function MapComponent({ selectedState }) {
       >
         <ChangeMapView center={mapCenter} />
         <TileLayer
-          attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
+          // attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         />
         {geoJsonComponent}
