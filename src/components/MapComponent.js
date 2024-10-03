@@ -1,9 +1,15 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-//import nyData from '../data/ny_districts.json';
-import nyCounties from '../data/NewYork/ny_congress_district.json';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { DropdownButton, Dropdown } from 'react-bootstrap';
+import nyDistrict from '../data/NewYork/ny_district.json';
+import nyCounties from '../data/NewYork/ny_counties_with_population.json';
+import nyCongressDistrict from '../data/NewYork/ny_congress_district.json';
+import arDistrict from '../data/Arkansas/ar_district.json'
 import arCounties from '../data/Arkansas/dummy_arkansas_counties_with_votes.json';
+import arCongressDistrict from '../data/Arkansas/ar_congress_district.json';
+
 import { memo } from 'react';
 
 const nyCenter = [42.965, -76.0167];
@@ -15,8 +21,15 @@ const usBounds = [
 
 function MapComponent({ selectedState }) {
   const [geoData, setGeoData] = useState(nyCounties);
-  const [showMapType, setShowMapType] = useState('counties');
-  function ChangeMapView({ center }) {
+  const [mapType, setMapType] = useState('counties'); // State to manage map type
+
+  const handleSelect = (eventKey) => {
+    console.log(eventKey);
+    // Update the selected map type
+    setMapType(eventKey);
+  };
+
+   function ChangeMapView({ center }) {
     const map = useMap();
     useEffect(() => {
       map.flyTo(center, 7);
@@ -48,7 +61,7 @@ function MapComponent({ selectedState }) {
       dashArray: null,
       fillOpacity: 0.7
     };
-  });
+  }, [getColor]);
 
   //useCallback to cache click data
   const onEachFeature = useCallback((feature, layer) => {
@@ -73,20 +86,29 @@ function MapComponent({ selectedState }) {
 
   // use useMemo to cache
   const geoJsonComponent = useMemo(() => {
+    console.log(mapType);
     return (
       <>
-      {showMapType === "counties" ?
-        (<>
+      {mapType === 'counties' ? (
+        <>
           <GeoJSON data={nyCounties} style={style} onEachFeature={onEachFeature}/>
           <GeoJSON data={arCounties} style={style} onEachFeature={onEachFeature}/>
-        </>)
-        : 
-        null
-      }
+        </>
+      ) : mapType === 'district' ? (
+        <>
+          <GeoJSON data={nyDistrict} style={style} onEachFeature={onEachFeature}/>
+          <GeoJSON data={arDistrict} style={style} onEachFeature={onEachFeature}/>
+        </>
+      ) : mapType === 'congressional district' ? (
+        <>
+          <GeoJSON data={nyCongressDistrict} style={style} onEachFeature={onEachFeature}/>
+          <GeoJSON data={arCongressDistrict} style={style} onEachFeature={onEachFeature}/>
+        </>
+      ): null}
       </>
     //  <GeoJSON data={geoData} style={style} onEachFeature={onEachFeature} />
     );
-  }, [geoData]);
+  }, [geoData, mapType, style, onEachFeature]);
 
   // loading specific GeoJSON date depending on the state
   useEffect(() => {
@@ -100,17 +122,25 @@ function MapComponent({ selectedState }) {
   }, [selectedState]);
 
   const mapCenter = selectedState === 'NY' ? nyCenter : arCenter;
-  
+
   return (
     <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
+      <div className="d-flex justify-content-center mb-3">
+        {/* Bootstrap Dropdown to select map type */}
+        <DropdownButton id="dropdown-basic-button" title={`Map: ${mapType}`} onSelect={handleSelect}>
+          <Dropdown.Item eventKey="counties">Show Counties Map</Dropdown.Item>
+          <Dropdown.Item eventKey="district">Show Districts Map</Dropdown.Item>
+          <Dropdown.Item eventKey="congressional district">Show Congress Districts Map</Dropdown.Item>
+        </DropdownButton>
+      </div>
       <MapContainer 
+        key={mapType} // Changing this key forces the map to fully reset
         center={mapCenter}
         bounds={usBounds}
         maxZoom={12}
         minZoom={5}
         scrollWheelZoom={true}
         preferCanvas={true}
-        
       >
         <ChangeMapView center={mapCenter} />
         <TileLayer
@@ -118,7 +148,6 @@ function MapComponent({ selectedState }) {
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         />
         {geoJsonComponent}
-
       </MapContainer>
     </div>
   );
