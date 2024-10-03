@@ -5,111 +5,69 @@ import {
   LineElement,
   PointElement,
   CategoryScale,
-  LinearScale,
+  LinearScale,   
+
   Tooltip,
   Legend,
-} from 'chart.js';
+} from 'chart.js';   
+
 
 // Register Chart.js components
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-function CandidatesContent({ selectedState }) {
+function DistrictComparisonContent({ selectedDistrict }) {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    // Dummy data to simulate support distribution for ethnicities across different candidates
+    // Replace with your actual data fetching logic based on selectedDistrict
     const dummyData = [
+      // ... Replace this with data for different districts
       {
-        candidate: 'Person 1',
+        district: 'District 1',
         data: [
           {
-            ethnicity: 'Indian',
-            values: [1, 2, 3, 4, 5, 4, 3, 2, 1],
+            demographic: 'Age (18-34)',
+            values: [10, 15, 20, 25, 30, 25, 20, 15, 10],
             backgroundColor: 'rgba(75, 192, 192, 0.5)',
             borderColor: 'rgba(75, 192, 192, 1)',
           },
           {
-            ethnicity: 'East Asian',
-            values: [3, 4, 5, 6, 7, 6, 5, 4, 3],
+            demographic: 'Age (35-54)',
+            values: [5, 10, 15, 20, 25, 20, 15, 10, 5],
             backgroundColor: 'rgba(255, 159, 64, 0.5)',
             borderColor: 'rgba(255, 159, 64, 1)',
           },
           {
-            ethnicity: 'Non-Asian',
-            values: [5, 6, 7, 8, 9, 8, 7, 6, 5],
-            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-          },
-        ],
-      },
-      {
-        candidate: 'Person 2',
-        data: [
-          {
-            ethnicity: 'Indian',
+            demographic: 'Age (55+)',
             values: [2, 4, 6, 8, 10, 8, 6, 4, 2],
-            backgroundColor: 'rgba(75, 192, 192, 0.5)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-          },
-          {
-            ethnicity: 'East Asian',
-            values: [1, 2, 3, 4, 5, 4, 3, 2, 1],
-            backgroundColor: 'rgba(255, 159, 64, 0.5)',
-            borderColor: 'rgba(255, 159, 64, 1)',
-          },
-          {
-            ethnicity: 'Non-Asian',
-            values: [3, 4, 5, 6, 7, 6, 5, 4, 3],
             backgroundColor: 'rgba(54, 162, 235, 0.5)',
             borderColor: 'rgba(54, 162, 235, 1)',
           },
         ],
       },
-      {
-        candidate: 'Person 3',
-        data: [
-          {
-            ethnicity: 'Indian',
-            values: [3, 6, 9, 12, 15, 12, 9, 6, 3],
-            backgroundColor: 'rgba(75, 192, 192, 0.5)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-          },
-          {
-            ethnicity: 'East Asian',
-            values: [2, 4, 6, 8, 10, 8, 6, 4, 2],
-            backgroundColor: 'rgba(255, 159, 64, 0.5)',
-            borderColor: 'rgba(255, 159, 64, 1)',
-          },
-          {
-            ethnicity: 'Non-Asian',
-            values: [1, 2, 3, 4, 5, 4, 3, 2, 1],
-            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-          },
-        ],
-      },
+      // ... Add data for other districts
     ];
 
     setChartData(dummyData);
-  }, [selectedState]);
+  }, [selectedDistrict]);
 
   return (
     <div className="col-12 col-md-9 col-lg-9">
-      <h2>Support Distribution for Candidates</h2>
-      <p>Below is the support distribution for Person 1, Person 2, and Person 3 based on ethnicity.</p>
+      <h2>Demographic Comparison for {selectedDistrict}</h2>
+      <p>Below is a comparison of demographics in {selectedDistrict}.</p>
 
-      {chartData.map((person) => (
-        <div key={person.candidate}>
-          <h3>Support for {person.candidate}</h3>
+      {chartData.map((districtData) => (
+        <div key={districtData.district}>
+          <h3>Demographics for {districtData.district}</h3>
           <Line
             data={{
-              labels: ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1.0'],
-              datasets: person.data.map((ethnicityData) => ({
-                label: ethnicityData.ethnicity,
-                data: ethnicityData.values,
+              labels: ['10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'],
+              datasets: districtData.data.map((demographicData) => ({
+                label: demographicData.demographic,
+                data: demographicData.values,
                 fill: true,
-                backgroundColor: ethnicityData.backgroundColor,
-                borderColor: ethnicityData.borderColor,
+                backgroundColor: demographicData.backgroundColor,
+                borderColor: demographicData.borderColor,
                 tension: 0.4, // Smooth curves
               })),
             }}
@@ -121,23 +79,22 @@ function CandidatesContent({ selectedState }) {
                 },
                 title: {
                   display: true,
-                  text: `Support for ${person.candidate}`,
+                  text: `Demographic Distribution in ${selectedDistrict}`,
                 },
               },
               scales: {
                 x: {
                   title: {
                     display: true,
-                    text: 'Support Probability',
+                    text: 'Percentage of Population',
                   },
                   type: 'linear',
                 },
                 y: {
                   title: {
                     display: true,
-                    text: 'Probability Density',
+                    text: 'Demographic Group',
                   },
-                  beginAtZero: true,
                 },
               },
             }}
@@ -148,4 +105,4 @@ function CandidatesContent({ selectedState }) {
   );
 }
 
-export default CandidatesContent;
+export default DistrictComparisonContent;

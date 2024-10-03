@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -8,31 +8,35 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import nyRaceEthnicityData from '../data/NY_Race_and_Ethnicity_2022.json'; // Import NY race and ethnicity data
 
 // Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-function NYHouseEthnicityContent() {
-  const [filteredRaceData, setFilteredRaceData] = useState([]);
+function NYHouseEthnicityContent({ selectedState }) {
+  const year = 2023; // Replace with the actual year
 
-  useEffect(() => {
-    // Filter the data for New York House of Representatives
-    const filteredData = nyRaceEthnicityData.filter(
-      (item) => item.Geography === 'New York House of Representatives'
-    );
-    setFilteredRaceData(filteredData);
-  }, []);
-
-  const data = {
-    labels: filteredRaceData.map((item) => item.Race), // Extract race names
-    datasets: [
-      {
-        label: 'Population',
-        data: filteredRaceData.map((item) => item.Population), // Extract population data
-        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-      },
-    ],
+  // Data for New York and Arkansas
+  const stateData = {
+    NY: {
+      labels: ['White', 'Black or African American', 'Hispanic or Latino', 'Asian', 'Other'],
+      datasets: [
+        {
+          label: 'Number of Representatives',
+          data: [100, 30, 15, 5, 0], // Hypothetical data for New York
+          backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        },
+      ],
+    },
+    AR: {
+      labels: ['White', 'Black or African American', 'Hispanic or Latino', 'Asian', 'Other'],
+      datasets: [
+        {
+          label: 'Number of Representatives',
+          data: [90, 25, 10, 3, 0], // Hypothetical data for Arkansas
+          backgroundColor: 'rgba(255, 99, 132, 0.6)',
+        },
+      ],
+    },
   };
 
   const options = {
@@ -43,7 +47,7 @@ function NYHouseEthnicityContent() {
       },
       title: {
         display: true,
-        text: 'New York House of Representatives Race and Ethnicity Distribution',
+        text: `${selectedState === 'NY' ? 'New York' : 'Arkansas'} House of Representatives Race and Ethnicity Distribution (${year})`,
       },
     },
     scales: {
@@ -57,7 +61,7 @@ function NYHouseEthnicityContent() {
       y: {
         title: {
           display: true,
-          text: 'Population',
+          text: 'Number of Representatives',
         },
         beginAtZero: true,
       },
@@ -66,9 +70,11 @@ function NYHouseEthnicityContent() {
 
   return (
     <div className="col-12 col-md-9 col-lg-9">
-      <h2>New York House of Representatives Race and Ethnicity Data</h2>
-      <p>Below is the race and ethnicity population distribution of the New York House of Representatives.</p>
-      <Bar data={data} options={options} />
+      <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} House of Representatives Race and Ethnicity Data</h2>
+      <p>
+        Below is the race and ethnicity distribution of the representatives in the {selectedState === 'NY' ? 'New York' : 'Arkansas'} House of Representatives.
+      </p>
+      <Bar data={stateData[selectedState]} options={options} />
     </div>
   );
 }
