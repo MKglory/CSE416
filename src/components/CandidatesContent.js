@@ -17,10 +17,10 @@ function CandidatesContent({ selectedState }) {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    // Dummy data to simulate support distribution for ethnicities across different candidates
-    const dummyData = [
+    // Dummy data for New York and Arkansas candidates
+    const newYorkData = [
       {
-        candidate: 'Person 1',
+        candidate: 'New York Person 1',
         data: [
           {
             ethnicity: 'Indian',
@@ -43,7 +43,7 @@ function CandidatesContent({ selectedState }) {
         ],
       },
       {
-        candidate: 'Person 2',
+        candidate: 'New York Person 2',
         data: [
           {
             ethnicity: 'Indian',
@@ -66,7 +66,7 @@ function CandidatesContent({ selectedState }) {
         ],
       },
       {
-        candidate: 'Person 3',
+        candidate: 'New York Person 3',
         data: [
           {
             ethnicity: 'Indian',
@@ -90,13 +90,90 @@ function CandidatesContent({ selectedState }) {
       },
     ];
 
-    setChartData(dummyData);
+    const arkansasData = [
+      {
+        candidate: 'Arkansas Person 1',
+        data: [
+          {
+            ethnicity: 'Indian',
+            values: [4, 5, 6, 7, 8, 7, 6, 5, 4],
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+          },
+          {
+            ethnicity: 'East Asian',
+            values: [2, 3, 4, 5, 6, 5, 4, 3, 2],
+            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+          },
+          {
+            ethnicity: 'Non-Asian',
+            values: [5, 6, 7, 8, 9, 8, 7, 6, 5],
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+          },
+        ],
+      },
+      {
+        candidate: 'Arkansas Person 2',
+        data: [
+          {
+            ethnicity: 'Indian',
+            values: [3, 5, 7, 9, 11, 9, 7, 5, 3],
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+          },
+          {
+            ethnicity: 'East Asian',
+            values: [2, 4, 6, 8, 10, 8, 6, 4, 2],
+            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+          },
+          {
+            ethnicity: 'Non-Asian',
+            values: [4, 5, 6, 7, 8, 7, 6, 5, 4],
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+          },
+        ],
+      },
+      {
+        candidate: 'Arkansas Person 3',
+        data: [
+          {
+            ethnicity: 'Indian',
+            values: [2, 4, 6, 8, 10, 8, 6, 4, 2],
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+          },
+          {
+            ethnicity: 'East Asian',
+            values: [1, 3, 5, 7, 9, 7, 5, 3, 1],
+            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+          },
+          {
+            ethnicity: 'Non-Asian',
+            values: [4, 5, 6, 7, 8, 7, 6, 5, 4],
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+          },
+        ],
+      },
+    ];
+
+    // Set data based on selected state
+    if (selectedState === 'NY') {
+      setChartData(newYorkData);
+    } else if (selectedState === 'AR') {
+      setChartData(arkansasData);
+    }
   }, [selectedState]);
 
   return (
     <div className="col-12 col-md-9 col-lg-9">
-      <h2>Support Distribution for Candidates</h2>
-      <p>Below is the support distribution for Person 1, Person 2, and Person 3 based on ethnicity.</p>
+      <h2>Support Distribution for {selectedState === 'NY' ? 'New York' : 'Arkansas'} Candidates</h2>
+      <p>Below is the support distribution for {selectedState === 'NY' ? 'New York Person 1, 2, 3' : 'Arkansas Person 1, 2, 3'} based on ethnicity.</p>
 
       {chartData.map((person) => (
         <div key={person.candidate}>

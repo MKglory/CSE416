@@ -34,34 +34,34 @@ function VoteGapAnalysisContent({ selectedState }) {
 
   useEffect(() => {
     // Dummy data simulating vote gaps based on percent Latino population
-    const scatterData = {
+    const newYorkData = {
       labels: Array.from({ length: 1138 }, (_, i) => `Precinct ${i + 1}`),
       datasets: [
         {
-          label: 'Baumgartner',
+          label: 'New York Candidate 1',
           data: Array.from({ length: 1138 }, () => ({
             x: Math.random() * 100,
-            y: 50 + Math.random() * 50 * (Math.random() > 0.5 ? 1 : -1), // Randomly fluctuates around 50%
+            y: 50 + Math.random() * 50 * (Math.random() > 0.5 ? 1 : -1),
           })),
           backgroundColor: 'rgba(255, 99, 132, 0.6)', // Red
           borderColor: 'rgba(255, 99, 132, 1)',
           type: 'scatter',
         },
         {
-          label: 'Cantwell',
+          label: 'New York Candidate 2',
           data: Array.from({ length: 1138 }, () => ({
             x: Math.random() * 100,
-            y: 50 + Math.random() * 50 * (Math.random() > 0.5 ? 1 : -1), // Randomly fluctuates around 50%
+            y: 50 + Math.random() * 50 * (Math.random() > 0.5 ? 1 : -1),
           })),
           backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue
           borderColor: 'rgba(54, 162, 235, 1)',
           type: 'scatter',
         },
         {
-          label: 'Trend Line Baumgartner',
+          label: 'Trend Line Candidate 1',
           data: Array.from({ length: 100 }, (_, i) => ({
             x: i,
-            y: 75 - (i * 0.5) // Simulated trend line equation
+            y: 75 - (i * 0.5), // Simulated trend line equation
           })),
           borderColor: 'rgba(255, 99, 132, 1)',
           backgroundColor: 'transparent',
@@ -69,26 +69,81 @@ function VoteGapAnalysisContent({ selectedState }) {
           fill: false,
         },
         {
-          label: 'Trend Line Cantwell',
+          label: 'Trend Line Candidate 2',
           data: Array.from({ length: 100 }, (_, i) => ({
             x: i,
-            y: 25 + (i * 0.75) // Simulated trend line equation
+            y: 25 + (i * 0.75), // Simulated trend line equation
           })),
           borderColor: 'rgba(54, 162, 235, 1)',
           backgroundColor: 'transparent',
           type: 'line',
           fill: false,
-        }
+        },
       ],
     };
 
-    setChartData(scatterData);
+    const arkansasData = {
+      labels: Array.from({ length: 1138 }, (_, i) => `Precinct ${i + 1}`),
+      datasets: [
+        {
+          label: 'Arkansas Candidate 1',
+          data: Array.from({ length: 1138 }, () => ({
+            x: Math.random() * 100,
+            y: 50 + Math.random() * 50 * (Math.random() > 0.5 ? 1 : -1),
+          })),
+          backgroundColor: 'rgba(255, 99, 132, 0.6)', // Red
+          borderColor: 'rgba(255, 99, 132, 1)',
+          type: 'scatter',
+        },
+        {
+          label: 'Arkansas Candidate 2',
+          data: Array.from({ length: 1138 }, () => ({
+            x: Math.random() * 100,
+            y: 50 + Math.random() * 50 * (Math.random() > 0.5 ? 1 : -1),
+          })),
+          backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue
+          borderColor: 'rgba(54, 162, 235, 1)',
+          type: 'scatter',
+        },
+        {
+          label: 'Trend Line Candidate 1',
+          data: Array.from({ length: 100 }, (_, i) => ({
+            x: i,
+            y: 70 - (i * 0.4), // Simulated trend line for Arkansas Candidate 1
+          })),
+          borderColor: 'rgba(255, 99, 132, 1)',
+          backgroundColor: 'transparent',
+          type: 'line',
+          fill: false,
+        },
+        {
+          label: 'Trend Line Candidate 2',
+          data: Array.from({ length: 100 }, (_, i) => ({
+            x: i,
+            y: 30 + (i * 0.65), // Simulated trend line for Arkansas Candidate 2
+          })),
+          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: 'transparent',
+          type: 'line',
+          fill: false,
+        },
+      ],
+    };
+
+    // Set chart data based on the selected state
+    if (selectedState === 'NY') {
+      setChartData(newYorkData);
+    } else if (selectedState === 'AR') {
+      setChartData(arkansasData);
+    }
   }, [selectedState]);
 
   return (
     <div className="col-12 col-md-9 col-lg-9">
-      <h2>Vote Gap Analysis</h2>
-      <p>Below is the vote distribution for Baumgartner and Cantwell based on Percent Latino population.</p>
+      <h2>Vote Gap Analysis for {selectedState === 'NY' ? 'New York' : 'Arkansas'} Candidates</h2>
+      <p>
+        Below is the vote distribution for {selectedState === 'NY' ? 'New York Candidate 1 and Candidate 2' : 'Arkansas Candidate 1 and Candidate 2'} based on Percent Latino population.
+      </p>
 
       <Scatter
         data={chartData}
@@ -100,7 +155,7 @@ function VoteGapAnalysisContent({ selectedState }) {
             },
             title: {
               display: true,
-              text: 'Vote Gap Analysis by Percent Latino',
+              text: `Vote Gap Analysis by Percent Latino for ${selectedState === 'NY' ? 'New York' : 'Arkansas'}`,
             },
           },
           scales: {
