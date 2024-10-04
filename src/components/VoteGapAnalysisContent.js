@@ -64,7 +64,7 @@ function VoteGapAnalysisContent({ selectedState }) {
             y: 75 - (i * 0.5), // Simulated trend line equation
           })),
           borderColor: 'rgba(255, 99, 132, 1)',
-          backgroundColor: 'transparent',
+          backgroundColor: 'transparent', // Ensure background is transparent
           type: 'line',
           fill: false,
         },
@@ -75,7 +75,7 @@ function VoteGapAnalysisContent({ selectedState }) {
             y: 25 + (i * 0.75), // Simulated trend line equation
           })),
           borderColor: 'rgba(54, 162, 235, 1)',
-          backgroundColor: 'transparent',
+          backgroundColor: 'transparent', // Ensure background is transparent
           type: 'line',
           fill: false,
         },
@@ -112,7 +112,7 @@ function VoteGapAnalysisContent({ selectedState }) {
             y: 70 - (i * 0.4), // Simulated trend line for Arkansas Candidate 1
           })),
           borderColor: 'rgba(255, 99, 132, 1)',
-          backgroundColor: 'transparent',
+          backgroundColor: 'transparent', // Ensure background is transparent
           type: 'line',
           fill: false,
         },
@@ -123,7 +123,7 @@ function VoteGapAnalysisContent({ selectedState }) {
             y: 30 + (i * 0.65), // Simulated trend line for Arkansas Candidate 2
           })),
           borderColor: 'rgba(54, 162, 235, 1)',
-          backgroundColor: 'transparent',
+          backgroundColor: 'transparent', // Ensure background is transparent
           type: 'line',
           fill: false,
         },
