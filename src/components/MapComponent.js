@@ -21,6 +21,7 @@ const usBounds = [
 ];
 
 function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
+
   const [mapType, setMapType] = useState('counties'); // State to manage map type
   const [mapShowType, setMapShowType] = useState('Election');
 

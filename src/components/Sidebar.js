@@ -1,31 +1,42 @@
+// Sidebar.js
 import React from 'react';
 
-function Sidebar({ handlePlotChange }) {
+function Sidebar({ handlePlotChange, selectedCounty, resetSelection, selectedContent }) {
   const handleSelect = (event) => {
-
-    handlePlotChange(event.target.value); // Pass the selected content type back to the parent
+    handlePlotChange(event.target.value);
   };
 
   return (
-<div className="sidebar">
-    <ul className="list-group">
-        <li className="list-group-item">
-            <select 
-            className="form-select" 
-            onChange={handleSelect} 
-            defaultValue="mainContent"
-            value="bdbd">
-                <option value="mainContent">Overview</option>
-                <option value="raceEthnicity">Race & Ethnicity</option>
-                <option value="electionVotes">Election Votes</option>
-                <option value="nyHouseEthnicity">NY House of Representatives Ethnicity</option>
-                <option value="candidates">Candidates</option> {/* Option for candidates */}
-                {/* <option value="districtComparison">District Comparison</option> */}
-                <option value="voteGapAnalysis">Vote Gap Analysis</option> {/* New option for Vote Gap Analysis */}
-            </select>
+    <div className="sidebar">
+      <ul className="list-group">
+        <li className="list-group-item d-flex flex-row align-items-center justify-content-between">
+          <select
+            className="form-select"
+            onChange={handleSelect}
+            value={selectedContent}
+          >
+            <option value="mainContent">Overview</option>
+            <option value="raceEthnicity">Race & Ethnicity</option>
+            <option value="electionVotes">Election Votes</option>
+            <option value="nyHouseEthnicity">NY House of Representatives Ethnicity</option>
+            <option value="candidates">Candidates</option>
+            {/* <option value="districtComparison">District Comparison</option> */}
+            <option value="voteGapAnalysis">Vote Gap Analysis</option>
+          </select>
+
+          {selectedCounty && (
+            <li className="d-flex justify-content-center align-items-center"
+              style={{ paddingLeft: 17}} >
+              <button onClick={resetSelection}
+                className="btn btn-secondary btn-sm me-2"
+                style={{ padding: '5px 15px' }} >
+                Back
+              </button>
+            </li>
+          )}
         </li>
-    </ul>
-</div>
+      </ul>
+    </div>
   );
 }
 

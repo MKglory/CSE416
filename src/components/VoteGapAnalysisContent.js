@@ -12,6 +12,7 @@ import {
   Legend,
   Title,
 } from 'chart.js';
+
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 // Register Chart.js components
@@ -50,6 +51,7 @@ function VoteGapAnalysisContent({ selectedState }) {
           backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue
           borderColor: 'rgba(54, 162, 235, 1)',
           type: 'scatter',
+
           datalabels: { display: false },
         },
         {
@@ -64,6 +66,7 @@ function VoteGapAnalysisContent({ selectedState }) {
           borderColor: 'rgba(255, 99, 132, 1)',
           type: 'scatter',
           datalabels: { display: false },
+
         },
         {
           label: 'Trend Line Hochul',
@@ -71,11 +74,13 @@ function VoteGapAnalysisContent({ selectedState }) {
             x: i,
             y: 75 - (i * 0.5),
           })),
+
           borderColor: 'rgba(54, 162, 235, 1)', // Blue for Democrat
           backgroundColor: 'transparent',
           type: 'line',
           fill: false,
           datalabels: { display: false },
+
         },
         {
           label: 'Trend Line Zeldin',
@@ -83,11 +88,13 @@ function VoteGapAnalysisContent({ selectedState }) {
             x: i,
             y: 25 + (i * 0.75),
           })),
+
           borderColor: 'rgba(255, 99, 132, 1)', // Red for Republican
           backgroundColor: 'transparent',
           type: 'line',
           fill: false,
           datalabels: { display: false },
+
         },
       ],
     };
@@ -106,6 +113,7 @@ function VoteGapAnalysisContent({ selectedState }) {
           backgroundColor: 'rgba(255, 99, 132, 0.6)', // Red
           borderColor: 'rgba(255, 99, 132, 1)',
           type: 'scatter',
+
           datalabels: { display: false },
         },
         {
@@ -127,6 +135,7 @@ function VoteGapAnalysisContent({ selectedState }) {
             x: i,
             y: 70 - (i * 0.4),
           })),
+
           borderColor: 'rgba(255, 99, 132, 1)', // Red for Republican
           backgroundColor: 'transparent',
           type: 'line',
@@ -139,6 +148,7 @@ function VoteGapAnalysisContent({ selectedState }) {
             x: i,
             y: 30 + (i * 0.65),
           })),
+
           borderColor: 'rgba(54, 162, 235, 1)', // Blue for Democrat
           backgroundColor: 'transparent',
           type: 'line',
