@@ -1,26 +1,26 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
-import nyDistrict from '../data/NewYork/maps/ny_district.json';
-import nyCounties from '../data/NewYork/maps/ny_counties_with_population.json';
-import nyCongressDistrict from '../data/NewYork/maps/ny_congress_district.json';
-import arDistrict from '../data/Arkansas/maps/ar_precinct.json'
-import arCounties from '../data/Arkansas/maps/arkansas_counties_with_population.json';
-import arCongressDistrict from '../data/Arkansas/maps/ar_congress_district.json';
 
-import { memo } from 'react';
+import nyDistrict from '../data/NewYork/ny_district.json';
+import nyCounties from '../data/NewYork/ny_counties_with_population.json';
+import nyCongressDistrict from '../data/NewYork/ny_congress_district.json';
+import arDistrict from '../data/Arkansas/ar_district.json';
+import arCounties from '../data/Arkansas/dummy_arkansas_counties_with_votes.json';
+import arCongressDistrict from '../data/Arkansas/ar_congress_district.json';
+
 
 const nyCenter = [42.965, -76.0167];
 const arCenter = [34.7465, -92.2896];
 const usBounds = [
   [24.396308, -124.848974], // Southwest
-  [49.384358, -66.885444]   // Northeast
+  [49.384358, -66.885444],  // Northeast
 ];
 
 function MapComponent({ selectedState }) {
-  const [geoData, setGeoData] = useState(nyCounties);
+
   const [mapType, setMapType] = useState('counties'); // State to manage map type
 
   const handleSelect = (eventKey) => {
@@ -32,48 +32,51 @@ function MapComponent({ selectedState }) {
     const map = useMap();
     useEffect(() => {
       map.flyTo(center, 7);
-    }, [center, map]);
+    }, [center]);
     return null;
   }
 
-  // useCallback to cache getColor function avoing rerender
   const getColor = (result) => {
     return result === 'Republican'
-      ? '#ff0000'//red
+      ? '#ff0000' // red
       : result === 'Democratic'
-      ? '#0000ff'//blue
-      : '#00ff00'//green
+
+      ? '#0000ff' // blue
+      : '#00ff00'; // green
   };
 
-  
-  // useCallback to cache style fucntion
-  const style = useCallback((feature) => {
-    const democratic_vote = feature.properties.Democratic_votes;
-    const republican_vote = feature.properties.Republican_votes;
-    const ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
-    // Return the style object
-    return {
-      fillColor: getColor(ELECTION_RESULT),
-      weight: 2,
-      opacity: 10,
-      color: 'grey',
-      dashArray: null,
-      fillOpacity: 0.7
-    };
-  }, [getColor]);
+  // Style function
+  const style = useCallback(
+    (feature) => {
+      const democratic_vote = feature.properties.Democratic_votes;
+      const republican_vote = feature.properties.Republican_votes;
+      const ELECTION_RESULT =
+        democratic_vote > republican_vote ? 'Democratic' : 'Republican';
+      // Return the style object
+      return {
+        fillColor: getColor(ELECTION_RESULT),
+        weight: 2,
+        opacity: 1,
+        color: 'grey',
+        dashArray: null,
+        fillOpacity: 0.7,
+      };
+    },
+    [getColor]
+  );
 
-  //useCallback to cache click data
-  const onEachFeature = (type) => (feature, layer) => {
-    let democratic_vote = 0;
-    let republican_vote = 0;
-    let ELECTION_RESULT = 'Unknown';
+  // onEachFeature function
+  const onEachFeature = useCallback(
+    (feature, layer) => {
+      const democratic_vote = feature.properties.Democratic_votes;
+      const republican_vote = feature.properties.Republican_votes;
+      const ELECTION_RESULT =
+        democratic_vote > republican_vote ? 'Democratic' : 'Republican';
 
-    democratic_vote = feature.properties.Democratic_votes;
-    republican_vote = feature.properties.Republican_votes;
-    ELECTION_RESULT = democratic_vote > republican_vote ? "Democratic" : "Republican";
-    if (feature.properties) {
-      let popupContent = ""
-      if (mapType === 'counties'){
+      let popupContent = '';
+
+      if (mapType === 'counties') {
+
         popupContent = `
           <h5>County: ${feature.properties.NAME}</h5>
           <p>Population: ${feature.properties.Total_population}</p>
@@ -81,6 +84,7 @@ function MapComponent({ selectedState }) {
           <p>Republican votes: ${republican_vote}</p>
           <p>Election Result: ${ELECTION_RESULT}</p>
         `;
+
       }
       else if (mapType === 'district'){
         // EDID repesents the district ID
@@ -92,8 +96,9 @@ function MapComponent({ selectedState }) {
           <p>Republican votes: ${republican_vote}</p>
           <p>Election Result: ${ELECTION_RESULT}</p>
         `;
-      }
-      else if (mapType === 'congressional district'){
+
+      } else if (mapType === 'congressional district') {
+
         popupContent = `
           <h5>Congress District: ${feature.properties.NAME}</h5>
           <p>Population: ${feature.properties.Total_population}</p>
@@ -104,66 +109,68 @@ function MapComponent({ selectedState }) {
       }
 
       layer.bindPopup(popupContent);
-    }
-  };
 
-  // use useMemo to cache
+    },
+    [mapType]
+  );
+
+
+  // Update geoJsonComponent function
   const geoJsonComponent = useMemo(() => {
     const dataMap = {
-      'counties': {
-        data: [nyCounties, arCounties],
-        handler: 'countiesDistrictOnEachFeature',
+
+      counties: {
+        NY: nyCounties,
+        AR: arCounties,
       },
-      'district': {
-        data: [nyDistrict, arDistrict],
-        handler: 'districtOnEachFeature',
+      district: {
+        NY: nyDistrict,
+        AR: arDistrict,
       },
       'congressional district': {
-        data: [nyCongressDistrict, arCongressDistrict],
-        handler: 'congressionalDistrictOnEachFeature',
+        NY: nyCongressDistrict,
+        AR: arCongressDistrict,
       },
     };
-  
-    const selectedData = dataMap[mapType];
-  
-    if (!selectedData) return null;
-  
-    return selectedData.data.map((data, index) => (
-      <GeoJSON
-        key={index}
-        data={data}
-        style={style}
-        onEachFeature={onEachFeature(mapType)}
-      />
-    ));
-  }, [mapType, style, onEachFeature]);
-  
 
-  // loading specific GeoJSON date depending on the state
-  useEffect(() => {
-    if (selectedState === 'NY') {
-      setGeoData(nyCounties);
-    }
-    else if (selectedState === 'AR') {
-      setGeoData(arCounties);
-    }
- 
-  }, [selectedState]);
+    const selectedData = dataMap[mapType] ? dataMap[mapType][selectedState] : undefined;
+
+
+    if (!selectedData) return null;
+
+    return (
+      <GeoJSON
+        //key={`${selectedState}-${mapType}`}
+        key={`${selectedState}-${mapType}`}
+        data={selectedData}
+        style={style}
+        onEachFeature={onEachFeature}
+      />
+    );
+  }, [selectedState, mapType, style, onEachFeature]);
+
 
   const mapCenter = selectedState === 'NY' ? nyCenter : arCenter;
 
   return (
-    <div >
+
+    <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
       <div className="d-flex justify-content-center mb-3">
         {/* Bootstrap Dropdown to select map type */}
-        <DropdownButton id="dropdown-basic-button" title={`Map: ${mapType}`} onSelect={handleSelect}>
+        <DropdownButton
+          id="dropdown-basic-button"
+          title={`Map: ${mapType}`}
+          onSelect={handleSelect}
+        >
           <Dropdown.Item eventKey="counties">Show Counties Map</Dropdown.Item>
-          <Dropdown.Item eventKey="district">Show Districts/Precincts Map</Dropdown.Item>
-          <Dropdown.Item eventKey="congressional district">Show Congress Districts Map</Dropdown.Item>
+          <Dropdown.Item eventKey="district">Show Districts Map</Dropdown.Item>
+          <Dropdown.Item eventKey="congressional district">
+            Show Congress Districts Map
+          </Dropdown.Item>
         </DropdownButton>
       </div>
-      <MapContainer 
-        key={mapType} // Changing this key forces the map to fully reset
+      <MapContainer
+
         center={mapCenter}
         bounds={usBounds}
         maxZoom={12}
@@ -173,7 +180,7 @@ function MapComponent({ selectedState }) {
       >
         <ChangeMapView center={mapCenter} />
         <TileLayer
-          // attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
+
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         />
         {geoJsonComponent}
@@ -182,4 +189,4 @@ function MapComponent({ selectedState }) {
   );
 }
 
-export default memo(MapComponent);
+export default MapComponent;
