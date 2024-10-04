@@ -2,6 +2,7 @@ import React from 'react';
 
 function Sidebar({ handlePlotChange }) {
   const handleSelect = (event) => {
+
     handlePlotChange(event.target.value); // Pass the selected content type back to the parent
   };
 
@@ -9,8 +10,12 @@ function Sidebar({ handlePlotChange }) {
 <div className="sidebar">
     <ul className="list-group">
         <li className="list-group-item">
-            <select className="form-select" onChange={handleSelect} defaultValue="mainContent">
-                <option value="mainContent">Main Content</option>
+            <select 
+            className="form-select" 
+            onChange={handleSelect} 
+            defaultValue="mainContent"
+            value="bdbd">
+                <option value="mainContent">Overview</option>
                 <option value="raceEthnicity">Race & Ethnicity</option>
                 <option value="electionVotes">Election Votes</option>
                 <option value="nyHouseEthnicity">NY House of Representatives Ethnicity</option>

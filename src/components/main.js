@@ -71,11 +71,11 @@ function Main() {
         return <CandidatesContent selectedState={selectedState} />; // Renders content for Candidates
       case 'districtComparison': // New case for District Comparison content
         return <DistrictComparisonContent selectedState={selectedState} />; // Renders content for District Comparison
-      case 'countiesRaceEthnicity':
-        return <CountiesRaceEthnicity selectedCounty={selectedCounty} />
+      // case 'countiesRaceEthnicity':
+      //   return <CountiesRaceEthnicity selectedCounty={selectedCounty} />
       case 'voteGapAnalysis': // New case for Vote Gap Analysis content
         return <VoteGapAnalysisContent selectedState={selectedState} />; // Renders content for Vote Gap Analysis
-      case 'countiesPlot':
+      case 'countiesPopulationRace':
           return (
           <CountiesRaceEthnicity 
           countyName={selectedCounty}
@@ -92,7 +92,9 @@ function Main() {
       <div className="container-fluid mt-4">
         <div className="row">
           <div className="col-md-6 left-content rounded-section">
-            <Sidebar handlePlotChange={handlePlotChange} />
+            <Sidebar 
+            handlePlotChange={handlePlotChange}
+            selectedCounty={selectedCounty} />
             <div className={`content ${fadeContent ? 'fade-out' : 'fade-in'} ${!isVisible ? 'd-none' : ''}`}> {/* Added fade classes for content */}
               {renderContent()}
             </div>

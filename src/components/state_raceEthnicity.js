@@ -48,7 +48,6 @@ function RaceEthnicityContent({ selectedState }) {
 
   const options = {
     responsive: true,
-    // maintainAspectRatio: false, // Disable aspect ratio for custom height
     plugins: {
       legend: {
         position: 'top',
@@ -58,7 +57,11 @@ function RaceEthnicityContent({ selectedState }) {
         text: `${selectedState === 'NY' ? 'New York' : 'Arkansas'} Race and Ethnicity Distribution`,
         font: {
           size: 20,
-        }
+        },
+      },
+      // Disable the datalabels plugin if it's present
+      datalabels: {
+        display: false,
       },
     },
     scales: {
@@ -68,9 +71,16 @@ function RaceEthnicityContent({ selectedState }) {
           text: 'Race and Ethnicity',
           font: {
             size: 20,
-          }
+          },
         },
-        type: 'category',
+        ticks: {
+          autoSkip: false,
+          maxRotation: 45,
+          minRotation: 45,
+          font: {
+            size: 12,
+          },
+        },
       },
       y: {
         title: {
@@ -81,11 +91,13 @@ function RaceEthnicityContent({ selectedState }) {
       },
     },
   };
+  
+  
 
   return (
-    <div className="col-12 col-md-9 col-lg-9">
-      <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} Race and Ethnicity Data</h2>
-      <Bar data={data} options={options} height={350}/> {/* Set height here */}
+    <div>
+      {/* <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} Race and Ethnicity Data</h2> */}
+      <Bar data={data} options={options} height={310}/> {/* Set height here */}
     </div>
   );
 }

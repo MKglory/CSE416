@@ -82,7 +82,7 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
           click: () => {
             // console.log('You clicked the county :', feature.properties.NAME)
             setSelectedCounty(feature.properties.NAME);
-            handlePlotChange('countiesPlot');
+            handlePlotChange('countiesPopulationRace');
           }
         });
         popupContent = `

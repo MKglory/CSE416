@@ -20,5 +20,8 @@ npm install react-router-dom
 
 shapefiles to geojson
 
+npm install chartjs-plugin-datalabels
+
+
 https://mapshaper.org/
 

@@ -71,10 +71,8 @@ function NYHouseEthnicityContent({ selectedState }) {
   return (
     <div className="col-12 col-md-9 col-lg-9">
       <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} House of Representatives Race and Ethnicity Data</h2>
-      <p>
-        Below is the race and ethnicity distribution of the representatives in the {selectedState === 'NY' ? 'New York' : 'Arkansas'} House of Representatives.
-      </p>
-      <Bar data={stateData[selectedState]} options={options} />
+
+      <Bar data={stateData[selectedState]} options={options} height={310}/>
     </div>
   );
 }
