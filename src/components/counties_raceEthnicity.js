@@ -104,7 +104,7 @@ function BarChart({ countyName, selectedState }) {
 
   return (
     <div>
-      <Bar data={data} options={options} height={200}/>
+      <Bar data={data} options={options} height={180}/>
     </div>
   );
 }

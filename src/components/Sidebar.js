@@ -7,7 +7,6 @@ function Sidebar({ handlePlotChange }) {
 
   return (
 <div className="sidebar">
-    <h3>General Information</h3>
     <ul className="list-group">
         <li className="list-group-item">
             <select className="form-select" onChange={handleSelect} defaultValue="mainContent">
@@ -17,7 +16,6 @@ function Sidebar({ handlePlotChange }) {
                 <option value="nyHouseEthnicity">NY House of Representatives Ethnicity</option>
                 <option value="candidates">Candidates</option> {/* Option for candidates */}
                 {/* <option value="districtComparison">District Comparison</option> */}
-
                 <option value="voteGapAnalysis">Vote Gap Analysis</option> {/* New option for Vote Gap Analysis */}
             </select>
         </li>
