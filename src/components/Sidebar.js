@@ -15,7 +15,7 @@ function Sidebar({ handlePlotChange, selectedCounty, resetSelection, selectedCon
             onChange={handleSelect}
             value={selectedContent}
           >
-            <option value="mainContent">Overview</option>
+            <option value="mainContent">Main Content</option>
             <option value="raceEthnicity">Race & Ethnicity</option>
             <option value="electionVotes">Election Votes</option>
             <option value="nyHouseEthnicity">NY House of Representatives Ethnicity</option>
