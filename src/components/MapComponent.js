@@ -3,13 +3,13 @@ import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
+import nyDistrict from '../data/NewYork/maps/ny_district.json';
+import nyCounties from '../data/NewYork/maps/ny_counties_with_population.json';
+import nyCongressDistrict from '../data/NewYork/maps/ny_congress_district.json';
+import arDistrict from '../data/Arkansas/maps/ar_precinct.json'
+import arCounties from '../data/Arkansas/maps/ar_counties_with_votes.json';
+import arCongressDistrict from '../data/Arkansas/maps/ar_congress_district.json';
 
-import nyDistrict from '../data/NewYork/ny_district.json';
-import nyCounties from '../data/NewYork/ny_counties_with_population.json';
-import nyCongressDistrict from '../data/NewYork/ny_congress_district.json';
-import arDistrict from '../data/Arkansas/ar_district.json';
-import arCounties from '../data/Arkansas/dummy_arkansas_counties_with_votes.json';
-import arCongressDistrict from '../data/Arkansas/ar_congress_district.json';
 
 
 const nyCenter = [42.965, -76.0167];
@@ -40,7 +40,6 @@ function MapComponent({ selectedState }) {
     return result === 'Republican'
       ? '#ff0000' // red
       : result === 'Democratic'
-
       ? '#0000ff' // blue
       : '#00ff00'; // green
   };
