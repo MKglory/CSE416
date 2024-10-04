@@ -20,7 +20,7 @@ footer {
 /* Map container styles */
 .leaflet-container {
   width: 100%;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 150px);
   border-radius: 15px; /* Rounded edges for the map */
 }
 

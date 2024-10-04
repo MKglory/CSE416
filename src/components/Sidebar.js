@@ -1,8 +1,8 @@
 import React from 'react';
 
-function Sidebar({ onContentChange }) {
+function Sidebar({ handlePlotChange }) {
   const handleSelect = (event) => {
-    onContentChange(event.target.value); // Pass the selected content type back to the parent
+    handlePlotChange(event.target.value); // Pass the selected content type back to the parent
   };
 
   return (
