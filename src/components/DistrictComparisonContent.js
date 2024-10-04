@@ -5,23 +5,22 @@ import {
   LineElement,
   PointElement,
   CategoryScale,
-  LinearScale,   
-
+  LinearScale,
   Tooltip,
   Legend,
-} from 'chart.js';   
-
+} from 'chart.js';
 
 // Register Chart.js components
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-function DistrictComparisonContent({ selectedDistrict }) {
+function DistrictComparisonContent({ selectedDistrict, selectedState }) {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    // Replace with your actual data fetching logic based on selectedDistrict
-    const dummyData = [
-      // ... Replace this with data for different districts
+    let data = [];
+
+    // Dummy data for New York districts
+    const newYorkData = [
       {
         district: 'District 1',
         data: [
@@ -45,16 +44,51 @@ function DistrictComparisonContent({ selectedDistrict }) {
           },
         ],
       },
-      // ... Add data for other districts
+      // Add more districts for New York...
     ];
 
-    setChartData(dummyData);
-  }, [selectedDistrict]);
+    // Dummy data for Arkansas districts
+    const arkansasData = [
+      {
+        district: 'District 1',
+        data: [
+          {
+            demographic: 'Age (18-34)',
+            values: [8, 12, 18, 22, 28, 22, 18, 12, 8],
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+          },
+          {
+            demographic: 'Age (35-54)',
+            values: [6, 12, 18, 24, 30, 24, 18, 12, 6],
+            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+          },
+          {
+            demographic: 'Age (55+)',
+            values: [3, 6, 9, 12, 15, 12, 9, 6, 3],
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+          },
+        ],
+      },
+      // Add more districts for Arkansas...
+    ];
+
+    // Switch data based on selected state
+    if (selectedState === 'NY') {
+      data = newYorkData;
+    } else if (selectedState === 'AR') {
+      data = arkansasData;
+    }
+
+    setChartData(data);
+  }, [selectedDistrict, selectedState]);
 
   return (
     <div className="col-12 col-md-9 col-lg-9">
       <h2>Demographic Comparison for {selectedDistrict}</h2>
-      <p>Below is a comparison of demographics in {selectedDistrict}.</p>
+      <p>Below is a comparison of demographics in {selectedDistrict} for {selectedState === 'NY' ? 'New York' : 'Arkansas'}.</p>
 
       {chartData.map((districtData) => (
         <div key={districtData.district}>
@@ -79,7 +113,7 @@ function DistrictComparisonContent({ selectedDistrict }) {
                 },
                 title: {
                   display: true,
-                  text: `Demographic Distribution in ${selectedDistrict}`,
+                  text: `Demographic Distribution in ${districtData.district}`,
                 },
               },
               scales: {

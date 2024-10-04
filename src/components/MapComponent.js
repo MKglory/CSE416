@@ -40,6 +40,7 @@ function MapComponent({ selectedState }) {
     return result === 'Republican'
       ? '#ff0000' // red
       : result === 'Democratic'
+
         ? '#0000ff' // blue
         : '#00ff00'; // green
   };

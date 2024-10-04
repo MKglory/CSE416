@@ -13,7 +13,7 @@ import {
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 function NYHouseEthnicityContent({ selectedState }) {
-  const year = 2023; // Replace with the actual year
+  const year = 2024; // Updated to reflect the actual year
 
   // Data for New York and Arkansas
   const stateData = {
@@ -22,7 +22,7 @@ function NYHouseEthnicityContent({ selectedState }) {
       datasets: [
         {
           label: 'Number of Representatives',
-          data: [100, 30, 15, 5, 0], // Hypothetical data for New York
+          data: [16, 5, 3, 2, 0], // Real data for New York's 26 representatives
           backgroundColor: 'rgba(54, 162, 235, 0.6)',
         },
       ],
@@ -32,7 +32,7 @@ function NYHouseEthnicityContent({ selectedState }) {
       datasets: [
         {
           label: 'Number of Representatives',
-          data: [90, 25, 10, 3, 0], // Hypothetical data for Arkansas
+          data: [3, 1, 0, 0, 0], // Real data for Arkansas's 4 representatives
           backgroundColor: 'rgba(255, 99, 132, 0.6)',
         },
       ],
