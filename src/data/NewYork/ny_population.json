@@ -1,0 +1,622 @@
+{
+    "Albany": {
+        "Total:": "314,848",
+        "Population of one race:": "293,076",
+        "White alone": "215,496",
+        "Black or African American alone": "43,206",
+        "American Indian and Alaska Native alone": "845",
+        "Asian alone": "24,473",
+        "Native Hawaiian and Other Pacific Islander alone": "183",
+        "Some Other Race alone": "8,873"
+    },
+    "Allegany": {
+        "Total:": "46,456",
+        "Population of one race:": "44,541",
+        "White alone": "42,555",
+        "Black or African American alone": "829",
+        "American Indian and Alaska Native alone": "91",
+        "Asian alone": "379",
+        "Native Hawaiian and Other Pacific Islander alone": "9",
+        "Some Other Race alone": "678"
+    },
+    "Bronx": {
+        "Total:": "1,472,654",
+        "Population of one race:": "1,280,481",
+        "White alone": "207,573",
+        "Black or African American alone": "487,118",
+        "American Indian and Alaska Native alone": "21,539",
+        "Asian alone": "69,559",
+        "Native Hawaiian and Other Pacific Islander alone": "1,640",
+        "Some Other Race alone": "493,052"
+    },
+    "Broome": {
+        "Total:": "198,683",
+        "Population of one race:": "185,345",
+        "White alone": "158,674",
+        "Black or African American alone": "12,684",
+        "American Indian and Alaska Native alone": "556",
+        "Asian alone": "9,372",
+        "Native Hawaiian and Other Pacific Islander alone": "84",
+        "Some Other Race alone": "3,975"
+    },
+    "Cattaraugus": {
+        "Total:": "77,042",
+        "Population of one race:": "73,029",
+        "White alone": "68,128",
+        "Black or African American alone": "1,043",
+        "American Indian and Alaska Native alone": "2,706",
+        "Asian alone": "567",
+        "Native Hawaiian and Other Pacific Islander alone": "14",
+        "Some Other Race alone": "571"
+    },
+    "Cayuga": {
+        "Total:": "76,248",
+        "Population of one race:": "71,709",
+        "White alone": "67,017",
+        "Black or African American alone": "2,910",
+        "American Indian and Alaska Native alone": "310",
+        "Asian alone": "385",
+        "Native Hawaiian and Other Pacific Islander alone": "54",
+        "Some Other Race alone": "1,033"
+    },
+    "Chautauqua": {
+        "Total:": "127,657",
+        "Population of one race:": "118,513",
+        "White alone": "109,333",
+        "Black or African American alone": "3,354",
+        "American Indian and Alaska Native alone": "673",
+        "Asian alone": "818",
+        "Native Hawaiian and Other Pacific Islander alone": "57",
+        "Some Other Race alone": "4,278"
+    },
+    "Chemung": {
+        "Total:": "84,148",
+        "Population of one race:": "78,412",
+        "White alone": "70,463",
+        "Black or African American alone": "5,315",
+        "American Indian and Alaska Native alone": "240",
+        "Asian alone": "1,432",
+        "Native Hawaiian and Other Pacific Islander alone": "15",
+        "Some Other Race alone": "947"
+    },
+    "Chenango": {
+        "Total:": "47,220",
+        "Population of one race:": "44,627",
+        "White alone": "43,531",
+        "Black or African American alone": "357",
+        "American Indian and Alaska Native alone": "126",
+        "Asian alone": "245",
+        "Native Hawaiian and Other Pacific Islander alone": "15",
+        "Some Other Race alone": "353"
+    },
+    "Clinton": {
+        "Total:": "79,843",
+        "Population of one race:": "75,498",
+        "White alone": "70,142",
+        "Black or African American alone": "3,060",
+        "American Indian and Alaska Native alone": "285",
+        "Asian alone": "975",
+        "Native Hawaiian and Other Pacific Islander alone": "26",
+        "Some Other Race alone": "1,010"
+    },
+    "Columbia": {
+        "Total:": "61,570",
+        "Population of one race:": "57,314",
+        "White alone": "51,533",
+        "Black or African American alone": "2,557",
+        "American Indian and Alaska Native alone": "188",
+        "Asian alone": "1,431",
+        "Native Hawaiian and Other Pacific Islander alone": "21",
+        "Some Other Race alone": "1,584"
+    },
+    "Cortland": {
+        "Total:": "46,809",
+        "Population of one race:": "44,137",
+        "White alone": "41,250",
+        "Black or African American alone": "895",
+        "American Indian and Alaska Native alone": "124",
+        "Asian alone": "1,028",
+        "Native Hawaiian and Other Pacific Islander alone": "15",
+        "Some Other Race alone": "825"
+    },
+    "Delaware": {
+        "Total:": "44,308",
+        "Population of one race:": "41,833",
+        "White alone": "39,466",
+        "Black or African American alone": "1,072",
+        "American Indian and Alaska Native alone": "145",
+        "Asian alone": "489",
+        "Native Hawaiian and Other Pacific Islander alone": "10",
+        "Some Other Race alone": "651"
+    },
+    "Dutchess": {
+        "Total:": "295,911",
+        "Population of one race:": "270,087",
+        "White alone": "207,251",
+        "Black or African American alone": "32,289",
+        "American Indian and Alaska Native alone": "1,312",
+        "Asian alone": "10,781",
+        "Native Hawaiian and Other Pacific Islander alone": "74",
+        "Some Other Race alone": "18,380"
+    },
+    "Erie": {
+        "Total:": "954,236",
+        "Population of one race:": "902,420",
+        "White alone": "693,563",
+        "Black or African American alone": "134,795",
+        "American Indian and Alaska Native alone": "5,594",
+        "Asian alone": "46,384",
+        "Native Hawaiian and Other Pacific Islander alone": "280",
+        "Some Other Race alone": "21,804"
+    },
+    "Essex": {
+        "Total:": "37,381",
+        "Population of one race:": "35,403",
+        "White alone": "34,102",
+        "Black or African American alone": "676",
+        "American Indian and Alaska Native alone": "78",
+        "Asian alone": "229",
+        "Native Hawaiian and Other Pacific Islander alone": "12",
+        "Some Other Race alone": "306"
+    },
+    "Franklin": {
+        "Total:": "47,555",
+        "Population of one race:": "45,699",
+        "White alone": "39,036",
+        "Black or African American alone": "1,848",
+        "American Indian and Alaska Native alone": "4,141",
+        "Asian alone": "191",
+        "Native Hawaiian and Other Pacific Islander alone": "0",
+        "Some Other Race alone": "483"
+    },
+    "Fulton": {
+        "Total:": "53,324",
+        "Population of one race:": "50,005",
+        "White alone": "47,775",
+        "Black or African American alone": "1,068",
+        "American Indian and Alaska Native alone": "121",
+        "Asian alone": "349",
+        "Native Hawaiian and Other Pacific Islander alone": "4",
+        "Some Other Race alone": "688"
+    },
+    "Genesee": {
+        "Total:": "58,388",
+        "Population of one race:": "55,255",
+        "White alone": "51,541",
+        "Black or African American alone": "1,441",
+        "American Indian and Alaska Native alone": "419",
+        "Asian alone": "416",
+        "Native Hawaiian and Other Pacific Islander alone": "17",
+        "Some Other Race alone": "1,421"
+    },
+    "Greene": {
+        "Total:": "47,931",
+        "Population of one race:": "44,482",
+        "White alone": "40,490",
+        "Black or African American alone": "2,370",
+        "American Indian and Alaska Native alone": "161",
+        "Asian alone": "506",
+        "Native Hawaiian and Other Pacific Islander alone": "7",
+        "Some Other Race alone": "948"
+    },
+    "Hamilton": {
+        "Total:": "5,107",
+        "Population of one race:": "4,865",
+        "White alone": "4,785",
+        "Black or African American alone": "31",
+        "American Indian and Alaska Native alone": "14",
+        "Asian alone": "12",
+        "Native Hawaiian and Other Pacific Islander alone": "1",
+        "Some Other Race alone": "22"
+    },
+    "Herkimer": {
+        "Total:": "60,139",
+        "Population of one race:": "56,900",
+        "White alone": "55,246",
+        "Black or African American alone": "759",
+        "American Indian and Alaska Native alone": "108",
+        "Asian alone": "370",
+        "Native Hawaiian and Other Pacific Islander alone": "35",
+        "Some Other Race alone": "382"
+    },
+    "Jefferson": {
+        "Total:": "116,721",
+        "Population of one race:": "108,443",
+        "White alone": "96,244",
+        "Black or African American alone": "6,707",
+        "American Indian and Alaska Native alone": "594",
+        "Asian alone": "2,248",
+        "Native Hawaiian and Other Pacific Islander alone": "309",
+        "Some Other Race alone": "2,341"
+    },
+    "Kings": {
+        "Total:": "2,736,074",
+        "Population of one race:": "2,498,775",
+        "White alone": "1,028,774",
+        "Black or African American alone": "772,050",
+        "American Indian and Alaska Native alone": "20,598",
+        "Asian alone": "373,680",
+        "Native Hawaiian and Other Pacific Islander alone": "1,487",
+        "Some Other Race alone": "302,186"
+    },
+    "Lewis": {
+        "Total:": "26,582",
+        "Population of one race:": "25,558",
+        "White alone": "25,121",
+        "Black or African American alone": "109",
+        "American Indian and Alaska Native alone": "57",
+        "Asian alone": "76",
+        "Native Hawaiian and Other Pacific Islander alone": "11",
+        "Some Other Race alone": "184"
+    },
+    "Livingston": {
+        "Total:": "61,834",
+        "Population of one race:": "58,436",
+        "White alone": "55,442",
+        "Black or African American alone": "1,191",
+        "American Indian and Alaska Native alone": "145",
+        "Asian alone": "657",
+        "Native Hawaiian and Other Pacific Islander alone": "6",
+        "Some Other Race alone": "995"
+    },
+    "Madison": {
+        "Total:": "68,016",
+        "Population of one race:": "64,297",
+        "White alone": "61,504",
+        "Black or African American alone": "1,120",
+        "American Indian and Alaska Native alone": "466",
+        "Asian alone": "679",
+        "Native Hawaiian and Other Pacific Islander alone": "11",
+        "Some Other Race alone": "517"
+    },
+    "Monroe": {
+        "Total:": "759,443",
+        "Population of one race:": "705,359",
+        "White alone": "521,127",
+        "Black or African American alone": "118,879",
+        "American Indian and Alaska Native alone": "2,094",
+        "Asian alone": "32,630",
+        "Native Hawaiian and Other Pacific Islander alone": "270",
+        "Some Other Race alone": "30,359"
+    },
+    "Montgomery": {
+        "Total:": "49,532",
+        "Population of one race:": "45,079",
+        "White alone": "40,209",
+        "Black or African American alone": "1,267",
+        "American Indian and Alaska Native alone": "159",
+        "Asian alone": "489",
+        "Native Hawaiian and Other Pacific Islander alone": "20",
+        "Some Other Race alone": "2,935"
+    },
+    "Nassau": {
+        "Total:": "1,395,774",
+        "Population of one race:": "1,278,463",
+        "White alone": "817,196",
+        "Black or African American alone": "153,274",
+        "American Indian and Alaska Native alone": "6,219",
+        "Asian alone": "164,201",
+        "Native Hawaiian and Other Pacific Islander alone": "435",
+        "Some Other Race alone": "137,138"
+    },
+    "New York": {
+        "Total:": "1,694,251",
+        "Population of one race:": "1,518,810",
+        "White alone": "847,604",
+        "Black or African American alone": "229,361",
+        "American Indian and Alaska Native alone": "9,969",
+        "Asian alone": "221,995",
+        "Native Hawaiian and Other Pacific Islander alone": "1,795",
+        "Some Other Race alone": "208,086"
+    },
+    "Niagara": {
+        "Total:": "212,666",
+        "Population of one race:": "200,302",
+        "White alone": "175,821",
+        "Black or African American alone": "16,740",
+        "American Indian and Alaska Native alone": "2,428",
+        "Asian alone": "2,459",
+        "Native Hawaiian and Other Pacific Islander alone": "47",
+        "Some Other Race alone": "2,807"
+    },
+    "Oneida": {
+        "Total:": "232,125",
+        "Population of one race:": "218,604",
+        "White alone": "185,042",
+        "Black or African American alone": "16,184",
+        "American Indian and Alaska Native alone": "692",
+        "Asian alone": "10,626",
+        "Native Hawaiian and Other Pacific Islander alone": "93",
+        "Some Other Race alone": "5,967"
+    },
+    "Onondaga": {
+        "Total:": "476,516",
+        "Population of one race:": "443,829",
+        "White alone": "353,232",
+        "Black or African American alone": "56,947",
+        "American Indian and Alaska Native alone": "3,364",
+        "Asian alone": "20,235",
+        "Native Hawaiian and Other Pacific Islander alone": "138",
+        "Some Other Race alone": "9,913"
+    },
+    "Ontario": {
+        "Total:": "112,458",
+        "Population of one race:": "105,861",
+        "White alone": "98,880",
+        "Black or African American alone": "2,662",
+        "American Indian and Alaska Native alone": "265",
+        "Asian alone": "1,383",
+        "Native Hawaiian and Other Pacific Islander alone": "24",
+        "Some Other Race alone": "2,647"
+    },
+    "Orange": {
+        "Total:": "401,310",
+        "Population of one race:": "360,810",
+        "White alone": "248,085",
+        "Black or African American alone": "45,543",
+        "American Indian and Alaska Native alone": "2,949",
+        "Asian alone": "12,025",
+        "Native Hawaiian and Other Pacific Islander alone": "185",
+        "Some Other Race alone": "52,023"
+    },
+    "Orleans": {
+        "Total:": "40,343",
+        "Population of one race:": "37,906",
+        "White alone": "34,643",
+        "Black or African American alone": "1,951",
+        "American Indian and Alaska Native alone": "223",
+        "Asian alone": "154",
+        "Native Hawaiian and Other Pacific Islander alone": "13",
+        "Some Other Race alone": "922"
+    },
+    "Oswego": {
+        "Total:": "117,525",
+        "Population of one race:": "111,261",
+        "White alone": "107,264",
+        "Black or African American alone": "1,584",
+        "American Indian and Alaska Native alone": "508",
+        "Asian alone": "871",
+        "Native Hawaiian and Other Pacific Islander alone": "31",
+        "Some Other Race alone": "1,003"
+    },
+    "Otsego": {
+        "Total:": "58,524",
+        "Population of one race:": "55,396",
+        "White alone": "52,403",
+        "Black or African American alone": "1,286",
+        "American Indian and Alaska Native alone": "121",
+        "Asian alone": "827",
+        "Native Hawaiian and Other Pacific Islander alone": "11",
+        "Some Other Race alone": "748"
+    },
+    "Putnam": {
+        "Total:": "97,668",
+        "Population of one race:": "88,221",
+        "White alone": "75,406",
+        "Black or African American alone": "2,828",
+        "American Indian and Alaska Native alone": "425",
+        "Asian alone": "2,225",
+        "Native Hawaiian and Other Pacific Islander alone": "25",
+        "Some Other Race alone": "7,312"
+    },
+    "Queens": {
+        "Total:": "2,405,464",
+        "Population of one race:": "2,162,100",
+        "White alone": "621,475",
+        "Black or African American alone": "403,077",
+        "American Indian and Alaska Native alone": "30,513",
+        "Asian alone": "660,631",
+        "Native Hawaiian and Other Pacific Islander alone": "1,718",
+        "Some Other Race alone": "444,686"
+    },
+    "Rensselaer": {
+        "Total:": "161,130",
+        "Population of one race:": "149,004",
+        "White alone": "126,828",
+        "Black or African American alone": "12,872",
+        "American Indian and Alaska Native alone": "441",
+        "Asian alone": "5,776",
+        "Native Hawaiian and Other Pacific Islander alone": "25",
+        "Some Other Race alone": "3,062"
+    },
+    "Richmond": {
+        "Total:": "495,747",
+        "Population of one race:": "456,927",
+        "White alone": "295,519",
+        "Black or African American alone": "52,039",
+        "American Indian and Alaska Native alone": "3,599",
+        "Asian alone": "59,279",
+        "Native Hawaiian and Other Pacific Islander alone": "234",
+        "Some Other Race alone": "46,257"
+    },
+    "Rockland": {
+        "Total:": "338,329",
+        "Population of one race:": "311,029",
+        "White alone": "214,890",
+        "Black or African American alone": "35,542",
+        "American Indian and Alaska Native alone": "1,716",
+        "Asian alone": "20,685",
+        "Native Hawaiian and Other Pacific Islander alone": "110",
+        "Some Other Race alone": "38,086"
+    },
+    "St. Lawrence": {
+        "Total:": "108,505",
+        "Population of one race:": "103,942",
+        "White alone": "97,530",
+        "Black or African American alone": "3,074",
+        "American Indian and Alaska Native alone": "1,194",
+        "Asian alone": "1,105",
+        "Native Hawaiian and Other Pacific Islander alone": "34",
+        "Some Other Race alone": "1,005"
+    },
+    "Saratoga": {
+        "Total:": "235,509",
+        "Population of one race:": "220,928",
+        "White alone": "206,278",
+        "Black or African American alone": "4,047",
+        "American Indian and Alaska Native alone": "438",
+        "Asian alone": "7,494",
+        "Native Hawaiian and Other Pacific Islander alone": "68",
+        "Some Other Race alone": "2,603"
+    },
+    "Schenectady": {
+        "Total:": "158,061",
+        "Population of one race:": "142,902",
+        "White alone": "107,493",
+        "Black or African American alone": "17,322",
+        "American Indian and Alaska Native alone": "1,125",
+        "Asian alone": "8,354",
+        "Native Hawaiian and Other Pacific Islander alone": "145",
+        "Some Other Race alone": "8,463"
+    },
+    "Schoharie": {
+        "Total:": "29,714",
+        "Population of one race:": "28,018",
+        "White alone": "27,112",
+        "Black or African American alone": "305",
+        "American Indian and Alaska Native alone": "83",
+        "Asian alone": "211",
+        "Native Hawaiian and Other Pacific Islander alone": "3",
+        "Some Other Race alone": "304"
+    },
+    "Schuyler": {
+        "Total:": "17,898",
+        "Population of one race:": "17,103",
+        "White alone": "16,750",
+        "Black or African American alone": "101",
+        "American Indian and Alaska Native alone": "50",
+        "Asian alone": "108",
+        "Native Hawaiian and Other Pacific Islander alone": "1",
+        "Some Other Race alone": "93"
+    },
+    "Seneca": {
+        "Total:": "33,814",
+        "Population of one race:": "32,039",
+        "White alone": "29,737",
+        "Black or African American alone": "1,414",
+        "American Indian and Alaska Native alone": "162",
+        "Asian alone": "269",
+        "Native Hawaiian and Other Pacific Islander alone": "3",
+        "Some Other Race alone": "454"
+    },
+    "Steuben": {
+        "Total:": "93,584",
+        "Population of one race:": "88,966",
+        "White alone": "84,953",
+        "Black or African American alone": "1,469",
+        "American Indian and Alaska Native alone": "234",
+        "Asian alone": "1,633",
+        "Native Hawaiian and Other Pacific Islander alone": "12",
+        "Some Other Race alone": "665"
+    },
+    "Suffolk": {
+        "Total:": "1,525,920",
+        "Population of one race:": "1,378,708",
+        "White alone": "1,022,846",
+        "Black or African American alone": "114,294",
+        "American Indian and Alaska Native alone": "9,188",
+        "Asian alone": "65,779",
+        "Native Hawaiian and Other Pacific Islander alone": "427",
+        "Some Other Race alone": "166,174"
+    },
+    "Sullivan": {
+        "Total:": "78,624",
+        "Population of one race:": "71,066",
+        "White alone": "56,040",
+        "Black or African American alone": "6,814",
+        "American Indian and Alaska Native alone": "418",
+        "Asian alone": "1,597",
+        "Native Hawaiian and Other Pacific Islander alone": "29",
+        "Some Other Race alone": "6,168"
+    },
+    "Tioga": {
+        "Total:": "48,455",
+        "Population of one race:": "45,880",
+        "White alone": "44,557",
+        "Black or African American alone": "452",
+        "American Indian and Alaska Native alone": "75",
+        "Asian alone": "379",
+        "Native Hawaiian and Other Pacific Islander alone": "18",
+        "Some Other Race alone": "399"
+    },
+    "Tompkins": {
+        "Total:": "105,740",
+        "Population of one race:": "97,041",
+        "White alone": "78,657",
+        "Black or African American alone": "4,597",
+        "American Indian and Alaska Native alone": "353",
+        "Asian alone": "10,532",
+        "Native Hawaiian and Other Pacific Islander alone": "47",
+        "Some Other Race alone": "2,855"
+    },
+    "Ulster": {
+        "Total:": "181,851",
+        "Population of one race:": "165,933",
+        "White alone": "141,728",
+        "Black or African American alone": "11,063",
+        "American Indian and Alaska Native alone": "829",
+        "Asian alone": "3,860",
+        "Native Hawaiian and Other Pacific Islander alone": "63",
+        "Some Other Race alone": "8,390"
+    },
+    "Warren": {
+        "Total:": "65,737",
+        "Population of one race:": "62,131",
+        "White alone": "59,911",
+        "Black or African American alone": "799",
+        "American Indian and Alaska Native alone": "170",
+        "Asian alone": "753",
+        "Native Hawaiian and Other Pacific Islander alone": "1",
+        "Some Other Race alone": "497"
+    },
+    "Washington": {
+        "Total:": "61,302",
+        "Population of one race:": "58,103",
+        "White alone": "55,162",
+        "Black or African American alone": "1,715",
+        "American Indian and Alaska Native alone": "174",
+        "Asian alone": "326",
+        "Native Hawaiian and Other Pacific Islander alone": "23",
+        "Some Other Race alone": "703"
+    },
+    "Wayne": {
+        "Total:": "91,283",
+        "Population of one race:": "85,470",
+        "White alone": "80,476",
+        "Black or African American alone": "2,562",
+        "American Indian and Alaska Native alone": "263",
+        "Asian alone": "487",
+        "Native Hawaiian and Other Pacific Islander alone": "15",
+        "Some Other Race alone": "1,667"
+    },
+    "Westchester": {
+        "Total:": "1,004,457",
+        "Population of one race:": "894,667",
+        "White alone": "533,150",
+        "Black or African American alone": "141,094",
+        "American Indian and Alaska Native alone": "7,466",
+        "Asian alone": "65,707",
+        "Native Hawaiian and Other Pacific Islander alone": "339",
+        "Some Other Race alone": "146,911"
+    },
+    "Wyoming": {
+        "Total:": "40,531",
+        "Population of one race:": "38,961",
+        "White alone": "36,046",
+        "Black or African American alone": "1,999",
+        "American Indian and Alaska Native alone": "98",
+        "Asian alone": "218",
+        "Native Hawaiian and Other Pacific Islander alone": "6",
+        "Some Other Race alone": "594"
+    },
+    "Yates": {
+        "Total:": "24,774",
+        "Population of one race:": "23,827",
+        "White alone": "23,264",
+        "Black or African American alone": "161",
+        "American Indian and Alaska Native alone": "49",
+        "Asian alone": "93",
+        "Native Hawaiian and Other Pacific Islander alone": "10",
+        "Some Other Race alone": "250"
+    }
+}

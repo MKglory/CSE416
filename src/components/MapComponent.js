@@ -55,7 +55,7 @@ function MapComponent({ selectedState }) {
       return {
         fillColor: getColor(ELECTION_RESULT),
         weight: 2,
-        opacity: 1,
+        opacity: 0.3,
         color: 'grey',
         dashArray: null,
         fillOpacity: 0.7,
