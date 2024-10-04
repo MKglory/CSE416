@@ -28,7 +28,7 @@ function MapComponent({ selectedState }) {
     setMapType(eventKey);
   };
 
-   function ChangeMapView({ center }) {
+  function ChangeMapView({ center }) {
     const map = useMap();
     useEffect(() => {
       map.flyTo(center, 7);
@@ -40,8 +40,9 @@ function MapComponent({ selectedState }) {
     return result === 'Republican'
       ? '#ff0000' // red
       : result === 'Democratic'
-      ? '#0000ff' // blue
-      : '#00ff00'; // green
+
+        ? '#0000ff' // blue
+        : '#00ff00'; // green
   };
 
   // Style function
@@ -51,12 +52,14 @@ function MapComponent({ selectedState }) {
       const republican_vote = feature.properties.Republican_votes;
       const ELECTION_RESULT =
         democratic_vote > republican_vote ? 'Democratic' : 'Republican';
+
+
       // Return the style object
       return {
         fillColor: getColor(ELECTION_RESULT),
-        weight: 2,
-        opacity: 0.3,
-        color: 'grey',
+        weight: 1,
+        opacity: 0.5,
+        color: 'black',
         dashArray: null,
         fillOpacity: 0.7,
       };
@@ -85,7 +88,7 @@ function MapComponent({ selectedState }) {
         `;
 
       }
-      else if (mapType === 'district'){
+      else if (mapType === 'district') {
         // EDID repesents the district ID
         const EDName = feature.properties.EDName;
         // console.log(EDName);
@@ -152,22 +155,16 @@ function MapComponent({ selectedState }) {
   const mapCenter = selectedState === 'NY' ? nyCenter : arCenter;
 
   return (
-
-    <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
-      <div className="d-flex justify-content-center mb-3">
-        {/* Bootstrap Dropdown to select map type */}
-        <DropdownButton
-          id="dropdown-basic-button"
-          title={`Map: ${mapType}`}
-          onSelect={handleSelect}
-        >
-          <Dropdown.Item eventKey="counties">Show Counties Map</Dropdown.Item>
-          <Dropdown.Item eventKey="district">Show Districts Map</Dropdown.Item>
-          <Dropdown.Item eventKey="congressional district">
-            Show Congress Districts Map
-          </Dropdown.Item>
-        </DropdownButton>
-      </div>
+    <div>
+      <ul className="list-group">
+        <li className="list-group-item">
+          <select className="form-select" onChange={(e) => handleSelect(e.target.value)} value={mapType}>
+            <option value="counties">Show Counties Map</option>
+            <option value="district">Show Districts Map</option>
+            <option value="congressional district">Show Congress Districts Map</option>
+          </select>
+        </li>
+      </ul>
       <MapContainer
 
         center={mapCenter}
@@ -184,7 +181,7 @@ function MapComponent({ selectedState }) {
         />
         {geoJsonComponent}
       </MapContainer>
-    </div>
+    </div >
   );
 }
 
