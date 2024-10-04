@@ -12,7 +12,7 @@ import {
   Legend,
   Title,
 } from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels'; // Import the data labels plugin
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 // Register Chart.js components
 ChartJS.register(
@@ -50,7 +50,7 @@ function VoteGapAnalysisContent({ selectedState }) {
           backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue
           borderColor: 'rgba(54, 162, 235, 1)',
           type: 'scatter',
-          datalabels: { display: false }, // Disable data labels for this dataset
+          datalabels: { display: false },
         },
         {
           label: 'Lee Zeldin (Republican) - 2022',
@@ -63,13 +63,13 @@ function VoteGapAnalysisContent({ selectedState }) {
           backgroundColor: 'rgba(255, 99, 132, 0.6)', // Red
           borderColor: 'rgba(255, 99, 132, 1)',
           type: 'scatter',
-          datalabels: { display: false }, // Disable data labels for this dataset
+          datalabels: { display: false },
         },
         {
           label: 'Trend Line Hochul',
           data: Array.from({ length: 100 }, (_, i) => ({
             x: i,
-            y: 75 - (i * 0.5), // Simulated trend line
+            y: 75 - (i * 0.5),
           })),
           borderColor: 'rgba(54, 162, 235, 1)', // Blue for Democrat
           backgroundColor: 'transparent',
@@ -81,7 +81,7 @@ function VoteGapAnalysisContent({ selectedState }) {
           label: 'Trend Line Zeldin',
           data: Array.from({ length: 100 }, (_, i) => ({
             x: i,
-            y: 25 + (i * 0.75), // Simulated trend line
+            y: 25 + (i * 0.75),
           })),
           borderColor: 'rgba(255, 99, 132, 1)', // Red for Republican
           backgroundColor: 'transparent',
@@ -148,7 +148,6 @@ function VoteGapAnalysisContent({ selectedState }) {
       ],
     };
 
-    // Set chart data based on the selected state
     if (selectedState === 'NY') {
       setChartData(newYorkData);
     } else if (selectedState === 'AR') {
@@ -157,48 +156,55 @@ function VoteGapAnalysisContent({ selectedState }) {
   }, [selectedState]);
 
   return (
-    <div className="col-12 col-md-9 col-lg-9">
-      <h2>Vote Gap Analysis for {selectedState === 'NY' ? 'New York' : 'Arkansas'} Candidates (2022)</h2>
-      <p>
-        Below is the vote distribution for {selectedState === 'NY' ? 'Kathy Hochul and Lee Zeldin' : 'Sarah Huckabee Sanders and Chris Jones'} based on major racial groups in the 2022 gubernatorial election.
-      </p>
-
-      <Scatter
-        data={chartData}
-        options={{
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            title: {
-              display: true,
-              text: `Vote Gap Analysis by Race for ${selectedState === 'NY' ? 'New York' : 'Arkansas'} (2022)`,
-            },
-            datalabels: {
-              display: false, // Disable all data labels globally for this chart
-            },
-          },
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: 'Percent of Racial Group',
-              },
-              beginAtZero: true,
-              max: 100,
-            },
-            y: {
-              title: {
-                display: true,
-                text: 'Vote Percentage',
-              },
-              min: 0,
-              max: 100,
-            },
-          },
-        }}
-      />
+    <div className="container-fluid full-page">
+      <div className="row full-height">
+        <div className="col-md-12 full-height">
+          <div className="content fade-in" style={{ height: 'calc(100vh - 100px)' }}>
+            <h2>Vote Gap Analysis for {selectedState === 'NY' ? 'New York' : 'Arkansas'} Candidates (2022)</h2>
+            <p>
+              Below is the vote distribution for {selectedState === 'NY' ? 'Kathy Hochul and Lee Zeldin' : 'Sarah Huckabee Sanders and Chris Jones'} based on major racial groups in the 2022 gubernatorial election.
+            </p>
+            <Scatter
+              data={chartData}
+              height={null}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: `Vote Gap Analysis by Race for ${selectedState === 'NY' ? 'New York' : 'Arkansas'} (2022)`,
+                  },
+                  datalabels: {
+                    display: false,
+                  },
+                },
+                scales: {
+                  x: {
+                    title: {
+                      display: true,
+                      text: 'Percent of Racial Group',
+                    },
+                    beginAtZero: true,
+                    max: 100,
+                  },
+                  y: {
+                    title: {
+                      display: true,
+                      text: 'Vote Percentage',
+                    },
+                    min: 0,
+                    max: 100,
+                  },
+                },
+              }}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
