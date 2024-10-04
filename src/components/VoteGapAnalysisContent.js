@@ -47,8 +47,8 @@ function VoteGapAnalysisContent({ selectedState }) {
             { x: 50, y: 85 }, // Hispanic voters
             { x: 60, y: 72 }, // Asian voters
           ],
-          backgroundColor: 'rgba(255, 99, 132, 0.6)', // Red
-          borderColor: 'rgba(255, 99, 132, 1)',
+          backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue
+          borderColor: 'rgba(54, 162, 235, 1)',
           type: 'scatter',
           datalabels: { display: false }, // Disable data labels for this dataset
         },
@@ -60,8 +60,8 @@ function VoteGapAnalysisContent({ selectedState }) {
             { x: 50, y: 15 }, // Hispanic voters
             { x: 60, y: 30 }, // Asian voters
           ],
-          backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue
-          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: 'rgba(255, 99, 132, 0.6)', // Red
+          borderColor: 'rgba(255, 99, 132, 1)',
           type: 'scatter',
           datalabels: { display: false }, // Disable data labels for this dataset
         },
@@ -71,11 +71,11 @@ function VoteGapAnalysisContent({ selectedState }) {
             x: i,
             y: 75 - (i * 0.5), // Simulated trend line
           })),
-          borderColor: 'rgba(255, 99, 132, 1)',
-          backgroundColor: 'transparent', // Ensure background is transparent
+          borderColor: 'rgba(54, 162, 235, 1)', // Blue for Democrat
+          backgroundColor: 'transparent',
           type: 'line',
           fill: false,
-          datalabels: { display: false }, // Disable data labels for this dataset
+          datalabels: { display: false },
         },
         {
           label: 'Trend Line Zeldin',
@@ -83,11 +83,11 @@ function VoteGapAnalysisContent({ selectedState }) {
             x: i,
             y: 25 + (i * 0.75), // Simulated trend line
           })),
-          borderColor: 'rgba(54, 162, 235, 1)',
-          backgroundColor: 'transparent', // Ensure background is transparent
+          borderColor: 'rgba(255, 99, 132, 1)', // Red for Republican
+          backgroundColor: 'transparent',
           type: 'line',
           fill: false,
-          datalabels: { display: false }, // Disable data labels for this dataset
+          datalabels: { display: false },
         },
       ],
     };
@@ -106,7 +106,7 @@ function VoteGapAnalysisContent({ selectedState }) {
           backgroundColor: 'rgba(255, 99, 132, 0.6)', // Red
           borderColor: 'rgba(255, 99, 132, 1)',
           type: 'scatter',
-          datalabels: { display: false }, // Disable data labels for this dataset
+          datalabels: { display: false },
         },
         {
           label: 'Chris Jones (Democrat) - 2022',
@@ -119,31 +119,31 @@ function VoteGapAnalysisContent({ selectedState }) {
           backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue
           borderColor: 'rgba(54, 162, 235, 1)',
           type: 'scatter',
-          datalabels: { display: false }, // Disable data labels for this dataset
+          datalabels: { display: false },
         },
         {
           label: 'Trend Line Huckabee Sanders',
           data: Array.from({ length: 100 }, (_, i) => ({
             x: i,
-            y: 70 - (i * 0.4), // Simulated trend line
+            y: 70 - (i * 0.4),
           })),
-          borderColor: 'rgba(255, 99, 132, 1)',
-          backgroundColor: 'transparent', // Ensure background is transparent
+          borderColor: 'rgba(255, 99, 132, 1)', // Red for Republican
+          backgroundColor: 'transparent',
           type: 'line',
           fill: false,
-          datalabels: { display: false }, // Disable data labels for this dataset
+          datalabels: { display: false },
         },
         {
           label: 'Trend Line Chris Jones',
           data: Array.from({ length: 100 }, (_, i) => ({
             x: i,
-            y: 30 + (i * 0.65), // Simulated trend line
+            y: 30 + (i * 0.65),
           })),
-          borderColor: 'rgba(54, 162, 235, 1)',
-          backgroundColor: 'transparent', // Ensure background is transparent
+          borderColor: 'rgba(54, 162, 235, 1)', // Blue for Democrat
+          backgroundColor: 'transparent',
           type: 'line',
           fill: false,
-          datalabels: { display: false }, // Disable data labels for this dataset
+          datalabels: { display: false },
         },
       ],
     };
