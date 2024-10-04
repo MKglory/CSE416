@@ -14,6 +14,8 @@ function Sidebar({ handlePlotChange, selectedCounty, resetSelection, selectedCon
             className="form-select"
             onChange={handleSelect}
             value={selectedContent}
+            disabled={selectedCounty !== null}
+            style={{ cursor: selectedCounty !== null ? 'not-allowed' : 'pointer' }} 
           >
             <option value="mainContent">Main Content</option>
             <option value="raceEthnicity">Race & Ethnicity</option>
@@ -25,7 +27,7 @@ function Sidebar({ handlePlotChange, selectedCounty, resetSelection, selectedCon
           </select>
 
           {selectedCounty && (
-            <li className="d-flex justify-content-center align-items-center"
+            <li className="d-flex justify-content-center align-items-center" 
               style={{ paddingLeft: 17}} >
               <button onClick={resetSelection}
                 className="btn btn-secondary btn-sm me-2"
