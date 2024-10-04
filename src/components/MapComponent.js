@@ -84,6 +84,24 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
                                  '#fc8d59';    // Very light maroon
     }
   };
+  const getColor_election = (result) => {
+    return result === 'Republican'
+      ? '#ff0000' // red
+      : result === 'Democratic'
+        ? '#0000ff' // blue
+        : '#00ff00'; // green
+  };
+  const getColor_population = (population) => {
+    // Define color ranges based on population size
+    return population > 800000 ? '#800026' :
+           population > 500000 ? '#BD0026' :
+           population > 300000 ? '#E31A1C' :
+           population > 150000 ? '#FC4E2A' :
+           population > 100000 ? '#FD8D3C' :
+           population > 50000  ? '#FEB24C' :
+           population > 20000  ? '#FED976' :
+                                 '#FFEDA0'; 
+  };
   
   function Legend() {
     const map = useMap();
@@ -173,24 +191,7 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
 
   
 
-  const getColor_election = (result) => {
-    return result === 'Republican'
-      ? '#ff0000' // red
-      : result === 'Democratic'
-        ? '#0000ff' // blue
-        : '#00ff00'; // green
-  };
-  const getColor_population = (population) => {
-    // Define color ranges based on population size
-    return population > 800000 ? '#800026' :
-           population > 500000 ? '#BD0026' :
-           population > 300000 ? '#E31A1C' :
-           population > 150000 ? '#FC4E2A' :
-           population > 100000 ? '#FD8D3C' :
-           population > 50000  ? '#FEB24C' :
-           population > 20000  ? '#FED976' :
-                                 '#FFEDA0'; 
-  };
+ 
   
   
   
@@ -201,11 +202,9 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
       let population = 0;
       let fillColor = null;
       if (demographicType === 'Asian' && mapType === 'counties') {
-        console.log('1')
         population = parseInt(feature.properties.Asian_population.replace(/,/g, ''), 10);
         fillColor = getColorByDemographics(demographicType, population);
       } else if (demographicType === 'American' && mapType === 'counties') {
-        console.log('2')
         population = parseInt(feature.properties.American_population.replace(/,/g, ''), 10);
         fillColor = getColorByDemographics(demographicType, population);
       } else if (demographicType === 'White' && mapType === 'counties') {

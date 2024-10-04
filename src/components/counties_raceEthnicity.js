@@ -20,7 +20,6 @@ function BarChart({ countyName, selectedState }) {
 
   // Use the uploaded data directly
   useEffect(() => {
-    console.log(selectedState);
     if (countyName && nyPopulationData[countyName] && selectedState === 'NY') {
       setPopulationData(nyPopulationData[countyName]);
     }

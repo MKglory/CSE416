@@ -13,8 +13,7 @@ function Sidebar({ handlePlotChange }) {
             <select 
             className="form-select" 
             onChange={handleSelect} 
-            defaultValue="mainContent"
-            value="bdbd">
+            defaultValue="mainContent">
                 <option value="mainContent">Overview</option>
                 <option value="raceEthnicity">Race & Ethnicity</option>
                 <option value="electionVotes">Election Votes</option>
