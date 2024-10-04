@@ -183,3 +183,36 @@ footer {
 .slide-out {
   animation: slideOut 0.5s forwards; /* Duration and apply forwards */
 }
+/* Make the container and content take up the full height */
+.full-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.full-height {
+  height: 100%;
+}
+
+/* Ensure content fills the entire height */
+.row.full-height, 
+.col-md-12.full-height {
+  height: 100%;
+}
+
+.content {
+  height: 100%; /* Ensure content takes up all available space */
+  overflow: auto; /* Allow scrolling within content, if needed */
+}
+
+/* Optional: Add fade-in and fade-out animations */
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}

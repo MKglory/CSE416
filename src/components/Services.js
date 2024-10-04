@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,15 +19,24 @@ function Services() {
   }, []); // Run this effect only once when component mounts
 
   return (
-    <div>
+    <div className="vh-100 d-flex flex-column"> {/* Full height and flex to stretch content */}
       <Navbar />
-      <div className="container-fluid mt-4">
-        <div className="row">
+      <div className="container-fluid flex-grow-1 d-flex align-items-center justify-content-center">
+        <div className="row w-100">
           <div className="col-md-12">
             <div className={`content ${fadeContent ? 'fade-out' : 'fade-in'} ${!isVisible ? 'd-none' : ''}`}>
               <h1>Our Services</h1>
               <p>
-                Here you can describe the services your project offers.
+                Our project offers a comprehensive analysis of demographic political preferences and district plans in U.S. states. 
+                We use advanced computational tools, including Markov Chain Monte Carlo (MCMC) algorithms, to generate random district 
+                plans and evaluate them for fairness and compliance with legal standards. Additionally, we provide insights into voting 
+                patterns across different economic and racial demographics, helping to understand the impact of socioeconomic factors 
+                on electoral outcomes.
+              </p>
+              <p>
+                We also offer data visualization services, making it easier to interpret and explore the outcomes of district plans and 
+                voting behavior analyses. Our platform integrates seamlessly with Java, JavaScript, and Python to deliver a smooth 
+                user experience for data analysis and interpretation.
               </p>
             </div>
           </div>

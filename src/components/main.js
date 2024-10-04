@@ -67,6 +67,11 @@ function Main() {
     }
     switch (selectedContent) {
       case 'mainContent':
+        // return (
+        // <CountiesRaceEthnicity 
+        // countyName={selectedCounty}
+        // selectedState={selectedState} />
+        // )
         return <MainContent selectedState={selectedState} />; // Only show MainContent
       case 'raceEthnicity':
         return <RaceEthnicityContent selectedState={selectedState} />; // Only show RaceEthnicityContent
@@ -103,6 +108,7 @@ function Main() {
             handlePlotChange={handlePlotChange}
             selectedCounty={selectedCounty}
             resetSelection={resetSelection} />
+
             <div className={`content ${fadeContent ? 'fade-out' : 'fade-in'} ${!isVisible ? 'd-none' : ''}`}> {/* Added fade classes for content */}
               {renderContent()}
             </div>
