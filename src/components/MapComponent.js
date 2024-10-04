@@ -3,12 +3,14 @@ import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
+
 import nyDistrict from '../data/NewYork/ny_district.json';
 import nyCounties from '../data/NewYork/ny_counties_with_population.json';
 import nyCongressDistrict from '../data/NewYork/ny_congress_district.json';
 import arDistrict from '../data/Arkansas/ar_district.json';
 import arCounties from '../data/Arkansas/dummy_arkansas_counties_with_votes.json';
 import arCongressDistrict from '../data/Arkansas/ar_congress_district.json';
+
 
 const nyCenter = [42.965, -76.0167];
 const arCenter = [34.7465, -92.2896];
@@ -18,6 +20,7 @@ const usBounds = [
 ];
 
 function MapComponent({ selectedState }) {
+
   const [mapType, setMapType] = useState('counties'); // State to manage map type
 
   const handleSelect = (eventKey) => {
@@ -25,7 +28,7 @@ function MapComponent({ selectedState }) {
     setMapType(eventKey);
   };
 
-  function ChangeMapView({ center }) {
+   function ChangeMapView({ center }) {
     const map = useMap();
     useEffect(() => {
       map.flyTo(center, 7);
@@ -33,11 +36,11 @@ function MapComponent({ selectedState }) {
     return null;
   }
 
-  // getColor function
   const getColor = (result) => {
     return result === 'Republican'
       ? '#ff0000' // red
       : result === 'Democratic'
+
       ? '#0000ff' // blue
       : '#00ff00'; // green
   };
@@ -73,6 +76,7 @@ function MapComponent({ selectedState }) {
       let popupContent = '';
 
       if (mapType === 'counties') {
+
         popupContent = `
           <h5>County: ${feature.properties.NAME}</h5>
           <p>Population: ${feature.properties.Total_population}</p>
@@ -80,15 +84,21 @@ function MapComponent({ selectedState }) {
           <p>Republican votes: ${republican_vote}</p>
           <p>Election Result: ${ELECTION_RESULT}</p>
         `;
-      } else if (mapType === 'district') {
-        // EDID represents the district ID
+
+      }
+      else if (mapType === 'district'){
+        // EDID repesents the district ID
+        const EDName = feature.properties.EDName;
+        // console.log(EDName);
         popupContent = `
-          <h5>District: ${feature.properties.EDID}</h5>
+          <h5>${EDName}</h5>
           <p>Democratic votes: ${democratic_vote}</p>
           <p>Republican votes: ${republican_vote}</p>
           <p>Election Result: ${ELECTION_RESULT}</p>
         `;
+
       } else if (mapType === 'congressional district') {
+
         popupContent = `
           <h5>Congress District: ${feature.properties.NAME}</h5>
           <p>Population: ${feature.properties.Total_population}</p>
@@ -99,13 +109,16 @@ function MapComponent({ selectedState }) {
       }
 
       layer.bindPopup(popupContent);
+
     },
     [mapType]
   );
 
+
   // Update geoJsonComponent function
   const geoJsonComponent = useMemo(() => {
     const dataMap = {
+
       counties: {
         NY: nyCounties,
         AR: arCounties,
@@ -136,9 +149,11 @@ function MapComponent({ selectedState }) {
     );
   }, [selectedState, mapType, style, onEachFeature]);
 
+
   const mapCenter = selectedState === 'NY' ? nyCenter : arCenter;
 
   return (
+
     <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
       <div className="d-flex justify-content-center mb-3">
         {/* Bootstrap Dropdown to select map type */}
@@ -155,6 +170,7 @@ function MapComponent({ selectedState }) {
         </DropdownButton>
       </div>
       <MapContainer
+
         center={mapCenter}
         bounds={usBounds}
         maxZoom={12}
@@ -164,6 +180,7 @@ function MapComponent({ selectedState }) {
       >
         <ChangeMapView center={mapCenter} />
         <TileLayer
+
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         />
         {geoJsonComponent}

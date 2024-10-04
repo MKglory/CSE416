@@ -47,6 +47,7 @@ function RaceEthnicityContent({ selectedState }) {
 
   const options = {
     responsive: true,
+    // maintainAspectRatio: false, // Disable aspect ratio for custom height
     plugins: {
       legend: {
         position: 'top',
@@ -54,6 +55,9 @@ function RaceEthnicityContent({ selectedState }) {
       title: {
         display: true,
         text: `${selectedState === 'NY' ? 'New York' : 'Arkansas'} Race and Ethnicity Distribution`,
+        font: {
+          size: 20,
+        }
       },
     },
     scales: {
@@ -61,6 +65,9 @@ function RaceEthnicityContent({ selectedState }) {
         title: {
           display: true,
           text: 'Race and Ethnicity',
+          font: {
+            size: 20,
+          }
         },
         type: 'category',
       },
@@ -77,11 +84,7 @@ function RaceEthnicityContent({ selectedState }) {
   return (
     <div className="col-12 col-md-9 col-lg-9">
       <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} Race and Ethnicity Data</h2>
-      <p>
-        Below is the race and ethnicity population distribution of {selectedState === 'NY' ? 'New York' : 'Arkansas'}.
-      </p>
-
-      <Bar data={data} options={options} />
+      <Bar data={data} options={options} height={350}/> {/* Set height here */}
     </div>
   );
 }

@@ -78,7 +78,12 @@ function MainContent({ selectedState }) {
   };
 
   return (
-    <div className="col-12 col-md-9 col-lg-9">
+    <div 
+      className="col-12 col-md-9 col-lg-9"
+      style={{
+        width: '100%',
+      }}
+    >
       <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} Main Content</h2>
       <p>
         Here is the population distribution and election result of {selectedState === 'NY' ? 'New York' : 'Arkansas'}.
@@ -87,6 +92,7 @@ function MainContent({ selectedState }) {
       {/* Render district drawing process information */}
       {getDistrictDrawingProcess(selectedState)}
       <Bar data={data} options={options} />
+
     </div>
   );
 }
