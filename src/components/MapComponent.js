@@ -3,12 +3,12 @@ import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
-import nyDistrict from '../data/NewYork/ny_district.json';
-import nyCounties from '../data/NewYork/ny_counties_with_population.json';
-import nyCongressDistrict from '../data/NewYork/ny_congress_district.json';
-import arDistrict from '../data/Arkansas/ar_district.json'
-import arCounties from '../data/Arkansas/dummy_arkansas_counties_with_votes.json';
-import arCongressDistrict from '../data/Arkansas/ar_congress_district.json';
+import nyDistrict from '../data/NewYork/maps/ny_district.json';
+import nyCounties from '../data/NewYork/maps/ny_counties_with_population.json';
+import nyCongressDistrict from '../data/NewYork/maps/ny_congress_district.json';
+import arDistrict from '../data/Arkansas/maps/ar_precinct.json'
+import arCounties from '../data/Arkansas/maps/dummy_arkansas_counties_with_votes.json';
+import arCongressDistrict from '../data/Arkansas/maps/ar_congress_district.json';
 
 import { memo } from 'react';
 
@@ -64,8 +64,6 @@ function MapComponent({ selectedState }) {
 
   //useCallback to cache click data
   const onEachFeature = (type) => (feature, layer) => {
-    console.log(type);
-    console.log('fd')
     let democratic_vote = 0;
     let republican_vote = 0;
     let ELECTION_RESULT = 'Unknown';
@@ -85,9 +83,11 @@ function MapComponent({ selectedState }) {
         `;
       }
       else if (mapType === 'district'){
-        // EDIE repesents the district ID
+        // EDID repesents the district ID
+        const EDName = feature.properties.EDName;
+        // console.log(EDName);
         popupContent = `
-          <h5>District: ${feature.properties.EDID}</h5>
+          <h5>${EDName}</h5>
           <p>Democratic votes: ${democratic_vote}</p>
           <p>Republican votes: ${republican_vote}</p>
           <p>Election Result: ${ELECTION_RESULT}</p>
@@ -153,12 +153,12 @@ function MapComponent({ selectedState }) {
   const mapCenter = selectedState === 'NY' ? nyCenter : arCenter;
 
   return (
-    <div style={{ paddingLeft: '30px', paddingRight: '30px' }}>
+    <div >
       <div className="d-flex justify-content-center mb-3">
         {/* Bootstrap Dropdown to select map type */}
         <DropdownButton id="dropdown-basic-button" title={`Map: ${mapType}`} onSelect={handleSelect}>
           <Dropdown.Item eventKey="counties">Show Counties Map</Dropdown.Item>
-          <Dropdown.Item eventKey="district">Show Districts Map</Dropdown.Item>
+          <Dropdown.Item eventKey="district">Show Districts/Precincts Map</Dropdown.Item>
           <Dropdown.Item eventKey="congressional district">Show Congress Districts Map</Dropdown.Item>
         </DropdownButton>
       </div>

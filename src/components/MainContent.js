@@ -78,15 +78,32 @@ function MainContent({ selectedState }) {
   };
 
   return (
-    <div className="col-12 col-md-9 col-lg-9">
+    <div 
+      className="col-12 col-md-9 col-lg-9"
+      style={{
+        width: '100%',
+      }}
+    >
       <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} Main Content</h2>
       <p>
         Here is the population distribution and election result of {selectedState === 'NY' ? 'New York' : 'Arkansas'}.
       </p>
 
-      {/* Render district drawing process information */}
-      {getDistrictDrawingProcess(selectedState)}
-      <Bar data={data} options={options} />
+      {/* Container for the text content */}
+      <div style={{
+        marginBottom: '20px',
+        textAlign: 'center',  // Center text horizontally
+      }}>
+        {getDistrictDrawingProcess(selectedState)}
+      </div>
+
+      {/* Container for the chart */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center', // Centers the chart horizontally
+      }}>
+        <Bar data={data} options={options} />
+      </div>
     </div>
   );
 }

@@ -55,11 +55,12 @@
                 "Democratic_votes": 3086,
                 "Republican_votes": 8988,
                 "Total_population": "40,343",
-                "White_population": "34,037",
-                "Black_population": "1,840",
-                "American_population": "177",
+                "White_population": "34,643",
+                "Black_population": "1,951",
+                "American_population": "223",
                 "Asian_population": "154",
-                "Other_population": "141"
+                "NativeHawaiian_population": "13",
+                "Other_population": "922"
             }
         },
         {
@@ -136,11 +137,12 @@
                 "Democratic_votes": 3613,
                 "Republican_votes": 10862,
                 "Total_population": "46,456",
-                "White_population": "42,327",
-                "Black_population": "809",
+                "White_population": "42,555",
+                "Black_population": "829",
                 "American_population": "91",
-                "Asian_population": "373",
-                "Other_population": "218"
+                "Asian_population": "379",
+                "NativeHawaiian_population": "9",
+                "Other_population": "678"
             }
         },
         {
@@ -213,11 +215,12 @@
                 "Democratic_votes": 6730,
                 "Republican_votes": 10722,
                 "Total_population": "47,931",
-                "White_population": "39,494",
-                "Black_population": "2,159",
-                "American_population": "100",
-                "Asian_population": "500",
-                "Other_population": "238"
+                "White_population": "40,490",
+                "Black_population": "2,370",
+                "American_population": "161",
+                "Asian_population": "506",
+                "NativeHawaiian_population": "7",
+                "Other_population": "948"
             }
         },
         {
@@ -298,11 +301,12 @@
                 "Democratic_votes": 85144,
                 "Republican_votes": 66148,
                 "Total_population": "476,516",
-                "White_population": "347,290",
-                "Black_population": "54,410",
-                "American_population": "2,940",
-                "Asian_population": "20,119",
-                "Other_population": "1,955"
+                "White_population": "353,232",
+                "Black_population": "56,947",
+                "American_population": "3,364",
+                "Asian_population": "20,235",
+                "NativeHawaiian_population": "138",
+                "Other_population": "9,913"
             }
         },
         {
@@ -391,11 +395,12 @@
                 "Democratic_votes": 25411,
                 "Republican_votes": 27702,
                 "Total_population": "161,130",
-                "White_population": "124,600",
-                "Black_population": "11,800",
-                "American_population": "310",
-                "Asian_population": "5,711",
-                "Other_population": "706"
+                "White_population": "126,828",
+                "Black_population": "12,872",
+                "American_population": "441",
+                "Asian_population": "5,776",
+                "NativeHawaiian_population": "25",
+                "Other_population": "3,062"
             }
         },
         {
@@ -496,11 +501,12 @@
                 "Democratic_votes": 770,
                 "Republican_votes": 1871,
                 "Total_population": "5,107",
-                "White_population": "4,769",
-                "Black_population": "30",
+                "White_population": "4,785",
+                "Black_population": "31",
                 "American_population": "14",
                 "Asian_population": "12",
-                "Other_population": "5"
+                "NativeHawaiian_population": "1",
+                "Other_population": "22"
             }
         },
         {
@@ -561,11 +567,12 @@
                 "Democratic_votes": 6299,
                 "Republican_votes": 8349,
                 "Total_population": "46,809",
-                "White_population": "40,801",
-                "Black_population": "829",
-                "American_population": "113",
-                "Asian_population": "1,018",
-                "Other_population": "204"
+                "White_population": "41,250",
+                "Black_population": "895",
+                "American_population": "124",
+                "Asian_population": "1,028",
+                "NativeHawaiian_population": "15",
+                "Other_population": "825"
             }
         },
         {
@@ -650,11 +657,12 @@
                 "Democratic_votes": 4708,
                 "Republican_votes": 9457,
                 "Total_population": "49,532",
-                "White_population": "38,237",
-                "Black_population": "987",
-                "American_population": "83",
-                "Asian_population": "479",
-                "Other_population": "210"
+                "White_population": "40,209",
+                "Black_population": "1,267",
+                "American_population": "159",
+                "Asian_population": "489",
+                "NativeHawaiian_population": "20",
+                "Other_population": "2,935"
             }
         },
         {
@@ -747,11 +755,12 @@
                 "Democratic_votes": 9438,
                 "Republican_votes": 13693,
                 "Total_population": "68,016",
-                "White_population": "60,965",
-                "Black_population": "1,071",
-                "American_population": "435",
-                "Asian_population": "664",
-                "Other_population": "187"
+                "White_population": "61,504",
+                "Black_population": "1,120",
+                "American_population": "466",
+                "Asian_population": "679",
+                "NativeHawaiian_population": "11",
+                "Other_population": "517"
             }
         },
         {
@@ -832,11 +841,12 @@
                 "Democratic_votes": 4623,
                 "Republican_votes": 10911,
                 "Total_population": "47,220",
-                "White_population": "43,153",
-                "Black_population": "345",
-                "American_population": "93",
-                "Asian_population": "236",
-                "Other_population": "109"
+                "White_population": "43,531",
+                "Black_population": "357",
+                "American_population": "126",
+                "Asian_population": "245",
+                "NativeHawaiian_population": "15",
+                "Other_population": "353"
             }
         },
         {
@@ -925,11 +935,12 @@
                 "Democratic_votes": 5723,
                 "Republican_votes": 11863,
                 "Total_population": "48,455",
-                "White_population": "44,195",
-                "Black_population": "434",
-                "American_population": "62",
-                "Asian_population": "370",
-                "Other_population": "158"
+                "White_population": "44,557",
+                "Black_population": "452",
+                "American_population": "75",
+                "Asian_population": "379",
+                "NativeHawaiian_population": "18",
+                "Other_population": "399"
             }
         },
         {
@@ -1002,11 +1013,12 @@
                 "Democratic_votes": 3017,
                 "Republican_votes": 10347,
                 "Total_population": "40,531",
-                "White_population": "35,579",
-                "Black_population": "1,852",
-                "American_population": "83",
-                "Asian_population": "217",
-                "Other_population": "77"
+                "White_population": "36,046",
+                "Black_population": "1,999",
+                "American_population": "98",
+                "Asian_population": "218",
+                "NativeHawaiian_population": "6",
+                "Other_population": "594"
             }
         },
         {
@@ -1091,11 +1103,12 @@
                 "Democratic_votes": 15108,
                 "Republican_votes": 22195,
                 "Total_population": "97,668",
-                "White_population": "71,942",
-                "Black_population": "2,425",
-                "American_population": "80",
-                "Asian_population": "2,146",
-                "Other_population": "561"
+                "White_population": "75,406",
+                "Black_population": "2,828",
+                "American_population": "425",
+                "Asian_population": "2,225",
+                "NativeHawaiian_population": "25",
+                "Other_population": "7,312"
             }
         },
         {
@@ -1188,11 +1201,12 @@
                 "Democratic_votes": 9053,
                 "Republican_votes": 22815,
                 "Total_population": "93,584",
-                "White_population": "84,338",
-                "Black_population": "1,416",
-                "American_population": "203",
-                "Asian_population": "1,616",
-                "Other_population": "301"
+                "White_population": "84,953",
+                "Black_population": "1,469",
+                "American_population": "234",
+                "Asian_population": "1,633",
+                "NativeHawaiian_population": "12",
+                "Other_population": "665"
             }
         },
         {
@@ -1301,11 +1315,12 @@
                 "Democratic_votes": 137612,
                 "Republican_votes": 105699,
                 "Total_population": "759,443",
-                "White_population": "506,153",
-                "Black_population": "112,710",
-                "American_population": "1,320",
-                "Asian_population": "32,294",
-                "Other_population": "2,958"
+                "White_population": "521,127",
+                "Black_population": "118,879",
+                "American_population": "2,094",
+                "Asian_population": "32,630",
+                "NativeHawaiian_population": "270",
+                "Other_population": "30,359"
             }
         },
         {
@@ -1382,11 +1397,12 @@
                 "Democratic_votes": 14400,
                 "Republican_votes": 11697,
                 "Total_population": "61,570",
-                "White_population": "50,795",
-                "Black_population": "2,421",
-                "American_population": "70",
-                "Asian_population": "1,423",
-                "Other_population": "348"
+                "White_population": "51,533",
+                "Black_population": "2,557",
+                "American_population": "188",
+                "Asian_population": "1,431",
+                "NativeHawaiian_population": "21",
+                "Other_population": "1,584"
             }
         },
         {
@@ -1483,11 +1499,12 @@
                 "Democratic_votes": 9505,
                 "Republican_votes": 14465,
                 "Total_population": "76,248",
-                "White_population": "66,313",
-                "Black_population": "2,727",
-                "American_population": "224",
-                "Asian_population": "379",
-                "Other_population": "253"
+                "White_population": "67,017",
+                "Black_population": "2,910",
+                "American_population": "310",
+                "Asian_population": "385",
+                "NativeHawaiian_population": "54",
+                "Other_population": "1,033"
             }
         },
         {
@@ -1576,11 +1593,12 @@
                 "Democratic_votes": 14180,
                 "Republican_votes": 24668,
                 "Total_population": "127,657",
-                "White_population": "106,063",
-                "Black_population": "2,891",
-                "American_population": "497",
-                "Asian_population": "796",
-                "Other_population": "363"
+                "White_population": "109,333",
+                "Black_population": "3,354",
+                "American_population": "673",
+                "Asian_population": "818",
+                "NativeHawaiian_population": "57",
+                "Other_population": "4,278"
             }
         },
         {
@@ -1657,11 +1675,12 @@
                 "Democratic_votes": 4226,
                 "Republican_votes": 6267,
                 "Total_population": "33,814",
-                "White_population": "29,273",
-                "Black_population": "1,263",
-                "American_population": "151",
-                "Asian_population": "268",
-                "Other_population": "80"
+                "White_population": "29,737",
+                "Black_population": "1,414",
+                "American_population": "162",
+                "Asian_population": "269",
+                "NativeHawaiian_population": "3",
+                "Other_population": "454"
             }
         },
         {
@@ -1758,11 +1777,12 @@
                 "Democratic_votes": 23658,
                 "Republican_votes": 44685,
                 "Total_population": "232,125",
-                "White_population": "180,984",
-                "Black_population": "14,989",
-                "American_population": "508",
-                "Asian_population": "10,522",
-                "Other_population": "729"
+                "White_population": "185,042",
+                "Black_population": "16,184",
+                "American_population": "692",
+                "Asian_population": "10,626",
+                "NativeHawaiian_population": "93",
+                "Other_population": "5,967"
             }
         },
         {
@@ -1867,11 +1887,12 @@
                 "Democratic_votes": 8104,
                 "Republican_votes": 11833,
                 "Total_population": "58,524",
-                "White_population": "51,490",
-                "Black_population": "1,189",
-                "American_population": "109",
-                "Asian_population": "813",
-                "Other_population": "180"
+                "White_population": "52,403",
+                "Black_population": "1,286",
+                "American_population": "121",
+                "Asian_population": "827",
+                "NativeHawaiian_population": "11",
+                "Other_population": "748"
             }
         },
         {
@@ -2060,11 +2081,12 @@
                 "Democratic_votes": 166539,
                 "Republican_votes": 128008,
                 "Total_population": "954,236",
-                "White_population": "678,236",
-                "Black_population": "129,874",
-                "American_population": "4,667",
-                "Asian_population": "46,090",
-                "Other_population": "3,254"
+                "White_population": "693,563",
+                "Black_population": "134,795",
+                "American_population": "5,594",
+                "Asian_population": "46,384",
+                "NativeHawaiian_population": "280",
+                "Other_population": "21,804"
             }
         },
         {
@@ -2169,11 +2191,12 @@
                 "Democratic_votes": 18945,
                 "Republican_votes": 22154,
                 "Total_population": "112,458",
-                "White_population": "97,397",
-                "Black_population": "2,439",
-                "American_population": "197",
-                "Asian_population": "1,374",
-                "Other_population": "418"
+                "White_population": "98,880",
+                "Black_population": "2,662",
+                "American_population": "265",
+                "Asian_population": "1,383",
+                "NativeHawaiian_population": "24",
+                "Other_population": "2,647"
             }
         },
         {
@@ -2298,11 +2321,12 @@
                 "Democratic_votes": 27791,
                 "Republican_votes": 38338,
                 "Total_population": "212,666",
-                "White_population": "173,691",
-                "Black_population": "16,206",
-                "American_population": "2,294",
-                "Asian_population": "2,439",
-                "Other_population": "737"
+                "White_population": "175,821",
+                "Black_population": "16,740",
+                "American_population": "2,428",
+                "Asian_population": "2,459",
+                "NativeHawaiian_population": "47",
+                "Other_population": "2,807"
             }
         },
         {
@@ -2371,11 +2395,12 @@
                 "Democratic_votes": 5823,
                 "Republican_votes": 13558,
                 "Total_population": "58,388",
-                "White_population": "50,960",
-                "Black_population": "1,358",
-                "American_population": "361",
-                "Asian_population": "412",
-                "Other_population": "173"
+                "White_population": "51,541",
+                "Black_population": "1,441",
+                "American_population": "419",
+                "Asian_population": "416",
+                "NativeHawaiian_population": "17",
+                "Other_population": "1,421"
             }
         },
         {
@@ -2456,11 +2481,12 @@
                 "Democratic_votes": 2436,
                 "Republican_votes": 4613,
                 "Total_population": "17,898",
-                "White_population": "16,618",
-                "Black_population": "91",
-                "American_population": "38",
+                "White_population": "16,750",
+                "Black_population": "101",
+                "American_population": "50",
                 "Asian_population": "108",
-                "Other_population": "43"
+                "NativeHawaiian_population": "1",
+                "Other_population": "93"
             }
         },
         {
@@ -2625,11 +2651,12 @@
                 "Democratic_votes": 8690,
                 "Republican_votes": 20488,
                 "Total_population": "116,721",
-                "White_population": "92,755",
-                "Black_population": "6,271",
-                "American_population": "461",
-                "Asian_population": "2,185",
-                "Other_population": "501"
+                "White_population": "96,244",
+                "Black_population": "6,707",
+                "American_population": "594",
+                "Asian_population": "2,248",
+                "NativeHawaiian_population": "309",
+                "Other_population": "2,341"
             }
         },
         {
@@ -2758,11 +2785,12 @@
                 "Democratic_votes": 12217,
                 "Republican_votes": 23935,
                 "Total_population": "117,525",
-                "White_population": "105,710",
-                "Black_population": "1,370",
-                "American_population": "457",
-                "Asian_population": "870",
-                "Other_population": "302"
+                "White_population": "107,264",
+                "Black_population": "1,584",
+                "American_population": "508",
+                "Asian_population": "871",
+                "NativeHawaiian_population": "31",
+                "Other_population": "1,003"
             }
         },
         {
@@ -2863,11 +2891,12 @@
                 "Democratic_votes": 5868,
                 "Republican_votes": 11075,
                 "Total_population": "44,308",
-                "White_population": "38,821",
-                "Black_population": "1,003",
-                "American_population": "93",
-                "Asian_population": "480",
-                "Other_population": "154"
+                "White_population": "39,466",
+                "Black_population": "1,072",
+                "American_population": "145",
+                "Asian_population": "489",
+                "NativeHawaiian_population": "10",
+                "Other_population": "651"
             }
         },
         {
@@ -2988,11 +3017,12 @@
                 "Democratic_votes": 10811,
                 "Republican_votes": 20167,
                 "Total_population": "108,505",
-                "White_population": "96,556",
-                "Black_population": "2,788",
-                "American_population": "1,143",
-                "Asian_population": "1,089",
-                "Other_population": "298"
+                "White_population": "97,530",
+                "Black_population": "3,074",
+                "American_population": "1,194",
+                "Asian_population": "1,105",
+                "NativeHawaiian_population": "34",
+                "Other_population": "1,005"
             }
         },
         {
@@ -3121,11 +3151,12 @@
                 "Democratic_votes": 187342,
                 "Republican_votes": 119352,
                 "Total_population": "1,004,457",
-                "White_population": "497,684",
-                "Black_population": "131,010",
-                "American_population": "1,017",
-                "Asian_population": "64,907",
-                "Other_population": "8,651"
+                "White_population": "533,150",
+                "Black_population": "141,094",
+                "American_population": "7,466",
+                "Asian_population": "65,707",
+                "NativeHawaiian_population": "339",
+                "Other_population": "146,911"
             }
         },
         {
@@ -3226,11 +3257,12 @@
                 "Democratic_votes": 8912,
                 "Republican_votes": 13363,
                 "Total_population": "78,624",
-                "White_population": "52,691",
-                "Black_population": "6,069",
-                "American_population": "174",
-                "Asian_population": "1,569",
-                "Other_population": "602"
+                "White_population": "56,040",
+                "Black_population": "6,814",
+                "American_population": "418",
+                "Asian_population": "1,597",
+                "NativeHawaiian_population": "29",
+                "Other_population": "6,168"
             }
         },
         {
@@ -3347,11 +3379,12 @@
                 "Democratic_votes": 11124,
                 "Republican_votes": 14223,
                 "Total_population": "79,843",
-                "White_population": "69,251",
-                "Black_population": "2,753",
-                "American_population": "238",
-                "Asian_population": "957",
-                "Other_population": "270"
+                "White_population": "70,142",
+                "Black_population": "3,060",
+                "American_population": "285",
+                "Asian_population": "975",
+                "NativeHawaiian_population": "26",
+                "Other_population": "1,010"
             }
         },
         {
@@ -3432,11 +3465,12 @@
                 "Democratic_votes": 336737,
                 "Republican_votes": 74592,
                 "Total_population": "1,694,251",
-                "White_population": "793,294",
-                "Black_population": "199,592",
-                "American_population": "1,895",
-                "Asian_population": "219,624",
-                "Other_population": "13,335"
+                "White_population": "847,604",
+                "Black_population": "229,361",
+                "American_population": "9,969",
+                "Asian_population": "221,995",
+                "NativeHawaiian_population": "1,795",
+                "Other_population": "208,086"
             }
         },
         {
@@ -3533,11 +3567,12 @@
                 "Democratic_votes": 3560,
                 "Republican_votes": 7651,
                 "Total_population": "29,714",
-                "White_population": "26,658",
-                "Black_population": "277",
-                "American_population": "68",
-                "Asian_population": "210",
-                "Other_population": "123"
+                "White_population": "27,112",
+                "Black_population": "305",
+                "American_population": "83",
+                "Asian_population": "211",
+                "NativeHawaiian_population": "3",
+                "Other_population": "304"
             }
         },
         {
@@ -3654,11 +3689,12 @@
                 "Democratic_votes": 45049,
                 "Republican_votes": 48466,
                 "Total_population": "235,509",
-                "White_population": "203,781",
-                "Black_population": "3,752",
-                "American_population": "301",
-                "Asian_population": "7,444",
-                "Other_population": "833"
+                "White_population": "206,278",
+                "Black_population": "4,047",
+                "American_population": "438",
+                "Asian_population": "7,494",
+                "NativeHawaiian_population": "68",
+                "Other_population": "2,603"
             }
         },
         {
@@ -3759,11 +3795,12 @@
                 "Democratic_votes": 51397,
                 "Republican_votes": 62845,
                 "Total_population": "401,310",
-                "White_population": "231,848",
-                "Black_population": "41,341",
-                "American_population": "754",
-                "Asian_population": "11,665",
-                "Other_population": "12,012"
+                "White_population": "248,085",
+                "Black_population": "45,543",
+                "American_population": "2,949",
+                "Asian_population": "12,025",
+                "NativeHawaiian_population": "185",
+                "Other_population": "52,023"
             }
         },
         {
@@ -3864,11 +3901,12 @@
                 "Democratic_votes": 27272,
                 "Republican_votes": 34542,
                 "Total_population": "198,683",
-                "White_population": "156,173",
-                "Black_population": "11,547",
-                "American_population": "413",
-                "Asian_population": "9,337",
-                "Other_population": "864"
+                "White_population": "158,674",
+                "Black_population": "12,684",
+                "American_population": "556",
+                "Asian_population": "9,372",
+                "NativeHawaiian_population": "84",
+                "Other_population": "3,975"
             }
         },
         {
@@ -3985,11 +4023,12 @@
                 "Democratic_votes": 7361,
                 "Republican_votes": 12655,
                 "Total_population": "61,302",
-                "White_population": "54,605",
-                "Black_population": "1,563",
-                "American_population": "149",
-                "Asian_population": "319",
-                "Other_population": "143"
+                "White_population": "55,162",
+                "Black_population": "1,715",
+                "American_population": "174",
+                "Asian_population": "326",
+                "NativeHawaiian_population": "23",
+                "Other_population": "703"
             }
         },
         {
@@ -4086,11 +4125,12 @@
                 "Democratic_votes": 44481,
                 "Republican_votes": 87263,
                 "Total_population": "495,747",
-                "White_population": "277,981",
-                "Black_population": "46,835",
-                "American_population": "624",
-                "Asian_population": "58,753",
-                "Other_population": "3,141"
+                "White_population": "295,519",
+                "Black_population": "52,039",
+                "American_population": "3,599",
+                "Asian_population": "59,279",
+                "NativeHawaiian_population": "234",
+                "Other_population": "46,257"
             }
         },
         {
@@ -4187,11 +4227,12 @@
                 "Democratic_votes": 38207,
                 "Republican_votes": 28938,
                 "Total_population": "181,851",
-                "White_population": "136,695",
-                "Black_population": "10,152",
-                "American_population": "306",
-                "Asian_population": "3,778",
-                "Other_population": "1,218"
+                "White_population": "141,728",
+                "Black_population": "11,063",
+                "American_population": "829",
+                "Asian_population": "3,860",
+                "NativeHawaiian_population": "63",
+                "Other_population": "8,390"
             }
         },
         {
@@ -4268,11 +4309,12 @@
                 "Democratic_votes": 5341,
                 "Republican_votes": 14590,
                 "Total_population": "77,042",
-                "White_population": "67,554",
-                "Black_population": "996",
-                "American_population": "2,661",
-                "Asian_population": "560",
-                "Other_population": "212"
+                "White_population": "68,128",
+                "Black_population": "1,043",
+                "American_population": "2,706",
+                "Asian_population": "567",
+                "NativeHawaiian_population": "14",
+                "Other_population": "571"
             }
         },
         {
@@ -4519,11 +4561,12 @@
                 "Democratic_votes": 223688,
                 "Republican_votes": 289077,
                 "Total_population": "1,525,920",
-                "White_population": "967,330",
-                "Black_population": "107,268",
-                "American_population": "3,102",
-                "Asian_population": "65,019",
-                "Other_population": "9,479"
+                "White_population": "1,022,846",
+                "Black_population": "114,294",
+                "American_population": "9,188",
+                "Asian_population": "65,779",
+                "NativeHawaiian_population": "427",
+                "Other_population": "166,174"
             }
         },
         {
@@ -4604,11 +4647,12 @@
                 "Democratic_votes": 148131,
                 "Republican_votes": 41685,
                 "Total_population": "1,472,654",
-                "White_population": "130,796",
-                "Black_population": "419,393",
-                "American_population": "3,087",
-                "Asian_population": "67,766",
-                "Other_population": "16,322"
+                "White_population": "207,573",
+                "Black_population": "487,118",
+                "American_population": "21,539",
+                "Asian_population": "69,559",
+                "NativeHawaiian_population": "1,640",
+                "Other_population": "493,052"
             }
         },
         {
@@ -4769,11 +4813,12 @@
                 "Democratic_votes": 6484,
                 "Republican_votes": 7878,
                 "Total_population": "37,381",
-                "White_population": "33,714",
-                "Black_population": "610",
-                "American_population": "74",
+                "White_population": "34,102",
+                "Black_population": "676",
+                "American_population": "78",
                 "Asian_population": "229",
-                "Other_population": "133"
+                "NativeHawaiian_population": "12",
+                "Other_population": "306"
             }
         },
         {
@@ -4846,11 +4891,12 @@
                 "Democratic_votes": 4915,
                 "Republican_votes": 12342,
                 "Total_population": "53,324",
-                "White_population": "47,051",
-                "Black_population": "966",
-                "American_population": "89",
-                "Asian_population": "343",
-                "Other_population": "164"
+                "White_population": "47,775",
+                "Black_population": "1,068",
+                "American_population": "121",
+                "Asian_population": "349",
+                "NativeHawaiian_population": "4",
+                "Other_population": "688"
             }
         },
         {
@@ -4915,11 +4961,12 @@
                 "Democratic_votes": 45258,
                 "Republican_votes": 51462,
                 "Total_population": "338,329",
-                "White_population": "206,113",
-                "Black_population": "33,775",
-                "American_population": "390",
-                "Asian_population": "20,413",
-                "Other_population": "3,445"
+                "White_population": "214,890",
+                "Black_population": "35,542",
+                "American_population": "1,716",
+                "Asian_population": "20,685",
+                "NativeHawaiian_population": "110",
+                "Other_population": "38,086"
             }
         },
         {
@@ -5032,11 +5079,12 @@
                 "Democratic_votes": 4254,
                 "Republican_votes": 13845,
                 "Total_population": "60,139",
-                "White_population": "54,653",
-                "Black_population": "682",
-                "American_population": "76",
-                "Asian_population": "359",
-                "Other_population": "153"
+                "White_population": "55,246",
+                "Black_population": "759",
+                "American_population": "108",
+                "Asian_population": "370",
+                "NativeHawaiian_population": "35",
+                "Other_population": "382"
             }
         },
         {
@@ -5113,11 +5161,12 @@
                 "Democratic_votes": 11601,
                 "Republican_votes": 14131,
                 "Total_population": "65,737",
-                "White_population": "59,299",
-                "Black_population": "736",
-                "American_population": "139",
-                "Asian_population": "729",
-                "Other_population": "189"
+                "White_population": "59,911",
+                "Black_population": "799",
+                "American_population": "170",
+                "Asian_population": "753",
+                "NativeHawaiian_population": "1",
+                "Other_population": "497"
             }
         },
         {
@@ -5246,11 +5295,12 @@
                 "Democratic_votes": 340206,
                 "Republican_votes": 151740,
                 "Total_population": "2,736,074",
-                "White_population": "968,427",
-                "Black_population": "729,696",
-                "American_population": "3,964",
-                "Asian_population": "370,776",
-                "Other_population": "32,897"
+                "White_population": "1,028,774",
+                "Black_population": "772,050",
+                "American_population": "20,598",
+                "Asian_population": "373,680",
+                "NativeHawaiian_population": "1,487",
+                "Other_population": "302,186"
             }
         },
         {
@@ -5387,11 +5437,12 @@
                 "Democratic_votes": 222305,
                 "Republican_votes": 264736,
                 "Total_population": "1,395,774",
-                "White_population": "779,454",
-                "Black_population": "147,216",
-                "American_population": "1,714",
-                "Asian_population": "163,165",
-                "Other_population": "11,780"
+                "White_population": "817,196",
+                "Black_population": "153,274",
+                "American_population": "6,219",
+                "Asian_population": "164,201",
+                "NativeHawaiian_population": "435",
+                "Other_population": "137,138"
             }
         },
         {
@@ -5460,11 +5511,12 @@
                 "Democratic_votes": 25310,
                 "Republican_votes": 22557,
                 "Total_population": "158,061",
-                "White_population": "104,878",
-                "Black_population": "15,943",
-                "American_population": "930",
-                "Asian_population": "8,281",
-                "Other_population": "4,469"
+                "White_population": "107,493",
+                "Black_population": "17,322",
+                "American_population": "1,125",
+                "Asian_population": "8,354",
+                "NativeHawaiian_population": "145",
+                "Other_population": "8,463"
             }
         },
         {
@@ -5537,11 +5589,12 @@
                 "Democratic_votes": 8998,
                 "Republican_votes": 16781,
                 "Total_population": "84,148",
-                "White_population": "69,559",
-                "Black_population": "5,009",
-                "American_population": "198",
-                "Asian_population": "1,426",
-                "Other_population": "228"
+                "White_population": "70,463",
+                "Black_population": "5,315",
+                "American_population": "240",
+                "Asian_population": "1,432",
+                "NativeHawaiian_population": "15",
+                "Other_population": "947"
             }
         },
         {
@@ -5618,11 +5671,12 @@
                 "Democratic_votes": 62327,
                 "Republican_votes": 40416,
                 "Total_population": "314,848",
-                "White_population": "210,895",
-                "Black_population": "40,667",
-                "American_population": "494",
-                "Asian_population": "24,363",
-                "Other_population": "1,821"
+                "White_population": "215,496",
+                "Black_population": "43,206",
+                "American_population": "845",
+                "Asian_population": "24,473",
+                "NativeHawaiian_population": "183",
+                "Other_population": "8,873"
             }
         },
         {
@@ -5727,11 +5781,12 @@
                 "Democratic_votes": 7551,
                 "Republican_votes": 13922,
                 "Total_population": "61,834",
-                "White_population": "54,611",
-                "Black_population": "1,071",
-                "American_population": "125",
-                "Asian_population": "653",
-                "Other_population": "203"
+                "White_population": "55,442",
+                "Black_population": "1,191",
+                "American_population": "145",
+                "Asian_population": "657",
+                "NativeHawaiian_population": "6",
+                "Other_population": "995"
             }
         },
         {
@@ -5812,11 +5867,12 @@
                 "Democratic_votes": 5628,
                 "Republican_votes": 8385,
                 "Total_population": "47,555",
-                "White_population": "38,559",
-                "Black_population": "1,686",
-                "American_population": "4,102",
+                "White_population": "39,036",
+                "Black_population": "1,848",
+                "American_population": "4,141",
                 "Asian_population": "191",
-                "Other_population": "91"
+                "NativeHawaiian_population": "0",
+                "Other_population": "483"
             }
         },
         {
@@ -5909,11 +5965,12 @@
                 "Democratic_votes": 10074,
                 "Republican_votes": 19081,
                 "Total_population": "91,283",
-                "White_population": "79,230",
-                "Black_population": "2,397",
-                "American_population": "171",
-                "Asian_population": "473",
-                "Other_population": "272"
+                "White_population": "80,476",
+                "Black_population": "2,562",
+                "American_population": "263",
+                "Asian_population": "487",
+                "NativeHawaiian_population": "15",
+                "Other_population": "1,667"
             }
         },
         {
@@ -5998,11 +6055,12 @@
                 "Democratic_votes": 1933,
                 "Republican_votes": 7876,
                 "Total_population": "26,582",
-                "White_population": "24,942",
-                "Black_population": "103",
-                "American_population": "40",
-                "Asian_population": "65",
-                "Other_population": "52"
+                "White_population": "25,121",
+                "Black_population": "109",
+                "American_population": "57",
+                "Asian_population": "76",
+                "NativeHawaiian_population": "11",
+                "Other_population": "184"
             }
         },
         {
@@ -6135,11 +6193,12 @@
                 "Democratic_votes": 252652,
                 "Republican_votes": 148466,
                 "Total_population": "2,405,464",
-                "White_population": "549,358",
-                "Black_population": "381,375",
-                "American_population": "9,576",
-                "Asian_population": "656,583",
-                "Other_population": "55,489"
+                "White_population": "621,475",
+                "Black_population": "403,077",
+                "American_population": "30,513",
+                "Asian_population": "660,631",
+                "NativeHawaiian_population": "1,718",
+                "Other_population": "444,686"
             }
         },
         {
@@ -6220,11 +6279,12 @@
                 "Democratic_votes": 2715,
                 "Republican_votes": 4729,
                 "Total_population": "24,774",
-                "White_population": "23,049",
-                "Black_population": "145",
-                "American_population": "28",
+                "White_population": "23,264",
+                "Black_population": "161",
+                "American_population": "49",
                 "Asian_population": "93",
-                "Other_population": "77"
+                "NativeHawaiian_population": "10",
+                "Other_population": "250"
             }
         },
         {
@@ -6301,11 +6361,12 @@
                 "Democratic_votes": 20685,
                 "Republican_votes": 8639,
                 "Total_population": "105,740",
-                "White_population": "76,737",
-                "Black_population": "4,274",
-                "American_population": "248",
-                "Asian_population": "10,487",
-                "Other_population": "622"
+                "White_population": "78,657",
+                "Black_population": "4,597",
+                "American_population": "353",
+                "Asian_population": "10,532",
+                "NativeHawaiian_population": "47",
+                "Other_population": "2,855"
             }
         },
         {
@@ -6402,11 +6463,12 @@
                 "Democratic_votes": 50967,
                 "Republican_votes": 52803,
                 "Total_population": "295,911",
-                "White_population": "198,495",
-                "Black_population": "30,126",
-                "American_population": "387",
-                "Asian_population": "10,635",
-                "Other_population": "1,956"
+                "White_population": "207,251",
+                "Black_population": "32,289",
+                "American_population": "1,312",
+                "Asian_population": "10,781",
+                "NativeHawaiian_population": "74",
+                "Other_population": "18,380"
             }
         }
     ]
