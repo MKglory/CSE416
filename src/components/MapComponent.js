@@ -8,7 +8,7 @@ import nyDistrict from '../data/NewYork/maps/ny_district.json';
 import nyCounties from '../data/NewYork/maps/ny_counties_with_population.json';
 import nyCongressDistrict from '../data/NewYork/maps/ny_congress_district.json';
 import arDistrict from '../data/Arkansas/maps/ar_precinct.json'
-import arCounties from '../data/Arkansas/maps/ar_counties_with_votes.json';
+import arCounties from '../data/Arkansas/maps/ar_counties_with_population.json';
 import arCongressDistrict from '../data/Arkansas/maps/ar_congress_district.json';
 
 

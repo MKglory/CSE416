@@ -51,6 +51,9 @@ function Main() {
   const handlePlotChange = (content) => {
     setFadeContent(true); // Trigger fade-out effect for content
     setTimeout(() => {
+      if (selectedContent === 'countiesPopulationRace'){
+        setSelectedCounty(null);
+      }
       setSelectedContent(content); // Update state based on sidebar button click
       setFadeContent(false); // Trigger fade-in effect for content
     }, 500); // Wait for fade-out duration
