@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,15 +19,24 @@ function About() {
   }, []); // Run this effect only once when component mounts
 
   return (
-    <div>
+    <div className="vh-100 d-flex flex-column">
       <Navbar />
-      <div className="container-fluid mt-4">
+      <div className="container-fluid flex-grow-1 d-flex align-items-center justify-content-center">
         <div className="row">
           <div className="col-md-12">
-            <div className={`content ${fadeContent ? 'fade-out' : 'fade-in'} ${!isVisible ? 'd-none' : ''}`}> {/* Added fade classes for content */}
-              <h1>About Us</h1>
+            <div className={`content text-center ${fadeContent ? 'fade-out' : 'fade-in'} ${!isVisible ? 'd-none' : ''}`}>
+              <h1>About Our Project</h1>
               <p>
-                This is the About page of the platform. Here, you can find information about our mission, values, and team.
+                Our platform is designed to analyze demographic political preferences and district plans across different U.S. states.
+                By examining voting patterns, economic status, and racial demographics, we aim to provide insightful comparisons between high- and low-income states.
+              </p>
+              <p>
+                The project leverages advanced algorithms such as Markov Chain Monte Carlo (MCMC) to generate random district plans and perform analyses of voter behavior.
+                With a focus on understanding how various demographics influence political outcomes, the platform offers a comprehensive look at the intersection of economics, race, and politics.
+              </p>
+              <p>
+                Through this tool, we hope to contribute to the broader conversation about gerrymandering and political representation in the United States.
+                Our project integrates technologies like Java, JavaScript, Python, and data visualization tools to offer an interactive and in-depth analysis for both researchers and the public.
               </p>
             </div>
           </div>
