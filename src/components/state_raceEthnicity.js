@@ -9,6 +9,7 @@ import {
   Legend,
 } from 'chart.js';
 import nyRaceEthnicityData from '../data/NY_Race_and_Ethnicity_2022.json'; // Import New York race and ethnicity data
+
 import arRaceEthnicityData from '../data/AR_Race_and_Ethnicity_2022.json'; // Import Arkansas race and ethnicity data
 
 // Register Chart.js components
