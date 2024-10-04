@@ -36,6 +36,10 @@ function Main() {
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []); // Run this effect only once when component mounts
 
+  const resetSelection = () => {
+    setSelectedCounty(null);
+    setSelectedContent('mainContent');
+  };
   const handleStateChange = (state) => {
     setFadeContent(true); // Trigger fade-out effect for content
     setTimeout(() => {
@@ -53,6 +57,14 @@ function Main() {
   };
 
   const renderContent = () => {
+    if (selectedCounty) {
+      return (
+        <CountiesRaceEthnicity 
+          countyName={selectedCounty}
+          selectedState={selectedState} 
+        />
+      );
+    }
     switch (selectedContent) {
       case 'mainContent':
         // return (
@@ -94,7 +106,9 @@ function Main() {
           <div className="col-md-6 left-content rounded-section">
             <Sidebar 
             handlePlotChange={handlePlotChange}
-            selectedCounty={selectedCounty} />
+            selectedCounty={selectedCounty}
+            resetSelection={resetSelection} />
+
             <div className={`content ${fadeContent ? 'fade-out' : 'fade-in'} ${!isVisible ? 'd-none' : ''}`}> {/* Added fade classes for content */}
               {renderContent()}
             </div>
