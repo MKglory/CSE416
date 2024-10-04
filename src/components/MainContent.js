@@ -86,7 +86,6 @@ function MainContent({ selectedState }) {
 
       {/* Render district drawing process information */}
       {getDistrictDrawingProcess(selectedState)}
-
       <Bar data={data} options={options} />
     </div>
   );
