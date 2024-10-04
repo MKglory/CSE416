@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Scatter, Line } from 'react-chartjs-2';
+import { Scatter } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   ScatterController,
@@ -12,6 +12,7 @@ import {
   Legend,
   Title,
 } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels'; // Import the data labels plugin
 
 // Register Chart.js components
 ChartJS.register(
@@ -23,7 +24,8 @@ ChartJS.register(
   CategoryScale,
   Tooltip,
   Legend,
-  Title
+  Title,
+  ChartDataLabels // Register the data labels plugin
 );
 
 function VoteGapAnalysisContent({ selectedState }) {
@@ -46,6 +48,7 @@ function VoteGapAnalysisContent({ selectedState }) {
           backgroundColor: 'rgba(255, 99, 132, 0.6)', // Red
           borderColor: 'rgba(255, 99, 132, 1)',
           type: 'scatter',
+          datalabels: { display: false }, // Disable data labels for this dataset
         },
         {
           label: 'New York Candidate 2',
@@ -56,6 +59,7 @@ function VoteGapAnalysisContent({ selectedState }) {
           backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue
           borderColor: 'rgba(54, 162, 235, 1)',
           type: 'scatter',
+          datalabels: { display: false }, // Disable data labels for this dataset
         },
         {
           label: 'Trend Line Candidate 1',
@@ -64,9 +68,10 @@ function VoteGapAnalysisContent({ selectedState }) {
             y: 75 - (i * 0.5), // Simulated trend line equation
           })),
           borderColor: 'rgba(255, 99, 132, 1)',
-          backgroundColor: 'transparent',
+          backgroundColor: 'transparent', // Ensure background is transparent
           type: 'line',
           fill: false,
+          datalabels: { display: false }, // Disable data labels for this dataset
         },
         {
           label: 'Trend Line Candidate 2',
@@ -75,9 +80,10 @@ function VoteGapAnalysisContent({ selectedState }) {
             y: 25 + (i * 0.75), // Simulated trend line equation
           })),
           borderColor: 'rgba(54, 162, 235, 1)',
-          backgroundColor: 'transparent',
+          backgroundColor: 'transparent', // Ensure background is transparent
           type: 'line',
           fill: false,
+          datalabels: { display: false }, // Disable data labels for this dataset
         },
       ],
     };
@@ -94,6 +100,7 @@ function VoteGapAnalysisContent({ selectedState }) {
           backgroundColor: 'rgba(255, 99, 132, 0.6)', // Red
           borderColor: 'rgba(255, 99, 132, 1)',
           type: 'scatter',
+          datalabels: { display: false }, // Disable data labels for this dataset
         },
         {
           label: 'Arkansas Candidate 2',
@@ -104,6 +111,7 @@ function VoteGapAnalysisContent({ selectedState }) {
           backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue
           borderColor: 'rgba(54, 162, 235, 1)',
           type: 'scatter',
+          datalabels: { display: false }, // Disable data labels for this dataset
         },
         {
           label: 'Trend Line Candidate 1',
@@ -112,9 +120,10 @@ function VoteGapAnalysisContent({ selectedState }) {
             y: 70 - (i * 0.4), // Simulated trend line for Arkansas Candidate 1
           })),
           borderColor: 'rgba(255, 99, 132, 1)',
-          backgroundColor: 'transparent',
+          backgroundColor: 'transparent', // Ensure background is transparent
           type: 'line',
           fill: false,
+          datalabels: { display: false }, // Disable data labels for this dataset
         },
         {
           label: 'Trend Line Candidate 2',
@@ -123,9 +132,10 @@ function VoteGapAnalysisContent({ selectedState }) {
             y: 30 + (i * 0.65), // Simulated trend line for Arkansas Candidate 2
           })),
           borderColor: 'rgba(54, 162, 235, 1)',
-          backgroundColor: 'transparent',
+          backgroundColor: 'transparent', // Ensure background is transparent
           type: 'line',
           fill: false,
+          datalabels: { display: false }, // Disable data labels for this dataset
         },
       ],
     };
@@ -156,6 +166,9 @@ function VoteGapAnalysisContent({ selectedState }) {
             title: {
               display: true,
               text: `Vote Gap Analysis by Percent Latino for ${selectedState === 'NY' ? 'New York' : 'Arkansas'}`,
+            },
+            datalabels: {
+              display: false, // Disable all data labels globally for this chart
             },
           },
           scales: {

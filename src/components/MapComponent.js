@@ -19,7 +19,7 @@ const usBounds = [
   [49.384358, -66.885444],  // Northeast
 ];
 
-function MapComponent({ selectedState }) {
+function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
 
   const [mapType, setMapType] = useState('counties'); // State to manage map type
 
@@ -78,7 +78,13 @@ function MapComponent({ selectedState }) {
       let popupContent = '';
 
       if (mapType === 'counties') {
-
+        layer.on({
+          click: () => {
+            // console.log('You clicked the county :', feature.properties.NAME)
+            setSelectedCounty(feature.properties.NAME);
+            handlePlotChange('countiesPopulationRace');
+          }
+        });
         popupContent = `
           <h5>County: ${feature.properties.NAME}</h5>
           <p>Population: ${feature.properties.Total_population}</p>
@@ -86,7 +92,6 @@ function MapComponent({ selectedState }) {
           <p>Republican votes: ${republican_vote}</p>
           <p>Election Result: ${ELECTION_RESULT}</p>
         `;
-
       }
       else if (mapType === 'district') {
         // EDID repesents the district ID
@@ -100,7 +105,6 @@ function MapComponent({ selectedState }) {
         `;
 
       } else if (mapType === 'congressional district') {
-
         popupContent = `
           <h5>Congress District: ${feature.properties.NAME}</h5>
           <p>Population: ${feature.properties.Total_population}</p>
@@ -109,7 +113,7 @@ function MapComponent({ selectedState }) {
           <p>Election Result: ${ELECTION_RESULT}</p>
         `;
       }
-
+      
       layer.bindPopup(popupContent);
 
     },
@@ -176,7 +180,6 @@ function MapComponent({ selectedState }) {
       >
         <ChangeMapView center={mapCenter} />
         <TileLayer
-
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         />
         {geoJsonComponent}
