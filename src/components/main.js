@@ -107,7 +107,8 @@ function Main() {
             <Sidebar 
             handlePlotChange={handlePlotChange}
             selectedCounty={selectedCounty}
-            resetSelection={resetSelection} />
+            resetSelection={resetSelection}
+            selectedContent={selectedContent}  />
 
             <div className={`content ${fadeContent ? 'fade-out' : 'fade-in'} ${!isVisible ? 'd-none' : ''}`}> {/* Added fade classes for content */}
               {renderContent()}
