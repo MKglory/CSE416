@@ -8,6 +8,7 @@ import NYHouseEthnicityContent from './NYHouseEthnicityContent';
 import CandidatesContent from './CandidatesContent';
 import DistrictComparisonContent from './DistrictComparisonContent';
 import VoteGapAnalysisContent from './VoteGapAnalysisContent';
+import HouseholdIncomeContent from './HouseholdIncomeContent';
 
 // real data
 import CountiesRaceEthnicity from './counties_raceEthnicity'
@@ -85,7 +86,10 @@ function Main() {
       case 'candidates': // New case for Candidates content
         return <CandidatesContent selectedState={selectedState} />; // Renders content for Candidates
       case 'districtComparison': // New case for District Comparison content
-        return <DistrictComparisonContent selectedState={selectedState} />; // Renders content for District Comparison
+        return <DistrictComparisonContent selectedState={selectedState} />; // Renders content for District Comparison\
+        case 'householdIncome':
+          return <HouseholdIncomeContent selectedState={selectedState}/>; // Renders content for Household Income
+      
       // case 'countiesRaceEthnicity':
       //   return <CountiesRaceEthnicity selectedCounty={selectedCounty} />
       case 'voteGapAnalysis': // New case for Vote Gap Analysis content

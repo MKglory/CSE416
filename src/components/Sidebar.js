@@ -24,6 +24,8 @@ function Sidebar({ handlePlotChange, selectedCounty, resetSelection, selectedCon
             <option value="candidates">Candidates</option>
             {/* <option value="districtComparison">District Comparison</option> */}
             <option value="voteGapAnalysis">Vote Gap Analysis</option>
+            <option value="householdIncome">Household Income</option> {/* New option added */}
+
           </select>
 
           {selectedCounty && (
