@@ -94,12 +94,12 @@ function Main() {
       //   return <CountiesRaceEthnicity selectedCounty={selectedCounty} />
       case 'voteGapAnalysis': // New case for Vote Gap Analysis content
         return <VoteGapAnalysisContent selectedState={selectedState} />; // Renders content for Vote Gap Analysis
-      case 'countiesPopulationRace':
-          return (
-          <CountiesRaceEthnicity 
-          countyName={selectedCounty}
-          selectedState={selectedState} />
-          )
+      // case 'countiesPopulationRace':
+      //     return (
+      //     <CountiesRaceEthnicity 
+      //     countyName={selectedCounty}
+      //     selectedState={selectedState} />
+      //     )
       default:
         return <MainContent selectedState={selectedState} />; // Default to MainContent
     }
