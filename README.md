@@ -22,6 +22,8 @@ shapefiles to geojson
 
 npm install chartjs-plugin-datalabels
 
+npm install papaparse
+
 
 https://mapshaper.org/
 
