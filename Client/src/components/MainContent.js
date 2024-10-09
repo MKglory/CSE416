@@ -90,7 +90,7 @@ function MainContent({ selectedState }) {
       </p>
 
       {/* Render district drawing process information */}
-      {getDistrictDrawingProcess(selectedState)}
+      {/* {getDistrictDrawingProcess(selectedState)} */}
       <Bar data={data} options={options} />
 
     </div>
