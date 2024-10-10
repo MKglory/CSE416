@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
+import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import nyDistrict from '../data/NewYork/maps/ny_district.json';
 import nyCounties from '../data/NewYork/maps/ny_counties_with_population.json';
 import ny_races from '../data/NewYork/ny_race_population.json'
-import nyCongressDistrict from '../data/NewYork/maps/ny_congress_district.json';
+// import nyCongressDistrict from '../data/NewYork/maps/ny_congress_district.json';
 import arDistrict from '../data/Arkansas/maps/ar_precinct.json'
 import arCounties from '../data/Arkansas/maps/ar_counties_with_population.json';
 import ar_races from '../data/Arkansas/ar_race_population.json'
@@ -21,13 +22,25 @@ const usBounds = [
 ];
 
 function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
-
   const [mapShowType, setMapShowType] = useState('Election');
+  const [CongressDistrict, setCongressDistrict] = useState(null);
+  let [loading, setLoading] = useState(true); 
 
+  
   const handleMapShowSelect = (eventKey) => {
-    // Update the selected map type
     setMapShowType(eventKey);
   };
+
+  const mapDataRequest = async () => {
+    const response = await axios.get(`http://localhost:8080/map/${selectedState.toLowerCase()}District`);
+    setCongressDistrict(response.data);
+    setLoading(false); 
+  };
+  
+  useEffect(() => {
+    setLoading(true);
+    mapDataRequest();
+  },[selectedState]);
 
   function ChangeMapView({ center }) {
     const map = useMap();
@@ -48,7 +61,6 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
   // Style function
   const style = useCallback(
     (feature) => {
-      let population = 0;
       let fillColor = null;
 
       const democratic_vote = feature.properties.Democratic_votes;
@@ -78,13 +90,25 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
       const DistrictNum = feature.properties.NAME.match(/\d+/);
       const districtKey = `District ${DistrictNum}`;
       const districtData = selectedState == 'AR' ? ar_races[districtKey] : ny_races[districtKey];
-      let popupContent = `
+      let popupContent = '';
+      if (districtData) {
+        popupContent = `
           <h5>Congress District: ${feature.properties.NAME}</h5>
           <p>Population: ${districtData["Total population"]}</p>
           <p>Democratic votes: ${democratic_vote}</p>
           <p>Republican votes: ${republican_vote}</p>
           <p>Election Result: ${ELECTION_RESULT}</p>
         `;
+      } else {
+        popupContent = `
+          <h5>Congress District: ${feature.properties.NAME}</h5>
+          <p>Population data not available.</p>
+          <p>Democratic votes: ${democratic_vote}</p>
+          <p>Republican votes: ${republican_vote}</p>
+          <p>Election Result: ${ELECTION_RESULT}</p>
+        `;
+      }
+
       
       layer.bindPopup(popupContent);
 
@@ -95,25 +119,24 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
 
   // Update geoJsonComponent function
   const geoJsonComponent = useMemo(() => {
-
-    const selectedData = selectedState == 'NY' ? nyCongressDistrict : arCongressDistrict;
-
-
+    const selectedData = selectedState == 'NY' ? CongressDistrict : CongressDistrict;
     if (!selectedData) return null;
-
     return (
       <GeoJSON
         key={`${selectedState}`}
-        data={selectedData}
+        data={CongressDistrict}
         style={style}
         onEachFeature={onEachFeature}
       />
     );
-  }, [selectedState, style, onEachFeature]);
+  }, [selectedState, style, onEachFeature, CongressDistrict]);
 
 
   const mapCenter = selectedState === 'NY' ? nyCenter : arCenter;
-
+  console.log(CongressDistrict);
+  if (loading) {
+    return <div>Loading map data...</div>;
+  }
   return (
     <div>
       <MapContainer
