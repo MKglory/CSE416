@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class NYController {
+public class ServerController {
 
     // Maps HTTP GET requests to the /NYVotingData URL endpoint
     // When a client makes a GET request to /NYVotingData (for example, http://localhost:8080/NYVotingData), the associated method will be executed.
