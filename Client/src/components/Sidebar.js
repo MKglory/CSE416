@@ -17,7 +17,7 @@ function Sidebar({ handlePlotChange, selectedCounty, resetSelection, selectedCon
             disabled={selectedCounty !== null}
             style={{ cursor: selectedCounty !== null ? 'not-allowed' : 'pointer' }} 
           >
-            <option value="mainContent">Main Content</option>
+            <option value="mainContent">Elections</option>
             <option value="raceEthnicity">Race & Ethnicity</option>
             <option value="electionVotes">Election Votes</option>
             <option value="nyHouseEthnicity">NY House of Representatives Ethnicity</option>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
-import MainContent from './MainContent';
+import Elections from './Elections';
 import RaceEthnicityContent from './state_raceEthnicity'; 
 import ElectionVotesContent from './ElectionVotesContent';
 import NYHouseEthnicityContent from './NYHouseEthnicityContent';
@@ -9,7 +9,6 @@ import CandidatesContent from './CandidatesContent';
 import DistrictComparisonContent from './DistrictComparisonContent';
 import VoteGapAnalysisContent from './VoteGapAnalysisContent';
 import HouseholdIncomeContent from './HouseholdIncomeContent';
-
 // real data
 import CountiesRaceEthnicity from './counties_raceEthnicity'
 import Footer from './Footer';
@@ -20,11 +19,11 @@ import '../stylesheets/styles.css'; // Import your custom styles
 
 function Main() {
   const [selectedState, setSelectedState] = useState('NY');
-  const [selectedContent, setSelectedContent] = useState('mainContent'); // State for managing content selection
+  const [selectedContent, setSelectedContent] = useState('mainContent');
   const [selectedCounty, setSelectedCounty] = useState(null);
 
-  const [fadeContent, setFadeContent] = useState(false); // State for managing fade effect for content
-  const [isVisible, setIsVisible] = useState(false); // State for controlling visibility of main content
+  const [fadeContent, setFadeContent] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
 
   useEffect(() => {
@@ -70,13 +69,13 @@ function Main() {
       );
     }
     switch (selectedContent) {
-      case 'mainContent':
+      case 'elections':
         // return (
         // <CountiesRaceEthnicity 
         // countyName={selectedCounty}
         // selectedState={selectedState} />
         // )
-        return <MainContent selectedState={selectedState} />; // Only show MainContent
+        return <Elections selectedState={selectedState} />; // Only show MainContent
       case 'raceEthnicity':
         return <RaceEthnicityContent selectedState={selectedState} />; // Only show RaceEthnicityContent
       case 'electionVotes':
@@ -101,14 +100,14 @@ function Main() {
       //     selectedState={selectedState} />
       //     )
       default:
-        return <MainContent selectedState={selectedState} />; // Default to MainContent
+        return <Elections selectedState={selectedState} />; // Default to MainContent
     }
   };
 
   return (
     <div>
       <Navbar onStateChange={handleStateChange} />
-      <div className="container-fluid mt-4">
+      <div className="mainPage mt-4">
         <div className="row">
           <div className="col-md-6 left-content rounded-section">
             <Sidebar 

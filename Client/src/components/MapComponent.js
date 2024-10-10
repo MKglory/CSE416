@@ -6,7 +6,6 @@ import nyDistrict from '../data/NewYork/maps/ny_district.json';
 import nyCounties from '../data/NewYork/maps/ny_counties_with_population.json';
 import ny_races from '../data/NewYork/ny_race_population.json'
 import nyCongressDistrict from '../data/NewYork/maps/ny_congress_district.json';
-
 import arDistrict from '../data/Arkansas/maps/ar_precinct.json'
 import arCounties from '../data/Arkansas/maps/ar_counties_with_population.json';
 import ar_races from '../data/Arkansas/ar_race_population.json'
@@ -23,16 +22,7 @@ const usBounds = [
 
 function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
 
-  const [mapType, setMapType] = useState('congressional district'); // State to manage map type
   const [mapShowType, setMapShowType] = useState('Election');
-
-  const handleSelect = (eventKey) => {
-    // Update the selected map type
-    if (eventKey !== 'counties'){
-      setMapShowType('Election');
-    }
-    setMapType(eventKey);
-  };
 
   const handleMapShowSelect = (eventKey) => {
     // Update the selected map type
@@ -78,9 +68,6 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
     [mapShowType] // Add demographic type as a dependency
   );
   
-  
-  console.log(selectedState);
-
   // onEachFeature function
   const onEachFeature = useCallback(
     (feature, layer) => {
@@ -88,88 +75,41 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
       const republican_vote = feature.properties.Republican_votes;
       const ELECTION_RESULT =
         democratic_vote > republican_vote ? 'Democratic' : 'Republican';
-
-      const num = feature.properties.NAME.match(/\d+/);
-      const districtKey = `District ${num}`;
+      const DistrictNum = feature.properties.NAME.match(/\d+/);
+      const districtKey = `District ${DistrictNum}`;
       const districtData = selectedState == 'AR' ? ar_races[districtKey] : ny_races[districtKey];
-      
-      let popupContent = '';
-      if (mapType === 'counties') {
-        layer.on({
-          click: () => {
-            setSelectedCounty(feature.properties.NAME);
-            handlePlotChange('countiesPopulationRace');
-          }
-        });
-        popupContent = `
-          <h5>County: ${feature.properties.NAME}</h5>
-          <p>Population: ${feature.properties.Total_population}</p>
-          <p>Democratic votes: ${democratic_vote}</p>
-          <p>Republican votes: ${republican_vote}</p>
-          <p>Election Result: ${ELECTION_RESULT}</p>
-        `;
-      }
-      else if (mapType === 'district') {
-        // EDID repesents the district ID
-        const EDName = feature.properties.EDName;
-        // console.log(EDName);
-        popupContent = `
-          <h5>${EDName}</h5>
-          <p>Democratic votes: ${democratic_vote}</p>
-          <p>Republican votes: ${republican_vote}</p>
-          <p>Election Result: ${ELECTION_RESULT}</p>
-        `;
-
-      } else if (mapType === 'congressional district') {
-        popupContent = `
+      let popupContent = `
           <h5>Congress District: ${feature.properties.NAME}</h5>
           <p>Population: ${districtData["Total population"]}</p>
           <p>Democratic votes: ${democratic_vote}</p>
           <p>Republican votes: ${republican_vote}</p>
           <p>Election Result: ${ELECTION_RESULT}</p>
         `;
-      }
       
       layer.bindPopup(popupContent);
 
     },
-    [mapType, selectedState]
+    [selectedState]
   );
 
 
   // Update geoJsonComponent function
   const geoJsonComponent = useMemo(() => {
-    const dataMap = {
 
-      counties: {
-        NY: nyCounties,
-        AR: arCounties,
-      },
-      district: {
-        NY: nyDistrict,
-        AR: arDistrict,
-      },
-      'congressional district': {
-        NY: nyCongressDistrict,
-        AR: arCongressDistrict,
-      },
-    };
-
-    const selectedData = dataMap[mapType] ? dataMap[mapType][selectedState] : undefined;
+    const selectedData = selectedState == 'NY' ? nyCongressDistrict : arCongressDistrict;
 
 
     if (!selectedData) return null;
 
     return (
       <GeoJSON
-        //key={`${selectedState}-${mapType}`}
-        key={`${selectedState}-${mapType}`}
+        key={`${selectedState}`}
         data={selectedData}
         style={style}
         onEachFeature={onEachFeature}
       />
     );
-  }, [selectedState, mapType, style, onEachFeature]);
+  }, [selectedState, style, onEachFeature]);
 
 
   const mapCenter = selectedState === 'NY' ? nyCenter : arCenter;

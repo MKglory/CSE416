@@ -24,15 +24,9 @@ footer {
   border-radius: 15px; /* Rounded edges for the map */
 }
 
-/* Custom layout styling */
-.left-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
 
 .map-content {
-  height: 100%; /* Ensures the map takes up full height */
+  height: 95vh; /* Ensures the map takes up full height */
 }
 
 /* Add rounded edges and spacing */
@@ -50,21 +44,14 @@ footer {
 
 /* Custom layout styling */
 .left-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%; /* Ensure it takes up full height */
+  height: 95vh; /* Ensure it takes up full height */
 }
 
 .sidebar {
   height: 20%; /* Sidebar takes 20% of the height */
-  overflow: auto; /* Add scrolling if needed */
 }
 
-.content {
-  height: 80%; /* Content takes 80% of the height */
-  overflow: auto; /* Add scrolling if needed */
-  position: relative; /* Ensure content positioning works for transitions */
-}
+
 
 .fade-in {
   opacity: 1;
@@ -97,15 +84,6 @@ footer {
   to {
     opacity: 0;
   }
-}
-
-
-/* Add rounded edges and spacing */
-.rounded-section {
-  border-radius: 15px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
 }
 
 /* Add to your CSS file */
@@ -215,4 +193,19 @@ footer {
 .fade-out {
   opacity: 0;
   transition: opacity 0.5s ease-out;
+}
+
+/* fdfd */
+
+/* Ensure html and body take up full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* The container and row should also take full height */
+.mainPage {
+  display: flex;
+  flex-direction: column;
 }
