@@ -61,10 +61,9 @@ function ElectionVotesContent({ selectedState }) {
       {
         label: 'Votes',
         data: filteredVotesData.map((item) => item.Votes),
-        backgroundColor: [
-          'rgba(54, 162, 235, 0.6)', // Set blue color for one party
-          'rgba(255, 99, 132, 0.6)', // Set red color for another party
-        ],
+        backgroundColor: filteredVotesData.map((item) => 
+          item.Party === 'REP' ? 'rgba(255, 99, 132, 0.6)' : 'rgba(54, 162, 235, 0.6)' // Set red for REP and blue for DEM
+        ),
       },
     ],
   };
