@@ -17,7 +17,7 @@ function ElectionVotesContent({ selectedState }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log('Component rendered, selectedState:', selectedState); // Log initial render and state selection
+    console.log('Component rendered, selectedState:', selectedState);
     setLoading(true);
 
     let apiUrl = '';
@@ -29,7 +29,7 @@ function ElectionVotesContent({ selectedState }) {
       apiUrl = '/ARVotingData';
       console.log('Fetching data from AR endpoint:', apiUrl);
     } else {
-      console.error('Invalid selectedState value:', selectedState); // If an unexpected state is passed
+      console.error('Invalid selectedState value:', selectedState);
     }
 
     console.log('Fetching data from API:', apiUrl);
@@ -37,7 +37,7 @@ function ElectionVotesContent({ selectedState }) {
     // Fetch data from the server
     fetch(apiUrl)
       .then((response) => {
-        console.log('Received response:', response); // Log the entire response object
+        console.log('Received response:', response);
 
         if (!response.ok) {
           console.error('Response not OK, status:', response.statusText);
@@ -46,7 +46,7 @@ function ElectionVotesContent({ selectedState }) {
         return response.json();
       })
       .then((data) => {
-        console.log('Fetched data (raw JSON):', data); // Log the data received
+        console.log('Fetched data (raw JSON):', data);
 
         // Convert the votes object into an array of party-vote pairs
         const filteredData = Object.entries(data).map(([party, count]) => ({
@@ -54,25 +54,25 @@ function ElectionVotesContent({ selectedState }) {
           Votes: count,
         }));
 
-        console.log('Filtered data (for chart):', filteredData); // Log the filtered data
+        console.log('Filtered data (for chart):', filteredData);
 
         setFilteredVotesData(filteredData);
         setLoading(false);
       })
       .catch((err) => {
-        console.error('Error during fetch:', err); // Log any errors that occur during fetch
+        console.error('Error during fetch:', err);
         setError(err.message);
         setLoading(false);
       });
   }, [selectedState]);
 
   if (loading) {
-    console.log('Loading state active...'); // Log loading state
+    console.log('Loading state active...');
     return <div>Loading data...</div>;
   }
 
   if (error) {
-    console.error('Error occurred:', error); // Log error state
+    console.error('Error occurred:', error);
     return (
       <div className="error-message">
         <h2>Data Retrieval Failed</h2>
@@ -95,7 +95,7 @@ function ElectionVotesContent({ selectedState }) {
     ],
   };
 
-  console.log('Rendering chart with data:', data); // Log final data being used for the chart
+  console.log('Rendering chart with data:', data);
 
   const options = {
     responsive: true,
