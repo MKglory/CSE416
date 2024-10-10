@@ -1,122 +1,85 @@
-import React, { useEffect, useState } from 'react';
-import { Pie } from 'react-chartjs-2';
+import React, { useEffect, useState } from 'react'; // Import React and necessary hooks
+import { Pie } from 'react-chartjs-2'; // Import the Pie component from react-chartjs-2
 import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+  Chart as ChartJS,    // Import the main Chart.js module to create and configure charts
+  ArcElement,           // Import the ArcElement used for rendering arcs in Pie and Doughnut charts
+  Tooltip,              // Import Tooltip to display information when hovering over chart elements
+  Legend,               // Import Legend to show a guide that maps colors or symbols to data categories
+} from 'chart.js';       // Import necessary Chart.js components for chart functionality
 
+// Register Chart.js components needed for pie chart functionality
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function ElectionVotesContent({ selectedState }) {
-  console.log('ElectionVotesContent component is rendering');
+function ElectionVotesContent({ selectedState }) { // Declare the functional component that receives the selectedState prop
+  const [filteredVotesData, setFilteredVotesData] = useState([]); // Initialize state to hold filtered votes data
 
-  const [filteredVotesData, setFilteredVotesData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  useEffect(() => { // useEffect runs whenever selectedState changes
+    const fetchData = async () => {
+      let url = '';
+      
+      // Set the URL dynamically based on the selected state
+      if (selectedState === 'NY') {
+        url = '/NYVotingData'; // Fetch New York voting data from server
+      } else if (selectedState === 'AR') {
+        url = '/ARVotingData'; // Fetch Arkansas voting data from server
+      }
 
-  useEffect(() => {
-    console.log('Component rendered, selectedState:', selectedState); // Log initial render and state selection
-    setLoading(true);
-
-    let apiUrl = '';
-    // Determine API URL based on the selected state
-    if (selectedState === 'NY') {
-      apiUrl = '/NYVotingData';
-      console.log('Fetching data from NY endpoint:', apiUrl);
-    } else if (selectedState === 'AR') {
-      apiUrl = '/ARVotingData';
-      console.log('Fetching data from AR endpoint:', apiUrl);
-    } else {
-      console.error('Invalid selectedState value:', selectedState); // If an unexpected state is passed
-    }
-
-    console.log('Fetching data from API:', apiUrl);
-
-    // Fetch data from the server
-    fetch(apiUrl)
-      .then((response) => {
-        console.log('Received response:', response); // Log the entire response object
-
-        if (!response.ok) {
-          console.error('Response not OK, status:', response.statusText);
-          throw new Error(`Error fetching data: ${response.statusText}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log('Fetched data (raw JSON):', data); // Log the data received
+      try {
+        const response = await fetch(url); // Fetch data from server
+        const votes = await response.json(); // Parse the response as JSON
 
         // Convert the votes object into an array of party-vote pairs
-        const filteredData = Object.entries(data).map(([party, count]) => ({
-          Party: party,
-          Votes: count,
+        const filteredData = Object.entries(votes).map(([party, count]) => ({
+          Party: party, // Set the party name
+          Votes: count, // Set the vote count
         }));
 
-        console.log('Filtered data (for chart):', filteredData); // Log the filtered data
+        setFilteredVotesData(filteredData); // Update the state with the filtered data
+      } catch (error) {
+        console.error('Error fetching voting data:', error); // Log errors if any
+      }
+    };
 
-        setFilteredVotesData(filteredData);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Error during fetch:', err); // Log any errors that occur during fetch
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [selectedState]);
-
-  if (loading) {
-    console.log('Loading state active...'); // Log loading state
-    return <div>Loading data...</div>;
-  }
-
-  if (error) {
-    console.error('Error occurred:', error); // Log error state
-    return (
-      <div className="error-message">
-        <h2>Data Retrieval Failed</h2>
-        <p>We are sorry, but we were unable to retrieve the voting data for {selectedState === 'NY' ? 'New York' : 'Arkansas'} at this time.</p>
-      </div>
-    );
-  }
+    fetchData(); // Call fetchData to initiate the fetch operation
+  }, [selectedState]); // Effect depends on selectedState, so it will run when it changes
 
   const data = {
-    labels: filteredVotesData.map((item) => item.Party),
+    labels: filteredVotesData.map((item) => item.Party), // Extract party names as labels for the chart
     datasets: [
       {
-        label: 'Votes',
-        data: filteredVotesData.map((item) => item.Votes),
+        label: 'Votes', // Dataset label
+        data: filteredVotesData.map((item) => item.Votes), // Extract the votes count
         backgroundColor: [
-          'rgba(54, 162, 235, 0.6)',
-          'rgba(255, 99, 132, 0.6)',
+          'rgba(54, 162, 235, 0.6)', // Set blue color for one party
+          'rgba(255, 99, 132, 0.6)', // Set red color for another party
         ],
       },
     ],
-  };
-
-  console.log('Rendering chart with data:', data); // Log final data being used for the chart
+  }; // Data structure used by the Pie chart
 
   const options = {
-    responsive: true,
+    responsive: true, // Make the chart responsive to screen size
     plugins: {
       legend: {
-        position: 'top',
+        position: 'top', // Set legend position to the top
       },
       title: {
-        display: true,
-        text: `${selectedState === 'NY' ? 'New York' : 'Arkansas'} Votes Distribution`,
+        display: true, // Display the title
+        text: `${selectedState === 'NY' ? 'New York' : 'Arkansas'} Votes Distribution`, // Set the title dynamically based on state
       },
     },
   };
 
   return (
-    <div className="col-12 col-md-9 col-lg-9">
-      <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} Votes Distribution</h2>
-      <p>Below is the vote distribution for political parties in {selectedState === 'NY' ? 'New York' : 'Arkansas'}.</p>
-      <Pie data={data} options={options} />
+    <div className="col-12 col-md-9 col-lg-9"> {/* Create a div container with Bootstrap classes */}
+      <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} Votes Distribution</h2> {/* Display a dynamic heading based on the selected state */}
+      <p>
+        Below is the vote distribution for political parties in {selectedState === 'NY' ? 'New York' : 'Arkansas'}.
+      </p>
+
+      <Pie data={data} options={options} /> {/* Render the Pie chart with the defined data and options */}
     </div>
   );
 }
 
-export default ElectionVotesContent;
+export default ElectionVotesContent; // Export the component for use in other parts of the app
