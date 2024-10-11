@@ -7,7 +7,6 @@ function Navbar({ onStateChange, onTabChange }) {
   const isMainPage = location.pathname === '/main'; // Check if we are on the main page
 
   const handleSelect = (event) => {
-    console.log("here", event.target.value);
     onStateChange(event.target.value);
   };
 
