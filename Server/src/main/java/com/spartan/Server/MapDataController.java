@@ -13,35 +13,14 @@ import org.springframework.http.HttpStatus;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class MapDataController {
-    @GetMapping("/map/nyDistrict")
-    public ResponseEntity<Resource> getNyCongressDistrict() {
+    @GetMapping("/map/{state}District")
+    public ResponseEntity<Resource> getCongressDistrict(@PathVariable String state) {
         try {
-            ClassPathResource resource = new ClassPathResource("maps/ny_congress_district.json");
-
-
+            String filePath = "maps/" + state.toLowerCase() + "_congress_district.json";
+            ClassPathResource resource = new ClassPathResource(filePath);
             String contentType = "application/geo+json";
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType))
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                    .body(resource);
-
-        } catch (Exception  e) {
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while retrieving map data.", e
-            );
-        }
-    }
-
-    @GetMapping("/map/arDistrict")
-    public ResponseEntity<Resource> getArCongressDistrict() {
-        try {
-            ClassPathResource resource = new ClassPathResource("maps/ar_congress_district_without_hawawi.json");
-
-
-            String contentType = "application/geo+json";
-            return ResponseEntity.ok()
-                    .contentType(MediaType.parseMediaType(contentType))
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                     .body(resource);
 
         } catch (Exception  e) {
