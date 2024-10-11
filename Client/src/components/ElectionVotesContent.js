@@ -39,7 +39,7 @@ function ElectionVotesContent({ selectedState }) {
     labels: filteredVotesData.map((item) => item.Party),
     datasets: [
       {
-        label: 'Votes', // Label for the dataset
+        label: 'Votes',
         data: filteredVotesData.map((item) => item.Votes),
         backgroundColor: filteredVotesData.map((item) =>
           item.Party === 'REP' ? 'rgba(255, 99, 132, 0.6)' : 'rgba(54, 162, 235, 0.6)'
