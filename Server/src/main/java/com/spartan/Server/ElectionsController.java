@@ -26,7 +26,7 @@ public class ElectionsController {
         try{
             String filePath = "elections/" + state.toLowerCase() + "_elections.json";
             ClassPathResource resource = new ClassPathResource(filePath);
-            String contentType = "applicaiton/json";
+            String contentType = "application/json";
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType((contentType)))
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
@@ -44,7 +44,7 @@ public class ElectionsController {
         try{
             String filePath = "elections/" + state.toLowerCase() + "_representatives.json";
             ClassPathResource resource = new ClassPathResource(filePath);
-            String contentType = "applicaiton/json";
+            String contentType = "application/json";
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType((contentType)))
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
