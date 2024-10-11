@@ -27,7 +27,7 @@ public class ServerController {
         try {
             String filePath = "data/" + state.toUpperCase() + "_party_votes_distribution.json";
             ClassPathResource resource = new ClassPathResource(filePath);
-            String contentType = "applicaiton/json";
+            String contentType = "application/json";
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType((contentType)))
                     .body(resource);
