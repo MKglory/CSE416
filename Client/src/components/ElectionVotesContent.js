@@ -98,14 +98,14 @@ function ElectionVotesContent({ selectedState }) {
   console.log('Rendering chart with data:', data); // Log final data being used for the chart
 
   const options = {
-    responsive: true,
+    responsive: true, // Make the chart responsive
     plugins: {
       legend: {
-        position: 'top',
+        position: 'top', // Position the legend at the top
       },
       title: {
-        display: true,
-        text: `${selectedState === 'NY' ? 'New York' : 'Arkansas'} Votes Distribution`,
+        display: true, // Display the title
+        text: `${selectedState === 'NY' ? 'New York' : 'Arkansas'} Votes Distribution`, // Set the title based on the selected state
       },
     },
   };
@@ -119,4 +119,4 @@ function ElectionVotesContent({ selectedState }) {
   );
 }
 
-export default ElectionVotesContent;
+export default ElectionVotesContent; // Export the component for use in other parts of the app
