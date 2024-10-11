@@ -22,14 +22,10 @@ const usBounds = [
 ];
 
 function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
-  const [mapShowType, setMapShowType] = useState('Election');
   const [CongressDistrict, setCongressDistrict] = useState(null);
   let [loading, setLoading] = useState(true); 
 
-  
-  const handleMapShowSelect = (eventKey) => {
-    setMapShowType(eventKey);
-  };
+
 
   const mapDataRequest = async () => {
     const response = await axios.get(`http://localhost:8080/map/${selectedState.toLowerCase()}District`);
@@ -77,7 +73,7 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
         fillOpacity: 0.7,
       };
     },
-    [mapShowType] // Add demographic type as a dependency
+    [] 
   );
   
   // onEachFeature function
@@ -133,7 +129,6 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
 
 
   const mapCenter = selectedState === 'NY' ? nyCenter : arCenter;
-  console.log(CongressDistrict);
   if (loading) {
     return <div>Loading map data...</div>;
   }
