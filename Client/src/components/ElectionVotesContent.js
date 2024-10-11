@@ -6,9 +6,10 @@ import {
   ArcElement,
   Tooltip,
   Legend,
+  Filler
 } from 'chart.js'; 
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, Filler);
 
 function ElectionVotesContent({ selectedState }) {
   const [filteredVotesData, setFilteredVotesData] = useState([]); 

@@ -38,4 +38,22 @@ public class ElectionsController {
             );
         }
     }
+
+    @GetMapping("representatives/{state}Data")
+    public ResponseEntity<Resource> getRepresentativesElection(@PathVariable String state){
+        try{
+            String filePath = "elections/" + state.toLowerCase() + "_representatives.json";
+            ClassPathResource resource = new ClassPathResource(filePath);
+            String contentType = "applicaiton/json";
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType((contentType)))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    // statue code 500
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while retrieving map data.", e
+            );
+        }
+    }
 }

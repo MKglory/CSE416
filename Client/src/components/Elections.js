@@ -22,9 +22,10 @@ function Elections({ selectedState }) {
 
   const ElectionsDataRequest = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/elections/${selectedState.toLowerCase()}Data`);
-      const electionData = response.data; // Adjust based on your API response structure
-      const representatives = ny_representatives_seats; // Adjust based on your API response structure
+      const electionResponse = await axios.get(`http://localhost:8080/elections/${selectedState.toLowerCase()}Data`);
+      const electionData = electionResponse.data; // Adjust based on your API response structure
+      const representativeResponse = await axios.get(`http://localhost:8080/representatives/${selectedState.toLowerCase()}Data`);
+      const representatives = representativeResponse.data; // Adjust based on your API response structure
 
       // Process Election Votes
       const districts = Object.keys(electionData);
@@ -66,7 +67,6 @@ function Elections({ selectedState }) {
           }
         ]
       });
-
       setLoading(false);
     } catch (error) {
       console.error("Error fetching election data:", error);
