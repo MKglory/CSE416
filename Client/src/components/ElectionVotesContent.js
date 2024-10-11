@@ -20,6 +20,7 @@ function ElectionVotesContent({ selectedState }) {
     setLoading(true);
     axios.get(apiUrl) // promise
       .then((response) => {
+        console.log(response);
         const filteredData = Object.entries(response.data).map(([party, count]) => ({
           Party: party,
           Votes: count,
@@ -32,6 +33,7 @@ function ElectionVotesContent({ selectedState }) {
         setLoading(false);
       });
   }, [selectedState]);
+  
 
   if (loading) {
     return <div>Loading data...</div>;

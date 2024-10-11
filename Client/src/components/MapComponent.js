@@ -23,20 +23,21 @@ const usBounds = [
 
 function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
   const [CongressDistrict, setCongressDistrict] = useState(null);
-  let [loading, setLoading] = useState(true); 
+  let [loading, setLoading] = useState(true);
 
 
 
   const mapDataRequest = async () => {
     const response = await axios.get(`http://localhost:8080/map/${selectedState.toLowerCase()}District`);
+    console.log(response);
     setCongressDistrict(response.data);
-    setLoading(false); 
+    setLoading(false);
   };
-  
+
   useEffect(() => {
     setLoading(true);
     mapDataRequest();
-  },[selectedState]);
+  }, [selectedState]);
 
   function ChangeMapView({ center }) {
     const map = useMap();
@@ -52,8 +53,8 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
         ? '#0000ff' // blue
         : '#00ff00'; // green
   };
-  
-  
+
+
   // Style function
   const style = useCallback(
     (feature) => {
@@ -62,7 +63,7 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
       const democratic_vote = feature.properties.Democratic_votes;
       const republican_vote = feature.properties.Republican_votes;
       const ELECTION_RESULT =
-      democratic_vote > republican_vote ? 'Democratic' : 'Republican';
+        democratic_vote > republican_vote ? 'Democratic' : 'Republican';
       fillColor = getColor_election(ELECTION_RESULT);
       return {
         fillColor: fillColor,
@@ -73,9 +74,9 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
         fillOpacity: 0.7,
       };
     },
-    [] 
+    []
   );
-  
+
   // onEachFeature function
   const onEachFeature = useCallback(
     (feature, layer) => {
@@ -95,17 +96,9 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
           <p>Republican votes: ${republican_vote}</p>
           <p>Election Result: ${ELECTION_RESULT}</p>
         `;
-      } else {
-        popupContent = `
-          <h5>Congress District: ${feature.properties.NAME}</h5>
-          <p>Population data not available.</p>
-          <p>Democratic votes: ${democratic_vote}</p>
-          <p>Republican votes: ${republican_vote}</p>
-          <p>Election Result: ${ELECTION_RESULT}</p>
-        `;
       }
 
-      
+
       layer.bindPopup(popupContent);
 
     },
@@ -115,7 +108,8 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
 
   // Update geoJsonComponent function
   const geoJsonComponent = useMemo(() => {
-    const selectedData = selectedState == 'NY' ? CongressDistrict : CongressDistrict;
+    //const selectedData = CongressDistrict == 'NY' ? CongressDistrict : CongressDistrict;
+    const selectedData = CongressDistrict;
     if (!selectedData) return null;
     return (
       <GeoJSON
@@ -129,9 +123,7 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
 
 
   const mapCenter = selectedState === 'NY' ? nyCenter : arCenter;
-  if (loading) {
-    return <div>Loading map data...</div>;
-  }
+
   return (
     <div>
       <MapContainer
@@ -146,7 +138,7 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         />
-        {geoJsonComponent}
+        {loading ? null : geoJsonComponent}
       </MapContainer>
     </div >
   );
