@@ -26,3 +26,6 @@ npm install axios
 
 https://mapshaper.org/
 
+congresional district shape file is 2022 from us census
+precinct shape file is from Redistricting Data Hub
+block shape file is from us census
