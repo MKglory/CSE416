@@ -22,22 +22,22 @@ const usBounds = [
 ];
 
 function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
-  const [CongressDistrict, setCongressDistrict] = useState(null);
-  let [loading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
+  const [mapBoundary, setMapBoundary] = useState("district");
+  const [loading, setLoading] = useState(true);
 
 
 
   const mapDataRequest = async () => {
-    const response = await axios.get(`http://localhost:8080/map/${selectedState.toLowerCase()}District`);
-    console.log(response);
-    setCongressDistrict(response.data);
+    const response = await axios.get(`http://localhost:8080/maps/${selectedState}/${mapBoundary}`);
+    setData(response.data);
     setLoading(false);
   };
 
   useEffect(() => {
     setLoading(true);
     mapDataRequest();
-  }, [selectedState]);
+  }, [selectedState, mapBoundary]);
 
   function ChangeMapView({ center }) {
     const map = useMap();
@@ -45,6 +45,9 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
       map.flyTo(center, 7);
     }, [center]);
     return null;
+  }
+  function MapBoundaryChangeHandler(type){
+    setMapBoundary(type);
   }
   const getColor_election = (result) => {
     return result === 'Republican'
@@ -62,8 +65,13 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
 
       const democratic_vote = feature.properties.Democratic_votes;
       const republican_vote = feature.properties.Republican_votes;
-      const ELECTION_RESULT =
-        democratic_vote > republican_vote ? 'Democratic' : 'Republican';
+      var ELECTION_RESULT = null;
+      if (democratic_vote > republican_vote) {
+        ELECTION_RESULT = 'Democratic';
+      }
+      else if (democratic_vote < republican_vote){
+        ELECTION_RESULT = 'Republican';
+      }
       fillColor = getColor_election(ELECTION_RESULT);
       return {
         fillColor: fillColor,
@@ -77,70 +85,122 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
     []
   );
 
+  function readDistrictData(feature){
+    const DistrictNum = feature.properties.NAME.match(/\d+/);
+    const districtKey = `District ${DistrictNum}`;
+    const districtData = selectedState == 'AR' ? ar_races[districtKey] : ny_races[districtKey];
+    return districtData;
+  }
   // onEachFeature function
   const onEachFeature = useCallback(
     (feature, layer) => {
       const democratic_vote = feature.properties.Democratic_votes;
       const republican_vote = feature.properties.Republican_votes;
-      const ELECTION_RESULT =
-        democratic_vote > republican_vote ? 'Democratic' : 'Republican';
-      const DistrictNum = feature.properties.NAME.match(/\d+/);
-      const districtKey = `District ${DistrictNum}`;
-      const districtData = selectedState == 'AR' ? ar_races[districtKey] : ny_races[districtKey];
+      var ELECTION_RESULT = null;
+      if (democratic_vote > republican_vote) {
+        ELECTION_RESULT = 'Democratic';
+      }
+      else if (democratic_vote < republican_vote){
+        ELECTION_RESULT = 'Republican';
+      }
       let popupContent = '';
-      if (districtData) {
+      if (mapBoundary === 'district') {
+        const districtData = readDistrictData(feature);
         popupContent = `
           <h5>Congress District: ${feature.properties.NAME}</h5>
-          <p>Population: ${districtData["Total population"]}</p>
+          <p>Total Population: ${districtData["Total population"]}
+          <p>Democratic votes: ${democratic_vote}</p>
+          <p>Republican votes: ${republican_vote}</p>
+          <p>Election Result: ${ELECTION_RESULT}</p>
+        `;
+      }
+      else if (mapBoundary === 'county'){
+        popupContent = `
+          <h5>County: ${feature.properties.NAME}</h5>
+          <p>Democratic votes: ${democratic_vote}</p>
+          <p>Republican votes: ${republican_vote}</p>
+          <p>Election Result: ${ELECTION_RESULT}</p>
+       `;
+      }
+      else if (mapBoundary === 'precinct'){
+        popupContent = `
+          <h5>Preinct: ${feature.properties.PRECINCT}</h5>
           <p>Democratic votes: ${democratic_vote}</p>
           <p>Republican votes: ${republican_vote}</p>
           <p>Election Result: ${ELECTION_RESULT}</p>
         `;
       }
 
-
       layer.bindPopup(popupContent);
 
     },
-    [selectedState]
+    [selectedState, mapBoundary]
   );
-
 
   // Update geoJsonComponent function
   const geoJsonComponent = useMemo(() => {
     //const selectedData = CongressDistrict == 'NY' ? CongressDistrict : CongressDistrict;
-    const selectedData = CongressDistrict;
-    if (!selectedData) return null;
+    if (loading) return null;
     return (
       <GeoJSON
         key={`${selectedState}`}
-        data={CongressDistrict}
+        data={data}
         style={style}
         onEachFeature={onEachFeature}
       />
     );
-  }, [selectedState, style, onEachFeature, CongressDistrict]);
+  }, [selectedState, style, onEachFeature, data]);
 
 
   const mapCenter = selectedState === 'NY' ? nyCenter : arCenter;
 
   return (
     <div>
-      <MapContainer
-        center={mapCenter}
-        bounds={usBounds}
-        maxZoom={12}
-        minZoom={5}
-        scrollWheelZoom={true}
-        preferCanvas={true}
-      >
-        <ChangeMapView center={mapCenter} />
-        <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-        />
-        {loading ? null : geoJsonComponent}
-      </MapContainer>
-    </div >
+      <div style={{ display: 'flex', width: '100%'}}>
+        <ul className="list-group">
+          <li className="list-group-item">
+            <select className="form-select" onChange={(e) => MapBoundaryChangeHandler(e.target.value)}>
+              <option value="district">Districts</option>
+              <option value="county">Counties</option>
+              <option value="precinct">Precinct</option>
+            </select>
+          </li>
+        </ul>
+        {/* {mapType === 'counties'?
+        <ul className="list-group">
+          <li className="list-group-item">
+            <select className="form-select" onChange={(e) => handleMapShowSelect(e.target.value)} value={mapShowType}>
+              <option value="Election">Show Election</option>
+              <option value="Population">Show Total Population</option>
+              <option value="White">Show White Population</option>
+              <option value="Black">Show Black Population</option>
+              <option value="American">Show American Indian Population</option>
+              <option value="Asian">Show Asian Population</option>
+              <option value="NativeHawaiian">Show Native Hawaiia`n Population</option>
+              <option value="Other">Show Other Population</option>
+            </select>
+          </li>
+        </ul>
+        : null
+      } */}
+      </div>
+      <div>
+        <MapContainer
+          center={mapCenter}
+          bounds={usBounds}
+          maxZoom={12}
+          minZoom={5}
+          scrollWheelZoom={true}
+          preferCanvas={true}
+        >
+          <ChangeMapView center={mapCenter} />
+          <TileLayer
+            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          />
+          {loading ? null : geoJsonComponent}
+        </MapContainer>
+      </div>
+    </div>
   );
 }
 
