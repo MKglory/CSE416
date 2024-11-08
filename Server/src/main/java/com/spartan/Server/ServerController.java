@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
 
 
 
@@ -37,4 +39,45 @@ public class ServerController {
             );
         }
     }
+
+        @GetMapping("/incomeData/{state}")
+    public ResponseEntity<Map<String, Object>> getIncomeData(@PathVariable String state) {
+        String filePath = "data/" + state.toUpperCase() + "_household_income_all_races_results.json";
+        Resource resource = new ClassPathResource(filePath);
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> incomeData = mapper.readValue(resource.getInputStream(), Map.class);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(incomeData);
+        } catch (IOException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while retrieving income data.", e
+            );
+        }
+    }
+
+    @GetMapping("/raceEthnicityData/{state}")
+    public ResponseEntity<List<Map<String, Object>>> getRaceEthnicityData(@PathVariable String state) {
+        String filePath = "data/" + state.toUpperCase() + "_Race_and_Ethnicity_2022.json";
+        Resource resource = new ClassPathResource(filePath);
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            List<Map<String, Object>> raceEthnicityData = mapper.readValue(resource.getInputStream(), List.class);
+            
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(raceEthnicityData);
+        } catch (IOException e) {
+            //logger.error("Error occurred while retrieving race and ethnicity data for state: " + state, e);
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while retrieving race and ethnicity data.", e
+            );
+        }
+    }
+
+
+
 }

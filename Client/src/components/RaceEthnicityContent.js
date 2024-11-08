@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -8,31 +9,40 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import nyRaceEthnicityData from '../data/NY_Race_and_Ethnicity_2022.json'; // Import New York race and ethnicity data
-import arRaceEthnicityData from '../data/AR_Race_and_Ethnicity_2022.json'; // Import Arkansas race and ethnicity data
 
 // Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 function RaceEthnicityContent({ selectedState }) {
   const [filteredRaceData, setFilteredRaceData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let filteredData = [];
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/raceEthnicityData/${selectedState}`);
+        setFilteredRaceData(response.data);
+      } catch (error) {
+        console.error('Error fetching race and ethnicity data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    // Filter the data based on selectedState (e.g., 'NY' or 'AR')
-    if (selectedState === 'NY') {
-      filteredData = nyRaceEthnicityData.filter(
-        (item) => item.Geography === 'New York'
-      );
-    } else if (selectedState === 'AR') {
-      filteredData = arRaceEthnicityData.filter(
-        (item) => item.Geography === 'Arkansas'
-      );
-    }
-
-    setFilteredRaceData(filteredData);
+    fetchData();
   }, [selectedState]);
+
+  if (loading) {
+    return (
+      <div className="loading-screen">
+        <p>Loading data...</p>
+      </div>
+    );
+  }
+
+  if (filteredRaceData.length === 0) {
+    return <p>No data available for the selected state.</p>;
+  }
 
   const data = {
     labels: filteredRaceData.map((item) => item.Race), // Extract race names
@@ -47,7 +57,6 @@ function RaceEthnicityContent({ selectedState }) {
 
   const options = {
     responsive: true,
-    // maintainAspectRatio: false, // Disable aspect ratio for custom height
     plugins: {
       legend: {
         position: 'top',
@@ -57,7 +66,7 @@ function RaceEthnicityContent({ selectedState }) {
         text: `${selectedState === 'NY' ? 'New York' : 'Arkansas'} Race and Ethnicity Distribution`,
         font: {
           size: 20,
-        }
+        },
       },
     },
     scales: {
@@ -67,7 +76,7 @@ function RaceEthnicityContent({ selectedState }) {
           text: 'Race and Ethnicity',
           font: {
             size: 20,
-          }
+          },
         },
         type: 'category',
       },
@@ -84,9 +93,11 @@ function RaceEthnicityContent({ selectedState }) {
   return (
     <div className="col-12 col-md-9 col-lg-9">
       <h2>{selectedState === 'NY' ? 'New York' : 'Arkansas'} Race and Ethnicity Data</h2>
-      <Bar data={data} options={options} height={350}/> {/* Set height here */}
+      <Bar data={data} options={options} height={350} />
     </div>
   );
 }
 
 export default RaceEthnicityContent;
+
+

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
+import axios from 'axios';
 import {
   Chart as ChartJS,
   BarElement,
@@ -8,49 +9,46 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import nyIncomeData from '../data/NY_household_income_all_races_results.json'; // Import the New York income data JSON file
-import arIncomeData from '../data/AR_household_income_all_races_results.json'; // Import the Arkansas income data JSON file
 
-// Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 function HouseholdIncomeContent({ selectedState }) {
-  const [chartData, setChartData] = useState({});
+  const [chartData, setChartData] = useState(null); // Set to null initially to indicate loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let incomeData;
+    setLoading(true);
+    axios.get(`http://localhost:8080/incomeData/${selectedState}`)
+      .then((response) => {
+        const incomeData = response.data;
 
-    // Determine which state's income data to use
-    if (selectedState === 'NY') {
-      incomeData = nyIncomeData;
-    } else if (selectedState === 'AR') {
-      incomeData = arIncomeData;
-    } else {
-      console.error("Invalid selectedState.");
-      return; // Exit if the selected state is invalid
-    }
+        // Prepare the data for the chart
+        const labels = Object.keys(incomeData); // Extract races
+        const meanIncomes = labels.map(race => incomeData[race]["Mean Household Income"]); // Extract mean household incomes
+        const averageIncomes = labels.map(race => incomeData[race]["Median Household Income"]); // Extract median household incomes
 
-    // Prepare the data for the chart
-    const labels = Object.keys(incomeData); // Extract races
-    const meanIncomes = labels.map(race => incomeData[race]["Mean Household Income"]); // Extract mean household incomes
-    const averageIncomes = labels.map(race => incomeData[race]["Median Household Income"]); // Extract average household incomes
-
-    setChartData({
-      labels: labels,
-      datasets: [
-        {
-          label: 'Mean Household Income',
-          data: meanIncomes,
-          backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        },
-        {
-          label: 'Average Household Income',
-          data: averageIncomes,
-          backgroundColor: 'rgba(255, 99, 132, 0.6)',
-        },
-      ],
-    });
-  }, [selectedState]); // Re-run effect when selectedState changes
+        setChartData({
+          labels: labels,
+          datasets: [
+            {
+              label: 'Mean Household Income',
+              data: meanIncomes,
+              backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            },
+            {
+              label: 'Median Household Income',
+              data: averageIncomes,
+              backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            },
+          ],
+        });
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching income data:', error);
+        setLoading(false);
+      });
+  }, [selectedState]);
 
   const options = {
     responsive: true,
@@ -102,10 +100,12 @@ function HouseholdIncomeContent({ selectedState }) {
 
   return (
     <div>
-      {chartData.labels ? ( // Check if labels are available before rendering the chart
+      {loading ? (
+        <p>Loading data...</p>
+      ) : chartData ? (
         <Bar data={chartData} options={options} height={310} />
       ) : (
-        <p>Loading data...</p> // Fallback loading message
+        <p>No data available</p> // Fallback in case of no data
       )}
     </div>
   );
