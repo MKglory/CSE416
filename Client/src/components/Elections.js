@@ -24,16 +24,16 @@ function Elections({ selectedState }) {
     try {
       const electionResponse = await axios.get(`http://localhost:8080/elections/${selectedState.toLowerCase()}Data`);
       const electionData = electionResponse.data; // Adjust based on your API response structure
-      const representativeResponse = await axios.get(`http://localhost:8080/representatives/${selectedState.toLowerCase()}Data`);
-      const representatives = representativeResponse.data; // Adjust based on your API response structure
+      console.log(electionData)
 
       // Process Election Votes
-      const districts = Object.keys(electionData);
-      const democraticVotes = districts.map(district => electionData[district]['Democracy'] || 0);
-      const republicanVotes = districts.map(district => electionData[district]['Republican'] || 0);
+      const districts = electionData.districts;
+      const districtsArray = Object.keys(districts); // Converts the object to an array of its values
+      const democraticVotes = districtsArray.map(district => districts[district]['democracy'] || 0);
+      const republicanVotes = districtsArray.map(district => districts[district]['republican'] || 0);
       const totalDemocraticVotes = democraticVotes.reduce((acc, votes) => acc + votes, 0);
       const totalRepublicanVotes = republicanVotes.reduce((acc, votes) => acc + votes, 0);
-
+      const representatives_demo = 
       // Set Chart Data for Elections
       setChartData_election({
         labels: ['Election Votes'],
@@ -57,12 +57,12 @@ function Elections({ selectedState }) {
         datasets: [
           {
             label: 'Democratic',
-            data: [representatives['party_distribution']['Democratic']['seats']],
+            data: [electionData['democraticSeats']],
             backgroundColor: 'rgba(0, 0, 255, 0.6)', // Blue
           },
           {
             label: 'Republican',
-            data: [representatives['party_distribution']['Republican']['seats']],
+            data: [electionData['republicanSeats']],
             backgroundColor: 'rgba(255, 0, 0, 0.6)', // Red
           }
         ]
@@ -135,10 +135,10 @@ function Elections({ selectedState }) {
   return (
     <div>
       <div style={{ height: '30vh' }}>
-        {chartData_election ? <Bar data={chartData_election} options={options} /> : "Loading election data..."}
+        {chartData_election ? <Bar data={chartData_election} options={options}/> : "Loading election data..."}
       </div>
       <div style={{ height: '30vh' }}>
-        {chartData_representatives ? <Bar data={chartData_representatives} options={options} /> : "Loading representative data..."}
+        {chartData_representatives ? <Bar data={chartData_representatives} options={options}/> : "Loading representative data..."}
       </div>
     </div>
   );

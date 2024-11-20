@@ -13,7 +13,12 @@ function Navbar({ onStateChange, onTabChange }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
-        <button className="navbar-brand" type="button" style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.25rem' }}>
+      <button 
+          className="navbar-brand" 
+          type="button" 
+          style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.25rem' }} 
+          onClick={() => navigate('/')} // Navigate to the Welcome page
+        >
           project
         </button>
         <button

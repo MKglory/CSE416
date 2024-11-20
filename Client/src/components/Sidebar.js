@@ -23,7 +23,7 @@ function Sidebar({ handlePlotChange, selectedCounty, resetSelection, selectedCon
             <option value="nyHouseEthnicity">NY House of Representatives Ethnicity</option>
             <option value="candidates">Candidates</option>
             {/* <option value="districtComparison">District Comparison</option> */}
-            <option value="voteGapAnalysis">Vote Gap Analysis</option>
+            <option value="voteGapAnalysis">Gingles 2/3 Analysis</option>
             <option value="householdIncome">Household Income</option> {/* New option added */}
 
           </select>

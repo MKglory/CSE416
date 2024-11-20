@@ -9,6 +9,9 @@ import CandidatesContent from './CandidatesContent';
 import DistrictComparisonContent from './DistrictComparisonContent';
 import VoteGapAnalysisContent from './VoteGapAnalysisContent';
 import HouseholdIncomeContent from './HouseholdIncomeContent';
+import Gingles from './Gingles.js'
+import IE from './IE.js'
+
 // real data
 import CountiesRaceEthnicity from './counties_raceEthnicity'
 import Footer from './Footer';
@@ -21,7 +24,6 @@ function Main() {
   const [selectedState, setSelectedState] = useState('NY');
   const [selectedContent, setSelectedContent] = useState('mainContent');
   const [selectedCounty, setSelectedCounty] = useState(null);
-
   const [fadeContent, setFadeContent] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -92,7 +94,7 @@ function Main() {
       // case 'countiesRaceEthnicity':
       //   return <CountiesRaceEthnicity selectedCounty={selectedCounty} />
       case 'voteGapAnalysis': // New case for Vote Gap Analysis content
-        return <VoteGapAnalysisContent selectedState={selectedState} />; // Renders content for Vote Gap Analysis
+        return <Gingles selectedState={selectedState}/>
       // case 'countiesPopulationRace':
       //     return (
       //     <CountiesRaceEthnicity 
@@ -103,7 +105,9 @@ function Main() {
         return <Elections selectedState={selectedState} />; // Default to MainContent
     }
   };
-
+  // return(
+  //   <IE/>
+  // )
   return (
     <div>
       <Navbar onStateChange={handleStateChange} />

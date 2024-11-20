@@ -23,7 +23,7 @@ const usBounds = [
 
 function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
   const [data, setData] = useState(null);
-  const [mapBoundary, setMapBoundary] = useState("district");
+  const [mapBoundary, setMapBoundary] = useState("districts");
   const [loading, setLoading] = useState(true);
 
 
@@ -85,12 +85,12 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
     []
   );
 
-  function readDistrictData(feature){
-    const DistrictNum = feature.properties.NAME.match(/\d+/);
-    const districtKey = `District ${DistrictNum}`;
-    const districtData = selectedState == 'AR' ? ar_races[districtKey] : ny_races[districtKey];
-    return districtData;
-  }
+  // function readDistrictData(feature){
+  //   const DistrictNum = feature.properties.NAME.match(/\d+/);
+  //   const districtKey = `District ${DistrictNum}`;
+  //   const districtData = selectedState == 'AR' ? ar_races[districtKey] : ny_races[districtKey];
+  //   return districtData;
+  // }
   // onEachFeature function
   const onEachFeature = useCallback(
     (feature, layer) => {
@@ -104,11 +104,11 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
         ELECTION_RESULT = 'Republican';
       }
       let popupContent = '';
-      if (mapBoundary === 'district') {
-        const districtData = readDistrictData(feature);
+      if (mapBoundary === 'districts') {
+        // const districtData = readDistrictData(feature);
         popupContent = `
           <h5>Congress District: ${feature.properties.NAME}</h5>
-          <p>Total Population: ${districtData["Total population"]}
+          <p>Total Population: ${feature.properties.CVAP_Total}
           <p>Democratic votes: ${democratic_vote}</p>
           <p>Republican votes: ${republican_vote}</p>
           <p>Election Result: ${ELECTION_RESULT}</p>
@@ -122,7 +122,7 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
           <p>Election Result: ${ELECTION_RESULT}</p>
        `;
       }
-      else if (mapBoundary === 'precinct'){
+      else if (mapBoundary === 'precincts'){
         popupContent = `
           <h5>Preinct: ${feature.properties.PRECINCT}</h5>
           <p>Democratic votes: ${democratic_vote}</p>
@@ -160,9 +160,9 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
         <ul className="list-group">
           <li className="list-group-item">
             <select className="form-select" onChange={(e) => MapBoundaryChangeHandler(e.target.value)}>
-              <option value="district">Districts</option>
+              <option value="districts">Districts</option>
               <option value="county">Counties</option>
-              <option value="precinct">Precinct</option>
+              <option value="precincts">Precincts</option>
             </select>
           </li>
         </ul>
