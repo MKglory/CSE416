@@ -4,8 +4,8 @@ import regression from 'regression';
 import axios from 'axios';
 
 // Load static JSON data file in React for fallback
-import ardata from '../data/ar_election_data.json';
-import nydata from '../data/ny_election_data.json';
+//import ardata from '../data/ar_election_data.json';
+//import nydata from '../data/ny_election_data.json';
 
 function Gingles({ selectedState }) {
   const [chartData, setChartData] = useState(null);
