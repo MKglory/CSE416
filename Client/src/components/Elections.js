@@ -128,6 +128,7 @@ function Elections({ selectedState }) {
     },
     maintainAspectRatio: false,
   };
+  return null;
 
   if (loading) {
     return <div>Loading data...</div>;

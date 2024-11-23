@@ -3,14 +3,7 @@ import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import nyDistrict from '../data/NewYork/maps/ny_district.json';
-import nyCounties from '../data/NewYork/maps/ny_counties_with_population.json';
-import ny_races from '../data/NewYork/ny_race_population.json'
-// import nyCongressDistrict from '../data/NewYork/maps/ny_congress_district.json';
-import arDistrict from '../data/Arkansas/maps/ar_precinct.json'
-import arCounties from '../data/Arkansas/maps/ar_counties_with_population.json';
-import ar_races from '../data/Arkansas/ar_race_population.json'
-import arCongressDistrict from '../data/Arkansas/maps/ar_congress_district_without_hawawi.json';
+
 
 
 
