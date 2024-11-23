@@ -1,114 +1,108 @@
-import React, { useEffect, useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import nyIncomeData from '../data/NY_household_income_all_races_results.json'; // Import the New York income data JSON file
-import arIncomeData from '../data/AR_household_income_all_races_results.json'; // Import the Arkansas income data JSON file
+import React, { useState, useEffect } from 'react';
+import CanvasJSReact from '@canvasjs/react-charts'; // Import CanvasJS for React
+import ensembleData from '../data/ensemble_data.json'; // Mock data for ensemble
+import enactedPlanData from '../data/enacted_plan_data.json'; // Mock data for enacted district plans
 
-// Register Chart.js components
-ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-function BoxAndWhiskerContent({ selectedState }) {
-  const [chartData, setChartData] = useState({});
+function BoxAndWhiskerComponent({ selectedState }) {
+  const [selectedGroup, setSelectedGroup] = useState('Black'); // Default racial/ethnic group
+  const [selectedRegion, setSelectedRegion] = useState('All'); // Default region type
+  const [chartOptions, setChartOptions] = useState({});
 
   useEffect(() => {
-    let incomeData;
+    // Filter data based on selected state, group, and region
+    const stateEnsembleData = ensembleData[selectedState] || {};
+    const stateEnactedData = enactedPlanData[selectedState] || {};
 
-    // Determine which state's income data to use
-    if (selectedState === 'NY') {
-      incomeData = nyIncomeData;
-    } else if (selectedState === 'AR') {
-      incomeData = arIncomeData;
-    } else {
-      console.error("Invalid selectedState.");
-      return; // Exit if the selected state is invalid
-    }
+    const filteredEnsembleData = stateEnsembleData[selectedGroup]?.[selectedRegion] || [];
+    const enactedDataPoints = stateEnactedData[selectedGroup]?.[selectedRegion] || [];
 
-    // Prepare the data for the chart
-    const labels = Object.keys(incomeData); // Extract races
-    const meanIncomes = labels.map(race => incomeData[race]["Mean Household Income"]); // Extract mean household incomes
-    const averageIncomes = labels.map(race => incomeData[race]["Median Household Income"]); // Extract average household incomes
+    // Transform ensemble data for box-and-whisker display
+    const ensemblePoints = filteredEnsembleData.map((district, index) => ({
+      x: index + 1, // District index
+      y: [district.min, district.lowerQuartile, district.median, district.upperQuartile, district.max],
+    }));
 
-    setChartData({
-      labels: labels,
-      datasets: [
+    // Transform enacted plan data for dot display
+    const enactedPoints = enactedDataPoints.map((value, index) => ({
+      x: index + 1,
+      y: value,
+      markerType: 'circle',
+      markerSize: 10,
+      markerColor: 'red',
+    }));
+
+    // Chart configuration
+    setChartOptions({
+      animationEnabled: true,
+      title: {
+        text: `(Dummy Data) Box-and-Whisker Plot for ${selectedGroup} in ${selectedState}`,
+        fontSize: 20,
+      },
+      axisX: {
+        title: 'Districts',
+        interval: 1,
+      },
+      axisY: {
+        title: `${selectedGroup} Percentage`,
+        minimum: 0,
+        maximum: 100,
+      },
+      legend: {
+        horizontalAlign: 'right',
+        verticalAlign: 'center',
+      },
+      data: [
         {
-          label: 'Mean Household Income',
-          data: meanIncomes,
-          backgroundColor: 'rgba(75, 192, 192, 0.6)',
+          type: 'boxAndWhisker',
+          name: 'Ensemble Data',
+          showInLegend: true,
+          dataPoints: ensemblePoints,
         },
         {
-          label: 'Average Household Income',
-          data: averageIncomes,
-          backgroundColor: 'rgba(255, 99, 132, 0.6)',
+          type: 'scatter',
+          name: 'Enacted Plan',
+          showInLegend: true,
+          dataPoints: enactedPoints,
         },
       ],
     });
-  }, [selectedState]); // Re-run effect when selectedState changes
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: `${selectedState === 'NY' ? 'New York' : 'Arkansas'} Household Income by Race (2022)`,
-        font: {
-          size: 20,
-        },
-      },
-      tooltip: {
-        enabled: true, // Keep tooltips enabled
-      },
-      datalabels: {
-        display: false, // Ensure data labels are hidden
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: 'Race',
-          font: {
-            size: 16,
-          },
-        },
-        ticks: {
-          autoSkip: false,
-          maxRotation: 45,
-          minRotation: 45,
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: 'Household Income ($)',
-          font: {
-            size: 16,
-          },
-        },
-        beginAtZero: true,
-      },
-    },
-  };
+  }, [selectedGroup, selectedRegion, selectedState]);
 
   return (
     <div>
-      {chartData.labels ? ( // Check if labels are available before rendering the chart
-        <Bar data={chartData} options={options} height={310} />
-      ) : (
-        <p>Loading data...</p> // Fallback loading message
-      )}
+      <div style={{ marginBottom: '20px' }}>
+        <label>
+          <strong>Select Group:</strong>
+          <select
+            value={selectedGroup}
+            onChange={(e) => setSelectedGroup(e.target.value)}
+            style={{ marginLeft: '10px' }}
+          >
+            <option value="Black">Black</option>
+            <option value="Hispanic">Hispanic</option>
+            <option value="Asian">Asian</option>
+            <option value="White">White</option>
+          </select>
+        </label>
+        <label style={{ marginLeft: '20px' }}>
+          <strong>Select Region:</strong>
+          <select
+            value={selectedRegion}
+            onChange={(e) => setSelectedRegion(e.target.value)}
+            style={{ marginLeft: '10px' }}
+          >
+            <option value="All">All</option>
+            <option value="Rural">Rural</option>
+            <option value="Urban">Urban</option>
+            <option value="Suburban">Suburban</option>
+          </select>
+        </label>
+      </div>
+      <CanvasJSChart options={chartOptions} />
     </div>
   );
 }
 
-export default BoxAndWhiskerContent;
+export default BoxAndWhiskerComponent;
