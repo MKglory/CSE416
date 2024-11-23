@@ -11,6 +11,8 @@ import VoteGapAnalysisContent from './VoteGapAnalysisContent';
 import HouseholdIncomeContent from './HouseholdIncomeContent';
 import Gingles from './Gingles.js'
 import IE from './IE.js'
+import BoxAndWhiskerContent from './BoxAndWhiskerContent'; // Import BoxAndWhiskerContent
+
 
 // real data
 import CountiesRaceEthnicity from './counties_raceEthnicity'
@@ -101,6 +103,9 @@ function Main() {
       //     countyName={selectedCounty}
       //     selectedState={selectedState} />
       //     )
+
+      case 'boxAndWhisker': // New case for Box and Whisker content
+      return <BoxAndWhiskerContent selectedState={selectedState} />; // Renders BoxAndWhiskerContent
       default:
         return <Elections selectedState={selectedState} />; // Default to MainContent
     }
