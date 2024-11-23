@@ -12,6 +12,8 @@ import HouseholdIncomeContent from './HouseholdIncomeContent';
 import Gingles from './Gingles.js'
 import IE from './IE.js'
 import BoxAndWhiskerContent from './BoxAndWhiskerContent'; // Import BoxAndWhiskerContent
+import StateDataSummaryContent from './StateDataSummaryContent'; // Import StateDataSummaryContent
+
 
 
 // real data
@@ -106,6 +108,9 @@ function Main() {
 
       case 'boxAndWhisker': // New case for Box and Whisker content
       return <BoxAndWhiskerContent selectedState={selectedState} />; // Renders BoxAndWhiskerContent
+
+      case 'stateDataSummary': // New case for State Data Summary content
+      return <StateDataSummaryContent selectedState={selectedState} />; // Renders StateDataSummaryContent
       default:
         return <Elections selectedState={selectedState} />; // Default to MainContent
     }

@@ -26,6 +26,8 @@ function Sidebar({ handlePlotChange, selectedCounty, resetSelection, selectedCon
             <option value="voteGapAnalysis">Gingles 2/3 Analysis</option>
             <option value="householdIncome">Household Income</option> {/* New option added */}
             <option value="boxAndWhisker">Box and Whisker</option> {/* New option added */}
+            <option value="stateDataSummary">State Data Summary</option> {/* New option added */}
+
 
 
           </select>
