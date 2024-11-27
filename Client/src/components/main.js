@@ -1,150 +1,174 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebar'; // For Graph Sidebar
+import TableSidebar from './TableSidebar'; // For Table Sidebar
 import Elections from './Elections';
-import RaceEthnicityContent from './state_raceEthnicity'; 
+import RaceEthnicityContent from './state_raceEthnicity';
 import ElectionVotesContent from './ElectionVotesContent';
 import NYHouseEthnicityContent from './NYHouseEthnicityContent';
 import CandidatesContent from './CandidatesContent';
 import DistrictComparisonContent from './DistrictComparisonContent';
 import VoteGapAnalysisContent from './VoteGapAnalysisContent';
 import HouseholdIncomeContent from './HouseholdIncomeContent';
-import Gingles from './Gingles.js'
-import IE from './IE.js'
-import BoxAndWhiskerContent from './BoxAndWhiskerContent'; // Import BoxAndWhiskerContent
-import StateDataSummaryContent from './StateDataSummaryContent'; // Import StateDataSummaryContent
-import CongressionalRepresentationTableContent from './CongressionalRepresentationTableContent'; // Updated import
-
-
-
-
-// real data
-import CountiesRaceEthnicity from './counties_raceEthnicity'
+import Gingles from './Gingles.js';
+import BoxAndWhiskerContent from './BoxAndWhiskerContent'; // Graph Content
+import StateDataSummaryContent from './StateDataSummaryContent'; // Graph Content
+import CongressionalRepresentationTableContent from './CongressionalRepresentationTableContent'; // Table Content
 import Footer from './Footer';
 import MapComponent from './MapComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'leaflet/dist/leaflet.css';
-import '../stylesheets/styles.css'; // Import your custom styles
+import '../stylesheets/styles.css'; // Import custom styles
 
 function Main() {
   const [selectedState, setSelectedState] = useState('NY');
-  const [selectedContent, setSelectedContent] = useState('mainContent');
+  const [selectedTableContent, setSelectedTableContent] = useState('mainTableContent'); // State for table content
+  const [selectedGraphContent, setSelectedGraphContent] = useState('mainGraphContent'); // State for graph content
   const [selectedCounty, setSelectedCounty] = useState(null);
-  const [fadeContent, setFadeContent] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-
+  const [fadeTableContent, setFadeTableContent] = useState(false); // Fade state for table
+  const [fadeGraphContent, setFadeGraphContent] = useState(false); // Fade state for graph
+  const [isTableVisible, setIsTableVisible] = useState(false); // Visibility for table
+  const [isGraphVisible, setIsGraphVisible] = useState(false); // Visibility for graph
 
   useEffect(() => {
-    setFadeContent(true); // Start fade-out effect when component mounts
-    const timer = setTimeout(() => {
-      setIsVisible(true); // Make the content visible after fade-out
-      setFadeContent(false); // Remove fade effect
-    }, 500); // Wait for fade-out duration
+    setFadeTableContent(true);
+    const tableTimer = setTimeout(() => {
+      setIsTableVisible(true);
+      setFadeTableContent(false);
+    }, 500);
 
-    return () => clearTimeout(timer); // Cleanup timer on unmount
-  }, []); // Run this effect only once when component mounts
+    return () => clearTimeout(tableTimer);
+  }, []); // Initialize table visibility on mount
+
+  useEffect(() => {
+    setFadeGraphContent(true);
+    const graphTimer = setTimeout(() => {
+      setIsGraphVisible(true);
+      setFadeGraphContent(false);
+    }, 500);
+
+    return () => clearTimeout(graphTimer);
+  }, []); // Initialize graph visibility on mount
 
   const resetSelection = () => {
     setSelectedCounty(null);
-    setSelectedContent('mainContent');
+    setSelectedTableContent('mainTableContent');
+    setSelectedGraphContent('mainGraphContent');
   };
+
+  const handleTableChange = (content) => {
+    setFadeTableContent(true);
+    setTimeout(() => {
+      setSelectedTableContent(content);
+      setFadeTableContent(false);
+    }, 500);
+  };
+
+  const handleGraphChange = (content) => {
+    setFadeGraphContent(true);
+    setTimeout(() => {
+      setSelectedGraphContent(content);
+      setFadeGraphContent(false);
+    }, 500);
+  };
+
   const handleStateChange = (state) => {
-    setFadeContent(true); // Trigger fade-out effect for content
+    setFadeTableContent(true);
+    setFadeGraphContent(true);
     setTimeout(() => {
-      setSelectedState(state); // Update selected state
-      setFadeContent(false); // Trigger fade-in effect for content
-    }, 500); // Wait for fade-out duration
+      setSelectedState(state);
+      setFadeTableContent(false);
+      setFadeGraphContent(false);
+    }, 500);
   };
 
-  const handlePlotChange = (content) => {
-    setFadeContent(true); // Trigger fade-out effect for content
-    setTimeout(() => {
-      // if (selectedContent === 'countiesPopulationRace'){
-      //   setSelectedCounty(null);
-      // }
-      setSelectedContent(content); // Update state based on sidebar button click
-      setFadeContent(false); // Trigger fade-in effect for content
-    }, 500); // Wait for fade-out duration
-  };
+const renderTableContent = () => {
+  switch (selectedTableContent) {
+    case 'congressionalRepresentationTable':
+      return <CongressionalRepresentationTableContent selectedState={selectedState} />;
+    case 'householdIncome':
+      return <HouseholdIncomeContent selectedState={selectedState} />;
+    default:
+      return <p>Please select a table from the sidebar.</p>;
+  }
+};
 
-  const renderContent = () => {
-    if (selectedCounty) {
-      return (
-        <CountiesRaceEthnicity 
-          countyName={selectedCounty}
-          selectedState={selectedState} 
-        />
-      );
-    }
-    switch (selectedContent) {
+  const renderGraphContent = () => {
+    switch (selectedGraphContent) {
       case 'elections':
-        // return (
-        // <CountiesRaceEthnicity 
-        // countyName={selectedCounty}
-        // selectedState={selectedState} />
-        // )
-        return <Elections selectedState={selectedState} />; // Only show MainContent
+        return <Elections selectedState={selectedState} />;
       case 'raceEthnicity':
-        return <RaceEthnicityContent selectedState={selectedState} />; // Only show RaceEthnicityContent
+        return <RaceEthnicityContent selectedState={selectedState} />;
       case 'electionVotes':
-        return <ElectionVotesContent selectedState={selectedState} />; // Updated to use selectedState
+        return <ElectionVotesContent selectedState={selectedState} />;
       case 'nyHouseEthnicity':
-        return <NYHouseEthnicityContent selectedState={selectedState} />; // Renders content for NY House Ethnicity
-      case 'candidates': // New case for Candidates content
-        return <CandidatesContent selectedState={selectedState} />; // Renders content for Candidates
-      case 'districtComparison': // New case for District Comparison content
-        return <DistrictComparisonContent selectedState={selectedState} />; // Renders content for District Comparison\
-        case 'householdIncome':
-          return <HouseholdIncomeContent selectedState={selectedState}/>; // Renders content for Household Income
-      
-      // case 'countiesRaceEthnicity':
-      //   return <CountiesRaceEthnicity selectedCounty={selectedCounty} />
-      case 'voteGapAnalysis': // New case for Vote Gap Analysis content
-        return <Gingles selectedState={selectedState}/>
-      // case 'countiesPopulationRace':
-      //     return (
-      //     <CountiesRaceEthnicity 
-      //     countyName={selectedCounty}
-      //     selectedState={selectedState} />
-      //     )
-
-      case 'boxAndWhisker': // New case for Box and Whisker content
-      return <BoxAndWhiskerContent selectedState={selectedState} />; // Renders BoxAndWhiskerContent
-
-      case 'stateDataSummary': // New case for State Data Summary content
-      return <StateDataSummaryContent selectedState={selectedState} />; // Renders StateDataSummaryContent
-
-      case 'congressionalRepresentationTable':
-        return <CongressionalRepresentationTableContent selectedState={selectedState} />;
+        return <NYHouseEthnicityContent selectedState={selectedState} />;
+      case 'candidates':
+        return <CandidatesContent selectedState={selectedState} />;
+      case 'districtComparison':
+        return <DistrictComparisonContent selectedState={selectedState} />;
+      case 'householdIncome':
+        return <HouseholdIncomeContent selectedState={selectedState} />;
+      case 'voteGapAnalysis':
+        return <Gingles selectedState={selectedState} />;
+      case 'boxAndWhisker':
+        return <BoxAndWhiskerContent selectedState={selectedState} />;
+      case 'stateDataSummary':
+        return <StateDataSummaryContent selectedState={selectedState} />;
       default:
-        return <Elections selectedState={selectedState} />; // Default to MainContent
+        return <p>Please select a graph from the sidebar.</p>;
     }
   };
-  // return(
-  //   <IE/>
-  // )
+
   return (
     <div>
       <Navbar onStateChange={handleStateChange} />
       <div className="mainPage mt-4">
         <div className="row">
-          <div className="col-md-6 left-content rounded-section">
-            <Sidebar 
-            handlePlotChange={handlePlotChange}
-            selectedCounty={selectedCounty}
-            resetSelection={resetSelection}
-            selectedContent={selectedContent}  />
+          {/* Left Column: Table + Graph */}
+          <div className="col-md-6 d-flex flex-column">
+            {/* Table Section */}
+            <div className="table-section mb-4">
+              <TableSidebar
+                handlePlotChange={handleTableChange}
+                selectedCounty={selectedCounty}
+                resetSelection={resetSelection}
+                selectedContent={selectedTableContent}
+              />
+              <div
+                className={`content ${fadeTableContent ? 'fade-out' : 'fade-in'} ${
+                  !isTableVisible ? 'd-none' : ''
+                }`}
+              >
+                {renderTableContent()}
+              </div>
+            </div>
 
-            <div className={`content ${fadeContent ? 'fade-out' : 'fade-in'} ${!isVisible ? 'd-none' : ''}`}> {/* Added fade classes for content */}
-              {renderContent()}
+            {/* Graph Section */}
+            <div className="graph-section">
+              <Sidebar
+                handlePlotChange={handleGraphChange}
+                selectedCounty={selectedCounty}
+                resetSelection={resetSelection}
+                selectedContent={selectedGraphContent}
+              />
+              <div
+                className={`content ${fadeGraphContent ? 'fade-out' : 'fade-in'} ${
+                  !isGraphVisible ? 'd-none' : ''
+                }`}
+              >
+                {renderGraphContent()}
+              </div>
             </div>
           </div>
 
+          {/* Right Column: Map */}
           <div className="col-md-6 map-content rounded-section">
             <MapComponent
-            selectedState={selectedState}
-            setSelectedCounty={setSelectedCounty}
-            handlePlotChange={handlePlotChange}/>
+              selectedState={selectedState}
+              setSelectedCounty={setSelectedCounty}
+              handlePlotChange={handleGraphChange}
+            />
           </div>
         </div>
       </div>
