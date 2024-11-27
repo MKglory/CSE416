@@ -27,6 +27,8 @@ function Sidebar({ handlePlotChange, selectedCounty, resetSelection, selectedCon
             <option value="householdIncome">Household Income</option> {/* New option added */}
             <option value="boxAndWhisker">Box and Whisker</option> {/* New option added */}
             <option value="stateDataSummary">State Data Summary</option> {/* New option added */}
+            <option value="congressionalRepresentationTable">Congressional Representation Table</option> {/* New option added */}
+
 
 
 

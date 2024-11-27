@@ -13,6 +13,8 @@ import Gingles from './Gingles.js'
 import IE from './IE.js'
 import BoxAndWhiskerContent from './BoxAndWhiskerContent'; // Import BoxAndWhiskerContent
 import StateDataSummaryContent from './StateDataSummaryContent'; // Import StateDataSummaryContent
+import CongressionalRepresentationTableContent from './CongressionalRepresentationTableContent'; // Updated import
+
 
 
 
@@ -111,6 +113,9 @@ function Main() {
 
       case 'stateDataSummary': // New case for State Data Summary content
       return <StateDataSummaryContent selectedState={selectedState} />; // Renders StateDataSummaryContent
+
+      case 'congressionalRepresentationTable':
+        return <CongressionalRepresentationTableContent selectedState={selectedState} />;
       default:
         return <Elections selectedState={selectedState} />; // Default to MainContent
     }

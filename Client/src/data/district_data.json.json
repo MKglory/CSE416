@@ -1,0 +1,55 @@
+{
+    "New York": {
+      "ensemble": [
+        {
+          "min": 10,
+          "lowerQuartile": 20,
+          "median": 30,
+          "upperQuartile": 40,
+          "max": 50
+        },
+        {
+          "min": 15,
+          "lowerQuartile": 25,
+          "median": 35,
+          "upperQuartile": 45,
+          "max": 55
+        }
+      ],
+      "enacted": [
+        {
+          "voteMargin": 5
+        },
+        {
+          "voteMargin": 10
+        }
+      ],
+      "details": [
+        {
+          "districtNumber": 1,
+          "representative": "John Doe",
+          "party": "Democrat",
+          "ethnicGroup": "Black",
+          "avgIncome": 60000,
+          "belowPoverty": 15,
+          "ruralPercentage": 10,
+          "urbanPercentage": 50,
+          "suburbanPercentage": 40,
+          "voteMargin": 5
+        },
+        {
+          "districtNumber": 2,
+          "representative": "Jane Smith",
+          "party": "Republican",
+          "ethnicGroup": "White",
+          "avgIncome": 70000,
+          "belowPoverty": 10,
+          "ruralPercentage": 20,
+          "urbanPercentage": 40,
+          "suburbanPercentage": 40,
+          "voteMargin": 10
+        }
+      ]
+    }
+  }
+  
