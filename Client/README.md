@@ -24,6 +24,9 @@ npm install chartjs-plugin-datalabels
 
 npm install axios
 
+npm install react-plotly.js
+
+
 https://mapshaper.org/
 
 congresional district shape file is 2022 from us census
