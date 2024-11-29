@@ -1,0 +1,55 @@
+{
+    "stateFP": "05",
+    "state": "ar",
+    "democratic_seats": 0,
+    "democratic_percentage": 0,
+    "republican_seats": 4,
+    "republican_percentage": 1,
+    "total_districts": 4,
+    "districts": {
+        "District 1": {
+            "Republican": 153774,
+            "RepublicanPercentage": 0.738,
+            "Democracy": 54598,
+            "DemocracyPercentage": 0.262,
+            "Libertarian": 0,
+            "LibertarianPercentage": 0.0,
+            "Total": 208732,
+            "TotalPercentage": 1,
+            "Result": "Republican hold"
+        },
+        "District 2": {
+            "Republican": 147975,
+            "RepublicanPercentage": 0.6004,
+            "Democracy": 86887,
+            "DemocracyPercentage": 0.3526,
+            "Libertarian": 11584,
+            "LibertarianPercentage": 0.047,
+            "Total": 246446,
+            "TotalPercentage": 1,
+            "Result": "Republican hold"
+        },
+        "District 3": {
+            "Republican": 142401,
+            "RepublicanPercentage": 0.6369,
+            "Democracy": 73541,
+            "DemocracyPercentage": 0.3289,
+            "Libertarian": 7646,
+            "LibertarianPercentage": 0.0342,
+            "Total": 223588,
+            "TotalPercentage": 1,
+            "Result": "Republican hold"
+        },
+        "District 4": {
+            "Republican": 153850,
+            "RepublicanPercentage": 0.71,
+            "Democracy": 56745,
+            "DemocracyPercentage": 0.2619,
+            "Libertarian": 6101,
+            "LibertarianPercentage": 0.0282,
+            "Total": 216696,
+            "TotalPercentage": 1,
+            "Result": "Republican hold"
+        }
+    }
+}

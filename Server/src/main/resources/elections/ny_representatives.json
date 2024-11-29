@@ -1,0 +1,15 @@
+{
+    "state": "New York",
+    "total_districts": 26,
+    "party_distribution": {
+      "democratic": {
+        "seats": 15,
+        "percentage": 57.69
+      },
+      "Republican": {
+        "seats": 11,
+        "percentage": 42.31
+      }
+    }
+  }
+  
