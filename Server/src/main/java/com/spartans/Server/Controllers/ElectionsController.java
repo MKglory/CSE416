@@ -1,9 +1,14 @@
 package com.spartans.Server.Controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.spartans.Server.Models.DistrictElection;
 import com.spartans.Server.Models.ElectionData;
+import com.spartans.Server.Repositories.DistrictElectionRepository;
 import com.spartans.Server.Repositories.ElectionDataRepository;
+import com.spartans.Server.Services.StateSummaryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +26,32 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class ElectionsController {
+
+    @Autowired
+    private StateSummaryService stateSummaryService;
+    @Autowired
+    private DistrictElectionRepository districtElectionRepository;
+    /**
+     * Endpoint to get state summary data
+     * @param state the state name
+     * @return summary data for the state
+     */
+    @GetMapping("/{state}/Summary")
+    public ResponseEntity<JsonNode> getStateSummary(
+            @PathVariable String state
+    ) {
+        if (state == null || state.isEmpty()) {
+            return ResponseEntity.badRequest().body(null); // Return 400 Bad Request for invalid state input
+        }
+        try {
+            JsonNode summary = stateSummaryService.getStateSummary(state);
+            return ResponseEntity.ok(summary);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            // Log error and return an appropriate response
+            return ResponseEntity.status(500).body(null); // Return 500 Internal Server Error
+        }
+    }
     private static final Logger logger = LoggerFactory.getLogger(ElectionsController.class);
     private final ElectionDataRepository repository;
 
@@ -50,4 +81,6 @@ public class ElectionsController {
             );
         }
     }
+
+
 }
