@@ -1,0 +1,46 @@
+{
+    "District 1": {
+        "Democracy": 153774,
+        "Democracy %": 0.738,
+        "Republican": 54598,
+        "Republican %": 0.262,
+        "Libertarian": 0,
+        "Libertarian %": 0.0,
+        "Total": 208732,
+        "Total %": 1,
+        "Result": "Republican hold"
+    },
+    "District 2": {
+        "Democracy": 147975,
+        "Democracy %": 0.6004,
+        "Republican": 86887,
+        "Republican %": 0.3526,
+        "Libertarian": 11584,
+        "Libertarian %": 0.047,
+        "Total": 246446,
+        "Total %": 1,
+        "Result": "Republican hold"
+    },
+    "District 3": {
+        "Democracy": 142401,
+        "Democracy %": 0.6369,
+        "Republican": 73541,
+        "Republican %": 0.3289,
+        "Libertarian": 7646,
+        "Libertarian %": 0.0342,
+        "Total": 223588,
+        "Total %": 1,
+        "Result": "Republican hold"
+    },
+    "District 4": {
+        "Democracy": 153850,
+        "Democracy %": 0.71,
+        "Republican": 56745,
+        "Republican %": 0.2619,
+        "Libertarian": 6101,
+        "Libertarian %": 0.0282,
+        "Total": 216696,
+        "Total %": 1,
+        "Result": "Republican hold"
+    }
+}
