@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
-import ny_elections from '../data/NewYork/ny_elections.json';
-import ny_representatives_seats from '../data/NewYork/ny_representatives';
 import {
   Chart as ChartJS,
   BarElement,
@@ -29,8 +27,8 @@ function Elections({ selectedState }) {
       // Process Election Votes
       const districts = electionData.districts;
       const districtsArray = Object.keys(districts); // Converts the object to an array of its values
-      const democraticVotes = districtsArray.map(district => districts[district]['democracy'] || 0);
-      const republicanVotes = districtsArray.map(district => districts[district]['republican'] || 0);
+      const democraticVotes = districtsArray.map(district => districts[district]['Democracy'] || 0);
+      const republicanVotes = districtsArray.map(district => districts[district]['Republican'] || 0);
       const totalDemocraticVotes = democraticVotes.reduce((acc, votes) => acc + votes, 0);
       const totalRepublicanVotes = republicanVotes.reduce((acc, votes) => acc + votes, 0);
       const representatives_demo = 

@@ -22,43 +22,39 @@ import '../stylesheets/styles.css'; // Import your custom styles
 
 function Main() {
   const [selectedState, setSelectedState] = useState('NY');
-  const [selectedContent, setSelectedContent] = useState('mainContent');
+  const [selectedContent, setSelectedContent] = useState('elections');
   const [selectedCounty, setSelectedCounty] = useState(null);
   const [fadeContent, setFadeContent] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
 
   useEffect(() => {
-    setFadeContent(true); // Start fade-out effect when component mounts
+    setFadeContent(true);
     const timer = setTimeout(() => {
-      setIsVisible(true); // Make the content visible after fade-out
-      setFadeContent(false); // Remove fade effect
-    }, 500); // Wait for fade-out duration
-
-    return () => clearTimeout(timer); // Cleanup timer on unmount
-  }, []); // Run this effect only once when component mounts
+      setIsVisible(true);
+      setFadeContent(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const resetSelection = () => {
     setSelectedCounty(null);
     setSelectedContent('mainContent');
   };
   const handleStateChange = (state) => {
-    setFadeContent(true); // Trigger fade-out effect for content
+    setFadeContent(true);
     setTimeout(() => {
-      setSelectedState(state); // Update selected state
-      setFadeContent(false); // Trigger fade-in effect for content
-    }, 500); // Wait for fade-out duration
+      setSelectedState(state); 
+      setFadeContent(false); 
+    }, 500);
   };
 
   const handlePlotChange = (content) => {
-    setFadeContent(true); // Trigger fade-out effect for content
+    setFadeContent(true); 
     setTimeout(() => {
-      // if (selectedContent === 'countiesPopulationRace'){
-      //   setSelectedCounty(null);
-      // }
-      setSelectedContent(content); // Update state based on sidebar button click
-      setFadeContent(false); // Trigger fade-in effect for content
-    }, 500); // Wait for fade-out duration
+      setSelectedContent(content);
+      setFadeContent(false); 
+    }, 500);
   };
 
   const renderContent = () => {
@@ -72,42 +68,23 @@ function Main() {
     }
     switch (selectedContent) {
       case 'elections':
-        // return (
-        // <CountiesRaceEthnicity 
-        // countyName={selectedCounty}
-        // selectedState={selectedState} />
-        // )
-        return <Elections selectedState={selectedState} />; // Only show MainContent
+        return <Elections selectedState={selectedState} />; 
       case 'raceEthnicity':
-        return <RaceEthnicityContent selectedState={selectedState} />; // Only show RaceEthnicityContent
+        return <RaceEthnicityContent selectedState={selectedState} />; 
       case 'electionVotes':
-        return <ElectionVotesContent selectedState={selectedState} />; // Updated to use selectedState
+        return <ElectionVotesContent selectedState={selectedState} />; 
       case 'nyHouseEthnicity':
-        return <NYHouseEthnicityContent selectedState={selectedState} />; // Renders content for NY House Ethnicity
-      case 'candidates': // New case for Candidates content
-        return <CandidatesContent selectedState={selectedState} />; // Renders content for Candidates
-      case 'districtComparison': // New case for District Comparison content
-        return <DistrictComparisonContent selectedState={selectedState} />; // Renders content for District Comparison\
+        return <NYHouseEthnicityContent selectedState={selectedState} />;
+      case 'candidates':
+        return <CandidatesContent selectedState={selectedState} />; 
+      case 'districtComparison': 
+        return <DistrictComparisonContent selectedState={selectedState} />; 
         case 'householdIncome':
-          return <HouseholdIncomeContent selectedState={selectedState}/>; // Renders content for Household Income
-      
-      // case 'countiesRaceEthnicity':
-      //   return <CountiesRaceEthnicity selectedCounty={selectedCounty} />
-      case 'voteGapAnalysis': // New case for Vote Gap Analysis content
+          return <HouseholdIncomeContent selectedState={selectedState}/>; 
+      case 'voteGapAnalysis':
         return <Gingles selectedState={selectedState}/>
-      // case 'countiesPopulationRace':
-      //     return (
-      //     <CountiesRaceEthnicity 
-      //     countyName={selectedCounty}
-      //     selectedState={selectedState} />
-      //     )
-      default:
-        return <Elections selectedState={selectedState} />; // Default to MainContent
     }
   };
-  // return(
-  //   <IE/>
-  // )
   return (
     <div>
       <Navbar onStateChange={handleStateChange} />

@@ -2,7 +2,7 @@
     "state": "Arkansas",
     "total_districts": 4,
     "party_distribution": {
-      "Democratic": {
+      "democratic": {
         "seats": 0,
         "percentage": 0
       },

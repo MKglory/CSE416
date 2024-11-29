@@ -3,16 +3,6 @@ import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import nyDistrict from '../data/NewYork/maps/ny_district.json';
-import nyCounties from '../data/NewYork/maps/ny_counties_with_population.json';
-import ny_races from '../data/NewYork/ny_race_population.json'
-// import nyCongressDistrict from '../data/NewYork/maps/ny_congress_district.json';
-import arDistrict from '../data/Arkansas/maps/ar_precinct.json'
-import arCounties from '../data/Arkansas/maps/ar_counties_with_population.json';
-import ar_races from '../data/Arkansas/ar_race_population.json'
-import arCongressDistrict from '../data/Arkansas/maps/ar_congress_district_without_hawawi.json';
-
-
 
 const nyCenter = [42.965, -76.0167];
 const arCenter = [34.7465, -92.2896];
@@ -23,14 +13,13 @@ const usBounds = [
 
 function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
   const [data, setData] = useState(null);
-  const [mapBoundary, setMapBoundary] = useState("districts");
+  const [mapBoundary, setMapBoundary] = useState("Districts");
+  const [heatMap, setHeatMap] = useState('None');
   const [loading, setLoading] = useState(true);
-
-
-
   const mapDataRequest = async () => {
     const response = await axios.get(`http://localhost:8080/maps/${selectedState}/${mapBoundary}`);
     setData(response.data);
+    console.log(response.data)
     setLoading(false);
   };
 
@@ -48,6 +37,9 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
   }
   function MapBoundaryChangeHandler(type){
     setMapBoundary(type);
+  }
+  function HeatMapChangeHandler(type){
+    setHeatMap(type);
   }
   const getColor_election = (result) => {
     return result === 'Republican'
@@ -104,7 +96,7 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
         ELECTION_RESULT = 'Republican';
       }
       let popupContent = '';
-      if (mapBoundary === 'districts') {
+      if (mapBoundary === 'Districts') {
         // const districtData = readDistrictData(feature);
         popupContent = `
           <h5>Congress District: ${feature.properties.NAME}</h5>
@@ -114,15 +106,7 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
           <p>Election Result: ${ELECTION_RESULT}</p>
         `;
       }
-      else if (mapBoundary === 'county'){
-        popupContent = `
-          <h5>County: ${feature.properties.NAME}</h5>
-          <p>Democratic votes: ${democratic_vote}</p>
-          <p>Republican votes: ${republican_vote}</p>
-          <p>Election Result: ${ELECTION_RESULT}</p>
-       `;
-      }
-      else if (mapBoundary === 'precincts'){
+      else if (mapBoundary === 'Precincts'){
         popupContent = `
           <h5>Preinct: ${feature.properties.PRECINCT}</h5>
           <p>Democratic votes: ${democratic_vote}</p>
@@ -139,14 +123,13 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
 
   // Update geoJsonComponent function
   const geoJsonComponent = useMemo(() => {
-    //const selectedData = CongressDistrict == 'NY' ? CongressDistrict : CongressDistrict;
     if (loading) return null;
     return (
       <GeoJSON
         key={`${selectedState}`}
         data={data}
-        style={style}
-        onEachFeature={onEachFeature}
+        // style={style}
+        // onEachFeature={onEachFeature}
       />
     );
   }, [selectedState, style, onEachFeature, data]);
@@ -157,32 +140,23 @@ function MapComponent({ selectedState, setSelectedCounty, handlePlotChange }) {
   return (
     <div>
       <div style={{ display: 'flex', width: '100%'}}>
-        <ul className="list-group">
-          <li className="list-group-item">
-            <select className="form-select" onChange={(e) => MapBoundaryChangeHandler(e.target.value)}>
-              <option value="districts">Districts</option>
-              <option value="county">Counties</option>
-              <option value="precincts">Precincts</option>
-            </select>
-          </li>
-        </ul>
-        {/* {mapType === 'counties'?
-        <ul className="list-group">
-          <li className="list-group-item">
-            <select className="form-select" onChange={(e) => handleMapShowSelect(e.target.value)} value={mapShowType}>
-              <option value="Election">Show Election</option>
-              <option value="Population">Show Total Population</option>
-              <option value="White">Show White Population</option>
-              <option value="Black">Show Black Population</option>
-              <option value="American">Show American Indian Population</option>
-              <option value="Asian">Show Asian Population</option>
-              <option value="NativeHawaiian">Show Native Hawaiia`n Population</option>
-              <option value="Other">Show Other Population</option>
-            </select>
-          </li>
-        </ul>
-        : null
-      } */}
+          <ul className="list-group">
+            <li className="list-group-item">
+              <select className="form-select" onChange={(e) => MapBoundaryChangeHandler(e.target.value)}>
+                <option value="Districts">Districts</option>
+                <option value="Precincts">Precincts</option>
+              </select>
+            </li>
+          </ul>
+          <ul className="list-group">
+            <li className="list-group-item">
+              <select className="form-select" value={heatMap} onChange={(e) => HeatMapChangeHandler(e.target.value)}>
+                <option value="None">None</option>
+                <option value="Demography">Demography</option>
+                <option value="Income">Income</option>
+              </select>
+            </li>
+          </ul>
       </div>
       <div>
         <MapContainer

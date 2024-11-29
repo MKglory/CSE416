@@ -69,7 +69,7 @@ const KDEPlot = () => {
       },
     },
   };
-
+  return null;
   return <Line data={data} options={options} />;
 };
 

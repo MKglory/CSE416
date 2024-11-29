@@ -1,4 +1,6 @@
-# Instruction
+# Instruction :\
+Downloading dataset from https://drive.google.com/drive/folders/1Jpzfh3K8cT6xAO3Pahb6zNaWVpQgiCqw?usp=drive_link.
+Run the populate_data.sh to import all data into Mongodb.
 
 # intall node modules
 npm install
@@ -23,6 +25,9 @@ shapefiles to geojson
 npm install chartjs-plugin-datalabels
 
 npm install axios
+
+npm install regression
+
 
 https://mapshaper.org/
 

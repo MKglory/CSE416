@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Map;
 
-@Document(collection = "stateElectionData")
+@Document(collection = "state_election")
 public class ElectionData {
     @Id
     private String id;
@@ -33,7 +33,7 @@ public class ElectionData {
     private String republicanPercentage;
 
     @Field("districts") // Maps the MongoDB field "districts" to the Java field
-    private Map<String, District> districts;
+    private Map<String, Object> districts;
 
     // Getters and Setters
     public String getId() {
@@ -100,11 +100,11 @@ public class ElectionData {
         this.republicanPercentage = republicanPercentage;
     }
 
-    public Map<String, District> getDistricts() {
+    public Map<String, Object> getDistricts() {
         return districts;
     }
 
-    public void setDistricts(Map<String, District> districts) {
+    public void setDistricts(Map<String, Object> districts) {
         this.districts = districts;
     }
 }

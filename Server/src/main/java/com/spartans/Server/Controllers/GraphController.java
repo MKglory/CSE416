@@ -45,29 +45,6 @@ public class GraphController {
             @PathVariable String state,
             @PathVariable String dataType) {
         try {
-//            String yPath = "elections/" + state.toLowerCase() + "_precincts_election.json";
-//            String xPath = dataType.toLowerCase() + "/" + state.toLowerCase() + "_precincts_" + dataType.toLowerCase() + ".json";
-//            Resource resourceY = new ClassPathResource(yPath);
-//            Resource resourceX = new ClassPathResource(xPath);
-//
-//            // Check if both files exist
-//            if (!resourceY.exists() || !resourceX.exists()) {
-//                logger.error("File not found: {} or {}", yPath, xPath);
-//                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found: " + yPath + " or " + xPath);
-//            }
-//
-//            try (InputStream yInputStream = resourceY.getInputStream();
-//                 InputStream xInputStream = resourceX.getInputStream()) {
-//
-//                JsonNode jsonY = objectMapper.readTree(yInputStream);
-//                JsonNode jsonX = objectMapper.readTree(xInputStream);
-//
-//                JsonNode mergedJson = mergeDatasets(jsonY, jsonX, "PrecinctID");
-//
-//                return ResponseEntity.ok()
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .body(mergedJson);
-//            }
             logger.info(state);
             List<PrecinctsElection> precinctsElectionList = precinctsElectionRepository.findByState(state.toLowerCase());
             List<PrecinctsDemography> precinctsDemographyList = precinctsDemographyRepository.findByState(state.toLowerCase());

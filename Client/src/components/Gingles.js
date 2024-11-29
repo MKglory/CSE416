@@ -110,6 +110,7 @@ function Gingles({ selectedState }) {
 
   if (loading) return <p>Loading...</p>;
 
+  return null;
   return (
     <div>
       <h2>Non-Linear Regression of Vote Share vs. Demographic Percentage</h2>
