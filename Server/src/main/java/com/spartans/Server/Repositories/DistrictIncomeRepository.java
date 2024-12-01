@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface DistrictIncomeRepository extends MongoRepository<DistrictIncome, String> {
-    List<DistrictIncome> findAllByState(String state);
+    List<DistrictIncome> findByState(String state);
 }

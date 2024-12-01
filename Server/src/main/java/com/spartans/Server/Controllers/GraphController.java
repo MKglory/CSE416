@@ -28,10 +28,8 @@ import java.util.Map;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class GraphController {
-
     private static final Logger logger = LoggerFactory.getLogger(GraphController.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
-
     private final PrecinctsElectionRepository precinctsElectionRepository;
     private final PrecinctsDemographyRepository precinctsDemographyRepository;
 

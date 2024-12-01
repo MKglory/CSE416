@@ -20,15 +20,16 @@ footer {
 /* Map container styles */
 .leaflet-container {
   width: 100%;
-  height: calc(100vh - 100px);
+  height: calc(80vh - 100px);
   border-radius: 15px; /* Rounded edges for the map */
 }
 
-
+.summaryTable{
+  margin-left: 1%;
+}
 .map-content {
   height: 95vh; /* Ensures the map takes up full height */
 }
-
 /* Add rounded edges and spacing */
 .rounded-section {
   border-radius: 15px;
@@ -43,8 +44,11 @@ footer {
 }
 
 /* Custom layout styling */
+.map-content {
+  height: 80vh; /* Ensure it takes up full height */
+}
 .left-content {
-  height: 95vh; /* Ensure it takes up full height */
+  height: 80vh; /* Ensure it takes up full height */
 }
 
 .sidebar {

@@ -26,13 +26,19 @@ public class DistrictIncome {
     private int stateFp;
 
     @Field("CD")
-    private int congressionalDistrict;
+    private int cd;
 
     @Field("BoundaryType")
     private String boundaryType;
 
     @Field("Income_Mean")
     private double incomeMean;
+
+    @Field("Income_Mean_normalized")
+    private double incomeMeanNormalized;
+
+    // Default Constructor
+    public DistrictIncome() {}
 
     // Getters and Setters
     public String getId() {
@@ -83,14 +89,6 @@ public class DistrictIncome {
         this.stateFp = stateFp;
     }
 
-    public int getCongressionalDistrict() {
-        return congressionalDistrict;
-    }
-
-    public void setCongressionalDistrict(int congressionalDistrict) {
-        this.congressionalDistrict = congressionalDistrict;
-    }
-
     public String getBoundaryType() {
         return boundaryType;
     }
@@ -105,5 +103,21 @@ public class DistrictIncome {
 
     public void setIncomeMean(double incomeMean) {
         this.incomeMean = incomeMean;
+    }
+
+    public double getIncomeMeanNormalized() {
+        return incomeMeanNormalized;
+    }
+
+    public void setIncomeMeanNormalized(double incomeMeanNormalized) {
+        this.incomeMeanNormalized = incomeMeanNormalized;
+    }
+
+    public int getCd() {
+        return cd;
+    }
+
+    public void setCd(int cd) {
+        this.cd = cd;
     }
 }

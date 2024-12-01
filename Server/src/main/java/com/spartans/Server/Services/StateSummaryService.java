@@ -30,9 +30,8 @@ public class StateSummaryService {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode summary = mapper.createObjectNode();
 
-        // Fetch data from the respective collections
         List<DistrictDemography> demographies = districtDemographyRepository.findByState(state.toLowerCase());
-        List<DistrictIncome> incomes = districtIncomeRepository.findAllByState(state.toLowerCase());
+        List<DistrictIncome> incomes = districtIncomeRepository.findByState(state.toLowerCase());
         List<DistrictElection> elections = districtElectionRepository.findByState(state.toLowerCase());
 
         // Initialize metrics
@@ -42,30 +41,34 @@ public class StateSummaryService {
         double totalIncome = 0.0;
         int totalDemocraticVotes = 0;
         int totalRepublicanVotes = 0;
+        String electionWinner = "";
 
         // Process demographic data
         for (DistrictDemography demography : demographies) {
             totalDistricts++;
-            totalPopulation += demography.getTotalPopulation();
-            totalWhite += demography.getWhitePopulation();
-            totalBlack += demography.getBlackPopulation();
-            totalAsian += demography.getAsianPopulation();
-            totalHispanic += demography.getHispanicPopulation();
-            totalAmericanIndian += demography.getAmericanIndianPopulation();
+            totalPopulation += demography.getTotal();
+            totalWhite += demography.getWhite();
+            totalBlack += demography.getBlack();
+            totalAsian += demography.getAsian();
+            totalHispanic += demography.getHispanic();
+            totalAmericanIndian += demography.getAmericanIndian();
         }
-
-        // Process income data
         for (DistrictIncome income : incomes) {
             totalIncome += income.getIncomeMean();
         }
-
-        // Process election data
         for (DistrictElection election : elections) {
             totalDemocraticVotes += election.getDemocraticVotes();
             totalRepublicanVotes += election.getRepublicanVotes();
         }
+        if (totalDemocraticVotes > totalRepublicanVotes){
+            electionWinner = "Democratic";
+        }
+        else if (totalDemocraticVotes < totalRepublicanVotes){
+            electionWinner = "Republican";
+        }else {
+            electionWinner = "Tie";
+        }
 
-        // Calculate averages
         double avgIncome = totalDistricts > 0 ? totalIncome / totalDistricts : 0.0;
 
         // Build JSON summary
@@ -75,7 +78,7 @@ public class StateSummaryService {
         summary.put("averageIncome", avgIncome);
         summary.put("totalDemocraticVotes", totalDemocraticVotes);
         summary.put("totalRepublicanVotes", totalRepublicanVotes);
-
+        summary.put("electionWinner", electionWinner);
         // Add demographic breakdown
         ObjectNode demographics = mapper.createObjectNode();
         demographics.put("white", totalWhite);

@@ -4,17 +4,17 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "precinctsElection") // Replace "precincts" with your MongoDB collection name
+@Document(collection = "precincts_elections") // Update with your MongoDB collection name
 public class PrecinctsElection {
 
     @Id
-    private String id; // The unique identifier, mapped from PrecinctID
-
-    @Field("STATEFP")
-    private String stateFP;
+    private String id;
 
     @Field("STATE")
     private String state;
+
+    @Field("STATEFP")
+    private String stateFP;
 
     @Field("COUNTYFP")
     private String countyFP;
@@ -25,23 +25,38 @@ public class PrecinctsElection {
     @Field("PRECINCT")
     private String precinct;
 
+    @Field("PrecinctID")
+    private String precinctID;
+
+    @Field("CD")
+    private String cd;
+
+    @Field("BoundaryType")
+    private String boundaryType;
+
+    @Field("Region_Type")
+    private String regionType;
+
     @Field("Democratic_votes")
     private int democraticVotes;
 
     @Field("Republican_votes")
     private int republicanVotes;
 
-    @Field("PrecinctID")
-    private String precinctID;
+    @Field("Percentage_vote_republican")
+    private double percentageVoteRepublican;
 
-    @Field("CD")
-    private String congressionalDistrict;
+    @Field("Percentage_vote_democracy")
+    private double percentageVoteDemocracy;
 
-    @Field("vote_share_democracy")
-    private Double voteShareDemocracy;
+    @Field("Republican_candidate")
+    private String republicanCandidate;
 
-    @Field("vote_share_republican")
-    private Double voteShareRepublican;
+    @Field("Democratic_candidate")
+    private String democraticCandidate;
+
+    @Field("Other_votes")
+    private int otherVotes;
 
     // Default Constructor
     public PrecinctsElection() {}
@@ -61,14 +76,6 @@ public class PrecinctsElection {
 
     public void setStateFP(String stateFP) {
         this.stateFP = stateFP;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String State) {
-        this.state = State;
     }
 
     public String getCountyFP() {
@@ -95,6 +102,30 @@ public class PrecinctsElection {
         this.precinct = precinct;
     }
 
+    public String getPrecinctID() {
+        return precinctID;
+    }
+
+    public void setPrecinctID(String precinctID) {
+        this.precinctID = precinctID;
+    }
+
+    public String getBoundaryType() {
+        return boundaryType;
+    }
+
+    public void setBoundaryType(String boundaryType) {
+        this.boundaryType = boundaryType;
+    }
+
+    public String getRegionType() {
+        return regionType;
+    }
+
+    public void setRegionType(String regionType) {
+        this.regionType = regionType;
+    }
+
     public int getDemocraticVotes() {
         return democraticVotes;
     }
@@ -111,35 +142,59 @@ public class PrecinctsElection {
         this.republicanVotes = republicanVotes;
     }
 
-    public String getPrecinctID() {
-        return precinctID;
+    public double getPercentageVoteRepublican() {
+        return percentageVoteRepublican;
     }
 
-    public void setPrecinctID(String precinctID) {
-        this.precinctID = precinctID;
+    public void setPercentageVoteRepublican(double percentageVoteRepublican) {
+        this.percentageVoteRepublican = percentageVoteRepublican;
     }
 
-    public String getCongressionalDistrict() {
-        return congressionalDistrict;
+    public double getPercentageVoteDemocracy() {
+        return percentageVoteDemocracy;
     }
 
-    public void setCongressionalDistrict(String congressionalDistrict) {
-        this.congressionalDistrict = congressionalDistrict;
+    public void setPercentageVoteDemocracy(double percentageVoteDemocracy) {
+        this.percentageVoteDemocracy = percentageVoteDemocracy;
     }
 
-    public Double getVoteShareDemocracy() {
-        return voteShareDemocracy;
+    public String getRepublicanCandidate() {
+        return republicanCandidate;
     }
 
-    public void setVoteShareDemocracy(Double voteShareDemocracy) {
-        this.voteShareDemocracy = voteShareDemocracy;
+    public void setRepublicanCandidate(String republicanCandidate) {
+        this.republicanCandidate = republicanCandidate;
     }
 
-    public Double getVoteShareRepublican() {
-        return voteShareRepublican;
+    public String getDemocraticCandidate() {
+        return democraticCandidate;
     }
 
-    public void setVoteShareRepublican(Double voteShareRepublican) {
-        this.voteShareRepublican = voteShareRepublican;
+    public void setDemocraticCandidate(String democraticCandidate) {
+        this.democraticCandidate = democraticCandidate;
+    }
+
+    public int getOtherVotes() {
+        return otherVotes;
+    }
+
+    public void setOtherVotes(int otherVotes) {
+        this.otherVotes = otherVotes;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCd() {
+        return cd;
+    }
+
+    public void setCd(String cd) {
+        this.cd = cd;
     }
 }
