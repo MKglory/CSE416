@@ -97,18 +97,18 @@ public class HeatMapService {
         // Try to fetch from cache
         Map<String, Object> cachedData = (Map<String, Object>) caffeineCache.getIfPresent(cacheKey);
         if (cachedData != null) {
-            logger.info("Cache hit for key: {}", cacheKey);
+            logger.info("[HeatMapService] Cache hit for key: {}", cacheKey);
             return cachedData; // Return cached result
         }
 
-        logger.info("Cache miss for key: {}. Fetching data from database.", cacheKey);
+        logger.info("[HeatMapService] Cache miss for key: {}. Fetching data from database.", cacheKey);
 
         // Fetch data if not in cache
         List<?> data = switch (boundary.toLowerCase()) {
             case "districts" -> getDistrictHeatMap(state, dataType);
             case "precincts" -> getPrecinctHeatMap(state, dataType);
             default -> {
-                logger.error("Unsupported boundary type: {}", boundary);
+                logger.error("[HeatMapService] Unsupported boundary type: {}", boundary);
                 throw new IllegalArgumentException("Unsupported boundary type: " + boundary);
             }
         };
@@ -121,38 +121,38 @@ public class HeatMapService {
 
         // Store result in cache
         caffeineCache.put(cacheKey, result);
-        logger.info("Data cached for key: {}", cacheKey);
+        logger.info("[HeatMapService] Data cached for key: {}", cacheKey);
 
         return result;
     }
 
     public List<?> getDistrictHeatMap(String state, String dataType) {
-        logger.debug("Fetching district heatmap data for state: {}, dataType: {}", state, dataType);
+        logger.debug("[HeatMapService] Fetching district heatmap data for state: {}, dataType: {}", state, dataType);
         return switch (dataType.toLowerCase()) {
             case "demography" -> districtDemographyRepository.findByState(state.toLowerCase());
             case "income" -> districtIncomeRepository.findByState(state.toLowerCase());
             case "election" -> districtElectionRepository.findByState(state.toLowerCase());
             default -> {
-                logger.error("Unsupported data type: {}", dataType);
+                logger.error("[HeatMapService] Unsupported data type: {}", dataType);
                 throw new IllegalArgumentException("Unsupported data type: " + dataType);
             }
         };
     }
 
     public List<?> getPrecinctHeatMap(String state, String dataType) {
-        logger.debug("Fetching precinct heatmap data for state: {}, dataType: {}", state, dataType);
+        logger.debug("[HeatMapService] Fetching precinct heatmap data for state: {}, dataType: {}", state, dataType);
         return switch (dataType.toLowerCase()) {
             case "demography" -> precinctsDemographyRepository.findByState(state.toLowerCase());
             case "income" -> precinctsIncomeRepository.findByState(state.toLowerCase());
             case "election" -> precinctsElectionRepository.findByState(state.toLowerCase());
             default -> {
-                logger.error("Unsupported data type: {}", dataType);
+                logger.error("[HeatMapService] Unsupported data type: {}", dataType);
                 throw new IllegalArgumentException("Unsupported data type: " + dataType);
             }
         };
     }
 
     private String generateCacheKey(String state, String boundary, String dataType) {
-        return state.toLowerCase() + ":" + boundary.toLowerCase() + ":" + dataType.toLowerCase();
+        return "HeatMapService:" + state.toLowerCase() + ":" + boundary.toLowerCase() + ":" + dataType.toLowerCase();
     }
 }
