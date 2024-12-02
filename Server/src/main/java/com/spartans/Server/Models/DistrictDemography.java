@@ -4,14 +4,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "districts_demography")
+@Document(collection = "districts_demography") // Update this to match your MongoDB collection name
 public class DistrictDemography {
 
     @Id
-    private String id;
+    private String id; // MongoDB's unique identifier (_id)
 
     @Field("GEOID20")
-    private String geoId20;
+    private String geoId;
 
     @Field("NAME")
     private String name;
@@ -23,31 +23,31 @@ public class DistrictDemography {
     private String district;
 
     @Field("STATEFP")
-    private int stateFp;
+    private int stateFP;
 
     @Field("CD")
-    private int congressionalDistrict;
+    private int cd;
 
     @Field("BoundaryType")
     private String boundaryType;
 
     @Field("White")
-    private int whitePopulation;
+    private int white;
 
     @Field("Black")
-    private int blackPopulation;
+    private int black;
 
     @Field("American_Indian")
-    private int americanIndianPopulation;
+    private int americanIndian;
 
     @Field("Asian")
-    private int asianPopulation;
+    private int asian;
 
     @Field("Hispanic")
-    private int hispanicPopulation;
+    private int hispanic;
 
     @Field("Total")
-    private int totalPopulation;
+    private int total;
 
     @Field("Percent_White")
     private double percentWhite;
@@ -70,6 +70,25 @@ public class DistrictDemography {
     @Field("Percentage_Prominent_Race")
     private double percentageProminentRace;
 
+    // New fields for normalized values
+    @Field("White_normalized")
+    private double whiteNormalized;
+
+    @Field("Black_normalized")
+    private double blackNormalized;
+
+    @Field("American_Indian_normalized")
+    private double americanIndianNormalized;
+
+    @Field("Asian_normalized")
+    private double asianNormalized;
+
+    @Field("Hispanic_normalized")
+    private double hispanicNormalized;
+
+    // Default Constructor
+    public DistrictDemography() {}
+
     // Getters and Setters
     public String getId() {
         return id;
@@ -79,12 +98,12 @@ public class DistrictDemography {
         this.id = id;
     }
 
-    public String getGeoId20() {
-        return geoId20;
+    public String getGeoId() {
+        return geoId;
     }
 
-    public void setGeoId20(String geoId20) {
-        this.geoId20 = geoId20;
+    public void setGeoId(String geoId) {
+        this.geoId = geoId;
     }
 
     public String getName() {
@@ -111,20 +130,20 @@ public class DistrictDemography {
         this.district = district;
     }
 
-    public int getStateFp() {
-        return stateFp;
+    public int getStateFP() {
+        return stateFP;
     }
 
-    public void setStateFp(int stateFp) {
-        this.stateFp = stateFp;
+    public void setStateFP(int stateFP) {
+        this.stateFP = stateFP;
     }
 
-    public int getCongressionalDistrict() {
-        return congressionalDistrict;
+    public int getCd() {
+        return cd;
     }
 
-    public void setCongressionalDistrict(int congressionalDistrict) {
-        this.congressionalDistrict = congressionalDistrict;
+    public void setCd(int cd) {
+        this.cd = cd;
     }
 
     public String getBoundaryType() {
@@ -135,52 +154,52 @@ public class DistrictDemography {
         this.boundaryType = boundaryType;
     }
 
-    public int getWhitePopulation() {
-        return whitePopulation;
+    public int getWhite() {
+        return white;
     }
 
-    public void setWhitePopulation(int whitePopulation) {
-        this.whitePopulation = whitePopulation;
+    public void setWhite(int white) {
+        this.white = white;
     }
 
-    public int getBlackPopulation() {
-        return blackPopulation;
+    public int getBlack() {
+        return black;
     }
 
-    public void setBlackPopulation(int blackPopulation) {
-        this.blackPopulation = blackPopulation;
+    public void setBlack(int black) {
+        this.black = black;
     }
 
-    public int getAmericanIndianPopulation() {
-        return americanIndianPopulation;
+    public int getAmericanIndian() {
+        return americanIndian;
     }
 
-    public void setAmericanIndianPopulation(int americanIndianPopulation) {
-        this.americanIndianPopulation = americanIndianPopulation;
+    public void setAmericanIndian(int americanIndian) {
+        this.americanIndian = americanIndian;
     }
 
-    public int getAsianPopulation() {
-        return asianPopulation;
+    public int getAsian() {
+        return asian;
     }
 
-    public void setAsianPopulation(int asianPopulation) {
-        this.asianPopulation = asianPopulation;
+    public void setAsian(int asian) {
+        this.asian = asian;
     }
 
-    public int getHispanicPopulation() {
-        return hispanicPopulation;
+    public int getHispanic() {
+        return hispanic;
     }
 
-    public void setHispanicPopulation(int hispanicPopulation) {
-        this.hispanicPopulation = hispanicPopulation;
+    public void setHispanic(int hispanic) {
+        this.hispanic = hispanic;
     }
 
-    public int getTotalPopulation() {
-        return totalPopulation;
+    public int getTotal() {
+        return total;
     }
 
-    public void setTotalPopulation(int totalPopulation) {
-        this.totalPopulation = totalPopulation;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public double getPercentWhite() {
@@ -237,5 +256,45 @@ public class DistrictDemography {
 
     public void setPercentageProminentRace(double percentageProminentRace) {
         this.percentageProminentRace = percentageProminentRace;
+    }
+
+    public double getWhiteNormalized() {
+        return whiteNormalized;
+    }
+
+    public void setWhiteNormalized(double whiteNormalized) {
+        this.whiteNormalized = whiteNormalized;
+    }
+
+    public double getBlackNormalized() {
+        return blackNormalized;
+    }
+
+    public void setBlackNormalized(double blackNormalized) {
+        this.blackNormalized = blackNormalized;
+    }
+
+    public double getAmericanIndianNormalized() {
+        return americanIndianNormalized;
+    }
+
+    public void setAmericanIndianNormalized(double americanIndianNormalized) {
+        this.americanIndianNormalized = americanIndianNormalized;
+    }
+
+    public double getAsianNormalized() {
+        return asianNormalized;
+    }
+
+    public void setAsianNormalized(double asianNormalized) {
+        this.asianNormalized = asianNormalized;
+    }
+
+    public double getHispanicNormalized() {
+        return hispanicNormalized;
+    }
+
+    public void setHispanicNormalized(double hispanicNormalized) {
+        this.hispanicNormalized = hispanicNormalized;
     }
 }

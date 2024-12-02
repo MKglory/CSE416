@@ -1,45 +1,67 @@
 // Sidebar.js
-import React from 'react';
+import React, { useEffect } from 'react';
+import Elections from './Elections';
+import RaceEthnicityContent from './state_raceEthnicity'; 
+import ElectionVotesContent from './ElectionVotesContent';
+import NYHouseEthnicityContent from './NYHouseEthnicityContent';
+import CandidatesContent from './CandidatesContent';
+import DistrictComparisonContent from './DistrictComparisonContent';
+import VoteGapAnalysisContent from './VoteGapAnalysisContent';
+import HouseholdIncomeContent from './HouseholdIncomeContent';
+import Gingles from './Gingles.js'
+import IE from './IE.js'
 
-function Sidebar({ handlePlotChange, selectedCounty, resetSelection, selectedContent }) {
+function Sidebar({ handlePlotChange, selectedState, selectedContent }) {
   const handleSelect = (event) => {
+    console.log(event.target.value)
     handlePlotChange(event.target.value);
+  };
+  const renderContent = () => {
+    switch (selectedContent) {
+      case 'elections':
+        return <Elections selectedState={selectedState} selectedContent={selectedContent}/>; 
+      case 'raceEthnicity':
+        return <RaceEthnicityContent selectedState={selectedState} />; 
+      case 'electionVotes':
+        return <ElectionVotesContent selectedState={selectedState} />; 
+      case 'nyHouseEthnicity':
+        return <NYHouseEthnicityContent selectedState={selectedState} />;
+      case 'candidates':
+        return <CandidatesContent selectedState={selectedState} />; 
+      case 'districtComparison': 
+        return <DistrictComparisonContent selectedState={selectedState} />; 
+        case 'householdIncome':
+          return <HouseholdIncomeContent selectedState={selectedState}/>; 
+      case 'voteGapAnalysis':
+        return <Gingles selectedState={selectedState}/>
+    }
   };
 
   return (
-    <div className="sidebar">
-      <ul className="list-group">
-        <li className="list-group-item d-flex flex-row align-items-center justify-content-between">
-          <select
-            className="form-select"
-            onChange={handleSelect}
-            value={selectedContent}
-            disabled={selectedCounty !== null}
-            style={{ cursor: selectedCounty !== null ? 'not-allowed' : 'pointer' }} 
-          >
-            <option value="mainContent">Elections</option>
-            <option value="raceEthnicity">Race & Ethnicity</option>
-            <option value="electionVotes">Election Votes</option>
-            <option value="nyHouseEthnicity">NY House of Representatives Ethnicity</option>
-            <option value="candidates">Candidates</option>
-            {/* <option value="districtComparison">District Comparison</option> */}
-            <option value="voteGapAnalysis">Gingles 2/3 Analysis</option>
-            <option value="householdIncome">Household Income</option> {/* New option added */}
-
-          </select>
-
-          {selectedCounty && (
-            <li className="d-flex justify-content-center align-items-center" 
-              style={{ paddingLeft: 17}} >
-              <button onClick={resetSelection}
-                className="btn btn-secondary btn-sm me-2"
-                style={{ padding: '5px 15px' }} >
-                Back
-              </button>
-            </li>
-          )}
-        </li>
-      </ul>
+    <div>
+      <div className="sidebar">
+        <ul className="list-group">
+          <li className="list-group-item d-flex flex-row align-items-center justify-content-between">
+            <select
+              className="form-select"
+              onChange={handleSelect}
+              value={selectedContent}
+            >
+              <option value="elections">Elections</option>
+              <option value="raceEthnicity">Race & Ethnicity</option>
+              <option value="electionVotes">Election Votes</option>
+              <option value="nyHouseEthnicity">NY House of Representatives Ethnicity</option>
+              <option value="candidates">Candidates</option>
+              {/* <option value="districtComparison">District Comparison</option> */}
+              <option value="voteGapAnalysis">Gingles 2/3 Analysis</option>
+              <option value="householdIncome">Household Income</option> {/* New option added */}
+            </select>
+          </li>
+        </ul>
+      </div>
+      <div> 
+        {renderContent()}
+      </div>
     </div>
   );
 }

@@ -1,7 +1,9 @@
 package com.spartans.Server.Controllers;
 
 import com.spartans.Server.Models.Boundaries;
+import com.spartans.Server.Repositories.PrecinctsDemographyRepository;
 import com.spartans.Server.Services.BoundariesService;
+import com.spartans.Server.Services.HeatMapService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +16,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class MapDataController {
-
     private static final Logger logger = LoggerFactory.getLogger(MapDataController.class);
     @Autowired
     private BoundariesService boundariesService;
+    @Autowired
+    private HeatMapService heatMapService;
+    @Autowired
+    private PrecinctsDemographyRepository precinctsDemographyRepository;
 
     @GetMapping("/maps/{state}/{boundaryType}")
     public ResponseEntity<?> getMapData(
@@ -30,6 +34,22 @@ public class MapDataController {
         try {
             Map<String, Object> featureCollection = boundariesService.getBoundariesByStateAndType(state, boundaryType);
             return ResponseEntity.ok(featureCollection);
+        } catch (Exception  e) {
+            logger.info(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while retrieving map data.", e
+            );
+        }
+    }
+
+    @GetMapping("/heatmaps/{state}/{boundaryType}/{dataType}")
+    public ResponseEntity<?> getHeatMapData(
+            @PathVariable String state,
+            @PathVariable String boundaryType,
+            @PathVariable String dataType) {
+        try {
+            Map<String, Object> heatMapData = heatMapService.getHeatMapData(state, boundaryType, dataType);
+            return ResponseEntity.ok(heatMapData);
         } catch (Exception  e) {
             logger.info(e.getMessage());
             throw new ResponseStatusException(

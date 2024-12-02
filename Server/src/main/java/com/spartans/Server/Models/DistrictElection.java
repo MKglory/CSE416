@@ -26,7 +26,7 @@ public class DistrictElection {
     private int stateFp;
 
     @Field("CD")
-    private int congressionalDistrict;
+    private int cd;
 
     @Field("BoundaryType")
     private String boundaryType;
@@ -92,14 +92,6 @@ public class DistrictElection {
         this.stateFp = stateFp;
     }
 
-    public int getCongressionalDistrict() {
-        return congressionalDistrict;
-    }
-
-    public void setCongressionalDistrict(int congressionalDistrict) {
-        this.congressionalDistrict = congressionalDistrict;
-    }
-
     public String getBoundaryType() {
         return boundaryType;
     }
@@ -138,5 +130,13 @@ public class DistrictElection {
 
     public void setPercentageVoteDemocracy(double percentageVoteDemocracy) {
         this.percentageVoteDemocracy = percentageVoteDemocracy;
+    }
+
+    public int getCd() {
+        return cd;
+    }
+
+    public void setCd(int cd) {
+        this.cd = cd;
     }
 }

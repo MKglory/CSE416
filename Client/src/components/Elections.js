@@ -13,7 +13,7 @@ import {
 // Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-function Elections({ selectedState }) {
+function Elections({ selectedState, selectedContent }) {
   const [chartData_election, setChartData_election] = useState(null);
   const [chartData_representatives, setChartData_representatives] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,17 +21,14 @@ function Elections({ selectedState }) {
   const ElectionsDataRequest = async () => {
     try {
       const electionResponse = await axios.get(`http://localhost:8080/elections/${selectedState.toLowerCase()}Data`);
-      const electionData = electionResponse.data; // Adjust based on your API response structure
-      console.log(electionData)
-
-      // Process Election Votes
+      const colors = electionResponse.data.colors
+      const electionData = electionResponse.data.data; 
       const districts = electionData.districts;
       const districtsArray = Object.keys(districts); // Converts the object to an array of its values
       const democraticVotes = districtsArray.map(district => districts[district]['Democracy'] || 0);
       const republicanVotes = districtsArray.map(district => districts[district]['Republican'] || 0);
       const totalDemocraticVotes = democraticVotes.reduce((acc, votes) => acc + votes, 0);
       const totalRepublicanVotes = republicanVotes.reduce((acc, votes) => acc + votes, 0);
-      const representatives_demo = 
       // Set Chart Data for Elections
       setChartData_election({
         labels: ['Election Votes'],
@@ -39,12 +36,12 @@ function Elections({ selectedState }) {
           {
             label: 'Democratic',
             data: [totalDemocraticVotes],
-            backgroundColor: 'rgba(0, 0, 255, 0.6)', // Blue
+            backgroundColor: colors.democraticColor, // Blue
           },
           {
             label: 'Republican',
             data: [totalRepublicanVotes],
-            backgroundColor: 'rgba(255, 0, 0, 0.6)', // Red
+            backgroundColor: colors.republicanColor, // Red
           }
         ]
       });
@@ -56,12 +53,12 @@ function Elections({ selectedState }) {
           {
             label: 'Democratic',
             data: [electionData['democraticSeats']],
-            backgroundColor: 'rgba(0, 0, 255, 0.6)', // Blue
+            backgroundColor: colors.democraticColor, // Blue
           },
           {
             label: 'Republican',
             data: [electionData['republicanSeats']],
-            backgroundColor: 'rgba(255, 0, 0, 0.6)', // Red
+            backgroundColor: colors.republicanColor, // Red
           }
         ]
       });
@@ -75,7 +72,7 @@ function Elections({ selectedState }) {
   useEffect(() => {
     setLoading(true);
     ElectionsDataRequest();
-  }, [selectedState]);
+  }, [selectedState, selectedContent]);
 
   const options = {
     indexAxis: 'y',
