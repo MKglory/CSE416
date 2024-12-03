@@ -13,17 +13,30 @@ public class CacheConfig {
     @Bean
     public Cache<String, Object> caffeineCache() {
         return Caffeine.newBuilder()
-                .expireAfterWrite(10, TimeUnit.MINUTES) // Cache entries expire after 10 minutes
-                .maximumWeight(500 * 1024 * 1024) // Maximum cache size of 500MB
+                // Set the expiration time for cache entries
+                .expireAfterWrite(10, TimeUnit.MINUTES) // Cache entries expire 10 minutes after being written
+    
+                // Set the maximum weight (size) of the cache to 500MB
+                .maximumWeight(500 * 1024 * 1024) // Cache will not exceed 500 megabytes in total size
+    
+                // Define a custom weigher to calculate the weight of cache entries
                 .weigher((String key, Object value) -> {
+                    // If the cached value is a byte array, use its length as the weight
                     if (value instanceof byte[]) {
-                        return ((byte[]) value).length; // Weight based on size of byte arrays
-                    } else if (value instanceof String) {
-                        return ((String) value).getBytes().length; // Weight based on size of strings
-                    } else {
-                        return 1; // Default weight for other objects
+                        return ((byte[]) value).length; // Weight is the number of bytes in the array
+                    }
+                    // If the cached value is a string, calculate weight based on its byte size
+                    else if (value instanceof String) {
+                        return ((String) value).getBytes().length; // Convert the string to bytes and use the length
+                    }
+                    // For other object types, assign a default weight of 1
+                    else {
+                        return 1; // Minimal weight for unsupported or unhandled object types
                     }
                 })
+    
+                // Build and return the configured cache instance
                 .build();
     }
+    
 }
