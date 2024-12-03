@@ -86,6 +86,14 @@ public class DistrictDemography {
     @Field("Hispanic_normalized")
     private double hispanicNormalized;
 
+    @Field("Rural_Pop")
+    private Long ruralPopulation;
+
+    @Field("Suburban_Pop")
+    private Long suburbanPopulation;
+
+    @Field("Urban_Pop")
+    private Long urbanPopulation;
     // Default Constructor
     public DistrictDemography() {}
 
@@ -296,5 +304,29 @@ public class DistrictDemography {
 
     public void setHispanicNormalized(double hispanicNormalized) {
         this.hispanicNormalized = hispanicNormalized;
+    }
+
+    public Long getRuralPopulation() {
+        return ruralPopulation;
+    }
+
+    public Long getSuburbanPopulation() {
+        return suburbanPopulation;
+    }
+
+    public Long getUrbanPopulation() {
+        return urbanPopulation;
+    }
+
+    public void setRuralPopulation(Long ruralPopulation) {
+        this.ruralPopulation = ruralPopulation;
+    }
+
+    public void setSuburbanPopulation(Long suburbanPopulation) {
+        this.suburbanPopulation = suburbanPopulation;
+    }
+
+    public void setUrbanPopulation(Long urbanPopulation) {
+        this.urbanPopulation = urbanPopulation;
     }
 }

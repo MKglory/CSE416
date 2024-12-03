@@ -53,7 +53,11 @@ function SummaryTable({ selectedState }) {
                         <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>REPUBLICAN</th>
                         <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>DEMOCRATIC</th>
                         <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>Election Winner</th>
+                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>RURAL POP</th>
+                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>SUBURBAN POP</th>
+                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>URBAN POP</th>
                         <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>AVERAGE INCOME</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -69,6 +73,9 @@ function SummaryTable({ selectedState }) {
                         <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.totalRepublicanVotes)}</td>
                         <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.totalDemocraticVotes)}</td>
                         <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{data.electionWinner}</td>
+                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.totalRuralPopulation)}</td>
+                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.totalSuburbanPopulation)}</td>
+                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.totalUrbanPopulation)}</td>
                         <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatIncome(data.averageIncome)}</td>
                     </tr>
                 </tbody>

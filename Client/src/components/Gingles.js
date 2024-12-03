@@ -1,143 +1,129 @@
-import React, { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import regression from 'regression';
+import React, { useState, useEffect } from "react";
+import { Line } from "react-chartjs-2";
 import axios from 'axios';
 
-// Load static JSON data file in React for fallback
-import ardata from '../data/ar_election_data.json';
-import nydata from '../data/ny_election_data.json';
-
 function Gingles({ selectedState }) {
+  const [chartConfig, setChartConfig] = useState(null);
   const [chartData, setChartData] = useState(null);
-  const [data, setData] = useState(null);
-  const [race, setRace] = useState('whitePopulation');
-  const [dataType, setDataType] = useState('Race');
-  const [loading, setLoading] = useState(false);
-
-  const dataFetch = async () => {
-    try {
-      console.log(dataType);
-      const response = await axios.get(`http://localhost:8080/${selectedState}/Gingles/${dataType}`);
-      setData(response.data);
-      console.log(response.data);
-
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
+  const [colors, setColors] = useState(null);
+  const [dataType, setDataType] = useState('Percent_White')
+  const [regionType, setRegionType] = useState('All')
+  const [loading, setLoading] = useState(true);
+  const fetchData = async () => {
+    const response = await axios.get(`http://localhost:8080/${selectedState}/Gingles/${dataType}/${regionType}`);
+    setChartData(response.data.gingleData);
+    setColors(response.data.colors);
+    console.log(response.data)
+    setLoading(false);
   };
-  useEffect(() => {
+  const dataTypeChangeHandler = (type) =>{
+    setDataType(type);
+  }
+  const regionTypeChangeHandler = (type) =>{
+    setRegionType(type);
+  }
+  useEffect(() =>{
     setLoading(true);
-    dataFetch();
-  }, [selectedState, dataType]);
-
+    fetchData();
+  }, [dataType, selectedState, regionType])
   useEffect(() => {
-    if (!data || loading) return; // Ensure data is available and loading is false
-
-    // Filter and clean the data
-    const cleanedData = data.filter(d => d.voteShareDemocracy && d.voteShareRepublican && (d[race] || d.Income_Mean));
-    console.log(cleanedData)
-    const get_x_data = () => {
-      if (dataType === 'Race') {
-        return cleanedData.map(d => parseFloat(d[race] / d.totalPopulation)).filter(x => x <= 1);
-      } else if (dataType === 'Income') {
-        const maxIncome = Math.max(...cleanedData.map(d => d.Income_Mean));
-        console.log(maxIncome)
-        return cleanedData.map(d => parseFloat(d.Income_Mean / maxIncome)).filter(x => x <= 1);
-      }
-    };
-
-    const x = get_x_data();
-    const y_Republican = cleanedData.map(d => parseFloat(d.voteShareDemocracy));
-    const y_Democratic = cleanedData.map(d => parseFloat(d.voteShareRepublican));
-
-    const regressionRepublican = regression.polynomial(x.map((xi, i) => [xi, y_Republican[i]]), { order: 2 });
-    const regressionDemocratic = regression.polynomial(x.map((xi, i) => [xi, y_Democratic[i]]), { order: 2 });
-
-    const xValues = Array.from(new Array(100), (_, i) => Math.min(...x) + (i * (Math.max(...x) - Math.min(...x)) / 100));
-    const y_Republican_Curve = xValues.map(xi => regressionRepublican.predict(xi)[1]);
-    const y_Democratic_Curve = xValues.map(xi => regressionDemocratic.predict(xi)[1]);
-
-    setChartData({
+    if (!chartData || loading) return
+    console.log(chartData);
+    const x = chartData.scatters.map((d) => parseFloat(d.xScatter));
+    const yRepublican = chartData.scatters.map((d) => parseFloat(d.voteShareRepublican));
+    const yDemocratic = chartData.scatters.map((d) => parseFloat(d.voteShareDemocratic));
+    const xValues = chartData.trends.map((d) => d.xSmooth);
+    const yRepublicanCurve = chartData.trends.map((d) => d.republicanTrend);
+    const yDemocraticCurve = chartData.trends.map((d) => d.democraticTrend);
+    setChartConfig({
       labels: xValues,
       datasets: [
         {
-          label: 'Republican Trend',
-          data: y_Republican_Curve,
-          borderColor: 'Red',
+          label: "Republican Trend",
+          data: yRepublicanCurve,
+          borderColor: colors.republicanColor,
+          fill: false,
+          borderWidth: 1,
+          tension: 0.5,
+        },
+        {
+          label: "Republican Data",
+          data: x.map((xi, i) => ({ x: xi, y: yRepublican[i] })),
+          type: "scatter",
+          backgroundColor: colors.republicanColor,
+          pointRadius: 0.8,
+          showLine: false,
+        },
+        {
+          label: "Democratic Trend",
+          data: yDemocraticCurve,
+          borderColor: colors.democraticColor,
           fill: false,
           borderWidth: 2,
-          order: 1
+          tension: 0.5,
         },
         {
-          label: 'Republican Data',
-          data: x.map((xi, i) => ({ x: xi, y: y_Republican[i] })),
-          backgroundColor: 'rgba(139, 0, 0, 0.01)',
-          borderColor: 'rgba(139, 0, 0, 0.05)',
-          type: 'scatter',
+          label: "Democratic Data",
+          data: x.map((xi, i) => ({ x: xi, y: yDemocratic[i] })),
+          type: "scatter",
+          backgroundColor: colors.democraticColor,
+          pointRadius: 0.8,
           showLine: false,
-          pointStyle: 'circle',
-          pointRadius: 2,
-          order: 0
         },
-        {
-          label: 'Democratic Trend',
-          data: y_Democratic_Curve,
-          borderColor: 'Blue',
-          fill: false,
-          borderWidth: 2,
-          order: 1
-        },
-        {
-          label: 'Democratic Data',
-          data: x.map((xi, i) => ({ x: xi, y: y_Democratic[i] })),
-          backgroundColor: 'rgba(0, 0, 139, 0.01)',
-          borderColor: 'rgba(0, 0, 139, 0.05)',
-          type: 'scatter',
-          showLine: false,
-          pointStyle: 'circle',
-          pointRadius: 2,
-          order: 0
-        }
-      ]
+      ],
     });
-  }, [data, race, selectedState, loading]);
+  }, [chartData]);
 
-  const toggleDataType = () => {
-    setDataType(prevType => (prevType === 'Race' ? 'Income' : 'Race'));
-  };
-
-  if (loading) return <p>Loading...</p>;
-
-  return null;
   return (
     <div>
-      <h2>Non-Linear Regression of Vote Share vs. Demographic Percentage</h2>
-      <button onClick={toggleDataType}>
-        Switch to {dataType === 'Race' ? 'Income' : 'Race'}
-      </button>
-      {chartData && (
+      {/* <h2>Non-Linear Regression of Vote Share vs. Demographic Percentage</h2> */}
+      <div style={{ display: 'flex', width: '100%'}}>
+        <ul className="list-group">
+          <li className="list-group-item">
+            <select className="form-select" onChange={(e) => dataTypeChangeHandler(e.target.value)}>
+              <option value="Percent_White">White</option>
+              <option value="Percent_Black">Black</option>
+              <option value="Percent_Asian">Asian</option>
+              <option value="Percent_Hispanic">Hispanic</option>
+              <option value="Percent_American_Indian">American Indian</option>
+              <option value="Income_Mean">Average Household Income</option>
+            </select>
+          </li>
+        </ul>
+        <ul className="list-group">
+          <li className="list-group-item">
+            <select className="form-select" onChange={(e) => regionTypeChangeHandler(e.target.value)}>
+              <option value="All">All</option>
+              <option value="Urban">Urban</option>
+              <option value="Rural">Rural</option>
+              <option value="Suburban">Suburban</option>
+            </select>
+          </li>
+        </ul>
+      </div>
+      {chartConfig && (
         <Line
-          data={chartData}
+          data={chartConfig}
           options={{
             responsive: true,
             plugins: {
-              tooltip: { enabled: false },
-              datalabels: { display: false }
+              legend: { position: "top" },
+              // tooltip: { enabled: false },
+              datalabels: { display: false },
             },
             scales: {
               x: {
-                type: 'linear',
-                title: { display: true, text: 'Percent of Demographic Group' },
-                ticks: { display: true, callback: value => `${(value * 100).toFixed(0)}%` },
-                min: 0,
-                max: 1
+                type: "linear",
+                title: { display: true, text: "Percent of Demographic Group" },
+                min: Math.min(...chartData.scatters.map((d) => d.xScatter)),
+                max: Math.max(...chartData.scatters.map((d) => d.xScatter)),
               },
               y: {
-                title: { display: true, text: 'Vote Share' }
-              }
-            }
+                title: { display: true, text: "Vote Share" },
+                min: 0,
+                max: 100,
+              },
+            },
           }}
         />
       )}

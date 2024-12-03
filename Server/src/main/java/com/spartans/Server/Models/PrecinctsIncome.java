@@ -29,7 +29,7 @@ public class PrecinctsIncome {
     private String precinctID;
 
     @Field("CD")
-    private String congressionalDistrict;
+    private String cd;
 
     @Field("BoundaryType")
     private String boundaryType;
@@ -42,6 +42,12 @@ public class PrecinctsIncome {
 
     @Field("Income_Mean_normalized")
     private Double incomeMeanNormalized;
+
+    @Field("Poverty_Households")
+    private int povertyHouseholds;
+
+    @Field("Poverty_Percentage")
+    private double povertyPercentage;
 
     // Default Constructor
     public PrecinctsIncome() {}
@@ -95,13 +101,6 @@ public class PrecinctsIncome {
         this.precinctID = precinctID;
     }
 
-    public String getCongressionalDistrict() {
-        return congressionalDistrict;
-    }
-
-    public void setCongressionalDistrict(String congressionalDistrict) {
-        this.congressionalDistrict = congressionalDistrict;
-    }
 
     public String getBoundaryType() {
         return boundaryType;
@@ -141,5 +140,29 @@ public class PrecinctsIncome {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public int getPovertyHouseholds() {
+        return povertyHouseholds;
+    }
+
+    public void setPovertyHouseholds(int povertyHouseholds) {
+        this.povertyHouseholds = povertyHouseholds;
+    }
+
+    public double getPovertyPercentage() {
+        return povertyPercentage;
+    }
+
+    public void setPovertyPercentage(double povertyPercentage) {
+        this.povertyPercentage = povertyPercentage;
+    }
+
+    public String getCd() {
+        return cd;
+    }
+
+    public void setCd(String cd) {
+        this.cd = cd;
     }
 }

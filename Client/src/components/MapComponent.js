@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
@@ -11,7 +11,7 @@ const usBounds = [
   [49.384358, -66.885444],  // Northeast
 ];
 
-function MapComponent({ selectedState, handlePlotChange }) {
+function MapComponent({ selectedState }) {
   const [boundaryData, setBoundaryData] = useState(null);
   const [heatMapData, setHeatMapData] = useState(null);
   const [mapBoundary, setMapBoundary] = useState("Districts");
@@ -20,6 +20,11 @@ function MapComponent({ selectedState, handlePlotChange }) {
   const [heatMapDataLoading, setHeatMapDataLoading] = useState(false);
   const [colors, setColors] = useState(null);
   const [selectedRace, setSelectedRace] = useState('white')
+  const [selectedIncome, setSelectedIncome] = useState('income')
+
+  // 123
+  const [selectedId, setSelectedId] = useState(null);
+  const layerRefs = useRef({});
 
   const mapDataRequest = async () => {
     const response = await axios.get(`http://localhost:8080/maps/${selectedState}/${mapBoundary}`);
@@ -47,11 +52,14 @@ function MapComponent({ selectedState, handlePlotChange }) {
     }
   }, [selectedState, mapBoundary, heatMap]);
 
-  function ChangeMapView({ center }) {
+  function ChangeMapView({ center, selectedState }) {
     const map = useMap();
+    const previousState = useRef(selectedState);
     useEffect(() => {
       map.flyTo(center, 7);
-    }, [center]);
+      previousState.current = selectedState;
+
+    }, [selectedState]);
     return null;
   }
   function MapBoundaryChangeHandler(type){
@@ -64,9 +72,11 @@ function MapComponent({ selectedState, handlePlotChange }) {
   function selectedRaceChangeHandler(race){
     setSelectedRace(race);
   }
+  function selectedIncomeChangeHandler(incomeType){
+    setSelectedIncome(incomeType);
+  }
   const getFillColor = (value, colors, selectedCatogory) => {
     if (heatMap == 'Demography'){
-      // const thresholds = [0.01, 0.1, 0.2, 0.4, 0.7];
       const thresholds = colors.demographicThreshold;
       const colorArray = colors[selectedCatogory];
       if (value <= thresholds[0]) return colorArray[0];
@@ -75,17 +85,17 @@ function MapComponent({ selectedState, handlePlotChange }) {
       }
       return colorArray[colorArray.length - 1];
     }
-    else if (heatMap == "Income"){
-      const numColors = colors[selectedCatogory].length;
-      if (value <= 0) return colors[selectedCatogory][0]; 
-      if (value >= 1) return colors[selectedCatogory][numColors - 1];
-      const index = Math.floor(value * (numColors - 1));
-      return colors[selectedCatogory][index];
+    else if (heatMap == 'Income'){
+      const thresholds = colors[selectedCatogory + "Threshold"];
+      const colorArray = colors[selectedCatogory];
+      console.log(thresholds + " " + value);
+      if (value <= thresholds[0]) return colorArray[0];
+      for (let i = 0; i < thresholds.length - 1; i++) {
+        if (value > thresholds[i] && value <= thresholds[i + 1]) return colorArray[i + 1]
+      }
+      return colorArray[colorArray.length - 1];
     }
   }
-
-
-
 
   // Style function
   const style = (
@@ -112,30 +122,82 @@ function MapComponent({ selectedState, handlePlotChange }) {
       else if (heatMap === "Demography"){
         if (heatMapData != null && colors != null){
           if (matchingMapEntry) {
-            const normalizedValue = matchingMapEntry[`${selectedRace}Normalized`];
-            fillColor = getFillColor(normalizedValue, colors, selectedRace);
+            const percentage = 'percent' + selectedRace.charAt(0).toUpperCase() + selectedRace.slice(1);
+            const value = matchingMapEntry[percentage];
+            fillColor = getFillColor(value, colors, selectedRace);
           }      
         }
       }
       else if (heatMap === "Income"){
         if (heatMapData != null && colors != null){
           if (matchingMapEntry) {
-            const normalizedValue = matchingMapEntry.incomeMeanNormalized;
-            fillColor = getFillColor(normalizedValue, colors, "income");
+            let value = 0;
+            if (selectedIncome === 'income'){
+              value = matchingMapEntry.incomeMean;
+            } 
+            else if (selectedIncome === 'povertyLine'){
+              value = matchingMapEntry.povertyPercentage;
+            }
+            fillColor = getFillColor(value, colors, selectedIncome);
           }      
         }
       }
+      const uniqueId = mapBoundary === 'Districts' ? feature.properties.CD : feature.properties.PrecinctID;
+      const isSelected = uniqueId === selectedId;
+  
       return {
         fillColor: fillColor,
-        color: "black",
+        color: isSelected ? '#ff0000' : 'black', // Red if selected, default blue otherwise
+        weight: isSelected ? 4 : 0.7,               // Thicker border if selected
         opacity: 1,
-        weight: 0.7,
         fillOpacity: 0.5,
-       };
+      };
     }
    );
+   function generateDemographyPopup(matchingMapEntry) {
+    return `
+      <p>Population: ${matchingMapEntry.total}</p>
+      <p>White: ${matchingMapEntry.white}</p>
+      <p>Black: ${matchingMapEntry.black}</p>
+      <p>Asian: ${matchingMapEntry.asian}</p>
+      <p>Hispanic: ${matchingMapEntry.hispanic}</p>
+      <p>American Indian: ${matchingMapEntry.americanIndian}</p>
+    `;
+  }
+  
+  function generateIncomePopup(matchingMapEntry) {
+    const formattedIncome = matchingMapEntry.incomeMean.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+    const formattedPovertyHouseholds = matchingMapEntry.povertyHouseholds.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+    const formattedPovertyPercentage = matchingMapEntry.povertyPercentage.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+    return `
+      <p>Average Household Income: ${formattedIncome}</p>
+      <p>Poverty Household Number: ${formattedPovertyHouseholds}</p>
+      <p>Poverty Household Percentage: ${formattedPovertyPercentage}</p>
+    `;
+  }
+  
+  function generateElectionPopup(matchingMapEntry) {
+    return `
+      <p>Democratic votes: ${matchingMapEntry.democraticVotes}</p>
+      <p>Republican votes: ${matchingMapEntry.republicanVotes}</p>
+    `;
+  }
+  
   const onEachFeature = (
     (feature, layer) => {
+      // Restrieve a unique id for current layer
+      const uniqueId = mapBoundary === 'Districts' ? feature.properties.CD : feature.properties.PrecinctID;
+      layerRefs.current[uniqueId] = layer;
+      let popupContent = "";
       let matchingMapEntry = null;
       if (mapBoundary === 'Districts' && heatMapData != null){
         const cd = feature.properties.CD;
@@ -145,80 +207,52 @@ function MapComponent({ selectedState, handlePlotChange }) {
         const precinctID = feature.properties.PrecinctID;
         matchingMapEntry = heatMapData.find((entry) => entry.precinctID === precinctID);
       }
-      let popupContent = "";
-      if (mapBoundary === 'Districts') {
-        popupContent = `
-        <p>${feature.properties.NAME}</p>
-        `;
-        if (heatMapData != null){
-          if (matchingMapEntry){
-            if (heatMap === 'Demography'){
-              popupContent += `
-                <p>Population: ${matchingMapEntry.total}</p>
-                <p >White: ${matchingMapEntry.white}</p>
-                <p>Black: ${matchingMapEntry.black}</p>
-                <p>Asian: ${matchingMapEntry.asian}</p>
-                <p>Hispanic: ${matchingMapEntry.hispanic}</p>
-                <p>American Indian: ${matchingMapEntry.americanIndian}</p>
-            `;
-            }
-            else if (heatMap === "Income"){
-              const formattedIncome = matchingMapEntry.incomeMean.toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              });
-              popupContent += `
-                <p>Average Household Income: ${formattedIncome}</p>
-            `;
-            }
-            else if (heatMap === 'Election'){
-              popupContent += `
-                <p>Demoratic votes: ${matchingMapEntry.democraticVotes}</p>
-                <p>Republican votes: ${matchingMapEntry.republicanVotes}</p>
-
-            `;
-            }
-          }
-        }
-      }
-      else if (mapBoundary === 'Precincts'){
-        popupContent = `
-          <p>Precinct: ${feature.properties.PRECINCT}</p>
-          `;
-        if (heatMapData != null){
-          if (matchingMapEntry){
-            if (heatMap === 'Demography'){
-              popupContent += `
-                <p>Population: ${matchingMapEntry.total}</p>
-                <p >White: ${matchingMapEntry.white}</p>
-                <p>Black: ${matchingMapEntry.black}</p>
-                <p>Asian: ${matchingMapEntry.asian}</p>
-                <p>Hispanic: ${matchingMapEntry.hispanic}</p>
-                <p>American Indian: ${matchingMapEntry.americanIndian}</p>
-            `;
-            }
-            else if (heatMap === "Income"){
-              const formattedIncome = matchingMapEntry.incomeMean.toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              });
-              popupContent += `
-                <p>Average Household Income: ${formattedIncome}</p>
-            `;
-            }
-            else if (heatMap === 'Election'){
-              popupContent += `
-                <p>Demoratic votes: ${matchingMapEntry.democraticVotes}</p>
-                <p>Republican votes: ${matchingMapEntry.republicanVotes}</p>
-
-            `;
-            }
+      if (mapBoundary === 'Districts' || mapBoundary === 'Precincts') {
+        popupContent = mapBoundary === 'Districts' 
+          ? `<p>${feature.properties.NAME}</p>` 
+          : `<p>Precinct: ${feature.properties.PRECINCT}</p>`;
+        
+        if (heatMapData && matchingMapEntry) {
+          if (heatMap === 'Demography') {
+            popupContent += generateDemographyPopup(matchingMapEntry);
+          } else if (heatMap === 'Income') {
+            popupContent += generateIncomePopup(matchingMapEntry);
+          } else if (heatMap === 'Election') {
+            popupContent += generateElectionPopup(matchingMapEntry);
           }
         }
       }
       layer.bindPopup(popupContent);
+      // dfd
+      layer.on('click', () => {
+        setSelectedId(uniqueId);
+      });
     }
   );
+  useEffect(() => {
+    Object.keys(layerRefs.current).forEach((key) => {
+      const layer = layerRefs.current[key];
+      if (layer) {
+        layer.setStyle({
+          color: '#black', // Default border color
+          weight: 0.7,         // Default border thickness
+        });
+      }
+    });
+
+    if (selectedId && layerRefs.current[selectedId]) {
+      layerRefs.current[selectedId].setStyle({
+        color: '#ff0000', // Highlight border color
+        weight: 4,         // Highlight border thickness
+      });
+
+      // **Bring the selected layer to front**
+      layerRefs.current[selectedId].bringToFront();
+
+      // **Optionally, open the popup**
+      layerRefs.current[selectedId].openPopup();
+    }
+  }, [selectedId]);
 
   // Update geoJsonComponent function
   const geoJsonComponent = useMemo(() => {
@@ -257,6 +291,7 @@ function MapComponent({ selectedState, handlePlotChange }) {
               </select>
             </li>
           </ul>
+          
           {
             heatMap === "Demography"
             ? <ul className="list-group">
@@ -272,6 +307,18 @@ function MapComponent({ selectedState, handlePlotChange }) {
               </ul>
             : null
           }
+          {
+            heatMap === "Income"
+            ? <ul className="list-group">
+                <li className="list-group-item">
+                  <select className="form-select" value={selectedIncome} onChange={(e) => selectedIncomeChangeHandler(e.target.value)}>
+                    <option value="income">Averge Household</option>
+                    <option value="povertyLine">Poverty Line</option>
+                  </select>
+                </li>
+              </ul>
+            : null            
+          }
       </div>
       <div>
         <MapContainer
@@ -282,22 +329,33 @@ function MapComponent({ selectedState, handlePlotChange }) {
           scrollWheelZoom={true}
           preferCanvas={true}
         >
-          <ChangeMapView center={mapCenter} />
-          <TileLayer
+        <ChangeMapView center={mapCenter} selectedState={selectedState} />
+        <TileLayer
             url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
           />
           {(heatMapDataLoading || mapLoading) ? null : geoJsonComponent}
         </MapContainer>
       </div>
-      <Legend colors={colors} selectedRace={selectedRace} heatMap={heatMap} />
+      <Legend colors={colors} selectedRace={selectedRace} heatMap={heatMap} selectedIncome={selectedIncome}/>
 
     </div>
   );
 }
-const Legend = ({ colors, selectedRace, heatMap }) => {
+const Legend = ({ colors, selectedRace, heatMap, selectedIncome }) => {
   if (!colors || heatMap === "None" || heatMap === 'Election') return null;
-  const raceColors = (heatMap == 'Demography' ? colors[selectedRace]: colors['income']);
-  const labels = colors.demographicLabels;
+  let legandColors = null;
+  // if (heatMap == 'Demography')  ? colors[selectedRace]: colors['income']);
+  let labels = null;
+  if (heatMap === 'Demography'){
+    labels = colors.demographicLabels;
+    legandColors = colors[selectedRace];
+  }
+  else if (heatMap === 'Income'){
+    labels = colors[selectedIncome + "Labels"];
+    legandColors = colors[selectedIncome];
+  }
+
+  if (!legandColors || !labels) return;
   return (
     <div
       style={{
@@ -313,7 +371,7 @@ const Legend = ({ colors, selectedRace, heatMap }) => {
       }}
     >
       <div>
-        {raceColors.map((color, index) => (
+        {legandColors.map((color, index) => (
           <div
             key={index}
             style={{
