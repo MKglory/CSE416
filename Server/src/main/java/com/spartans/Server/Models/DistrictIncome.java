@@ -37,6 +37,12 @@ public class DistrictIncome {
     @Field("Income_Mean_normalized")
     private double incomeMeanNormalized;
 
+    @Field("Poverty_Households")
+    private int povertyHouseholds;
+
+    @Field("Poverty_Percentage")
+    private double povertyPercentage;
+
     // Default Constructor
     public DistrictIncome() {}
 
@@ -119,5 +125,21 @@ public class DistrictIncome {
 
     public void setCd(int cd) {
         this.cd = cd;
+    }
+
+    public int getPovertyHouseholds() {
+        return povertyHouseholds;
+    }
+
+    public void setPovertyHouseholds(int povertyHouseholds) {
+        this.povertyHouseholds = povertyHouseholds;
+    }
+
+    public double getPovertyPercentage() {
+        return povertyPercentage;
+    }
+
+    public void setPovertyPercentage(double povertyPercentage) {
+        this.povertyPercentage = povertyPercentage;
     }
 }

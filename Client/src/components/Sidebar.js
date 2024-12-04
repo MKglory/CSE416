@@ -2,11 +2,10 @@
 import React, { useEffect } from 'react';
 import Elections from './Elections';
 import RaceEthnicityContent from './state_raceEthnicity'; 
-import ElectionVotesContent from './ElectionVotesContent';
 import NYHouseEthnicityContent from './NYHouseEthnicityContent';
 import CandidatesContent from './CandidatesContent';
 import DistrictComparisonContent from './DistrictComparisonContent';
-import VoteGapAnalysisContent from './VoteGapAnalysisContent';
+import DistrictsTable from './districtsTable';
 import HouseholdIncomeContent from './HouseholdIncomeContent';
 import Gingles from './Gingles.js'
 import IE from './IE.js'
@@ -23,7 +22,7 @@ function Sidebar({ handlePlotChange, selectedState, selectedContent }) {
       case 'raceEthnicity':
         return <RaceEthnicityContent selectedState={selectedState} />; 
       case 'electionVotes':
-        return <ElectionVotesContent selectedState={selectedState} />; 
+        return <DistrictsTable selectedState={selectedState} />; 
       case 'nyHouseEthnicity':
         return <NYHouseEthnicityContent selectedState={selectedState} />;
       case 'candidates':

@@ -38,6 +38,7 @@ public class StateSummaryService {
         int totalDistricts = 0;
         int totalPopulation = 0;
         int totalWhite = 0, totalBlack = 0, totalAsian = 0, totalHispanic = 0, totalAmericanIndian = 0;
+        Long totalRuralPopulation = 0L, totalSuburbanPopulation = 0L, totalUrbanPopulation = 0L;
         double totalIncome = 0.0;
         int totalDemocraticVotes = 0;
         int totalRepublicanVotes = 0;
@@ -52,6 +53,9 @@ public class StateSummaryService {
             totalAsian += demography.getAsian();
             totalHispanic += demography.getHispanic();
             totalAmericanIndian += demography.getAmericanIndian();
+            totalRuralPopulation += demography.getRuralPopulation();
+            totalSuburbanPopulation += demography.getSuburbanPopulation();
+            totalUrbanPopulation += demography.getUrbanPopulation();
         }
         for (DistrictIncome income : incomes) {
             totalIncome += income.getIncomeMean();
@@ -79,6 +83,10 @@ public class StateSummaryService {
         summary.put("totalDemocraticVotes", totalDemocraticVotes);
         summary.put("totalRepublicanVotes", totalRepublicanVotes);
         summary.put("electionWinner", electionWinner);
+        summary.put("totalRuralPopulation", totalRuralPopulation);
+        summary.put("totalSuburbanPopulation", totalSuburbanPopulation);
+        summary.put("totalUrbanPopulation", totalUrbanPopulation);
+
         // Add demographic breakdown
         ObjectNode demographics = mapper.createObjectNode();
         demographics.put("white", totalWhite);

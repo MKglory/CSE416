@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface BoundariesRepository extends MongoRepository<Boundaries, String> {
 
-
     @Query("{ 'properties.STATE': ?0 }")
     List<Boundaries> findByPropertiesState(String state);
 
