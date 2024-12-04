@@ -22,7 +22,6 @@ function MapComponent({ selectedState }) {
   const [selectedRace, setSelectedRace] = useState('white')
   const [selectedIncome, setSelectedIncome] = useState('income')
 
-  // 123
   const [selectedId, setSelectedId] = useState(null);
   const layerRefs = useRef({});
 
@@ -88,7 +87,6 @@ function MapComponent({ selectedState }) {
     else if (heatMap == 'Income'){
       const thresholds = colors[selectedCatogory + "Threshold"];
       const colorArray = colors[selectedCatogory];
-      console.log(thresholds + " " + value);
       if (value <= thresholds[0]) return colorArray[0];
       for (let i = 0; i < thresholds.length - 1; i++) {
         if (value > thresholds[i] && value <= thresholds[i + 1]) return colorArray[i + 1]

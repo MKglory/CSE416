@@ -43,6 +43,18 @@ public class DistrictElection {
     @Field("Percentage_vote_democracy")
     private double percentageVoteDemocracy;
 
+    @Field("Representative")
+    private String representative;
+
+    @Field("Representative_race")
+    private String representativeRace;
+
+    @Field("Republican_candidate")
+    private String republicanPresidentCandidate;
+
+    @Field("Democratic_candidate")
+    private String democraticPresidentCandidate;
+
     // Getters and Setters
     public String getId() {
         return id;
@@ -138,5 +150,37 @@ public class DistrictElection {
 
     public void setCd(int cd) {
         this.cd = cd;
+    }
+
+    public String getRepresentative() {
+        return representative;
+    }
+
+    public void setRepresentative(String representative) {
+        this.representative = representative;
+    }
+
+    public String getRepublicanPresidentCandidate() {
+        return republicanPresidentCandidate;
+    }
+
+    public void setRepublicanPresidentCandidate(String republicanPresidentCandidate) {
+        this.republicanPresidentCandidate = republicanPresidentCandidate;
+    }
+
+    public String getDemocraticPresidentCandidate() {
+        return democraticPresidentCandidate;
+    }
+
+    public void setDemocraticPresidentCandidate(String democraticPresidentCandidate) {
+        this.democraticPresidentCandidate = democraticPresidentCandidate;
+    }
+
+    public String getRepresentativeRace() {
+        return representativeRace;
+    }
+
+    public void setRepresentativeRace(String representativeRace) {
+        this.representativeRace = representativeRace;
     }
 }

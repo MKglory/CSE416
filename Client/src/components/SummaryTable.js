@@ -17,70 +17,105 @@ function SummaryTable({ selectedState }) {
         setLoading(false);
     };
 
-    // Helper function to format numbers with commas
     const formatNumber = (number) => {
         return number.toLocaleString('en-US');
     };
 
-    // Helper function to format income with two decimal places
     const formatIncome = (income) => {
-        return `$${income.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        const inThousands = income / 1000; // Convert to thousands
+        return `$${Math.round(inThousands).toLocaleString('en-US')}K`;
     };
 
     if (loading || data === null) {
         return <div>Loading...</div>;
     }
+    
+    const formatPercentage = (value) => {
+        if (data.totalPopulation === 0) return "0.00%";
+        return ((value / data.totalPopulation) * 100).toFixed(2) + "%";
+      };
+
+      const tableHeaders = [
+        "STATE",
+        "District",
+        "TOT POP",
+        "WHITE",
+        "BLACK",
+        "ASIAN",
+        "HISPANIC",
+        "American Indian",
+        "REPUBLICAN VOTES",
+        "DEMOCRATIC VOTES",
+        "Election Winner",
+        "RURAL POP%",
+        "SUBURBAN POP%",
+        "URBAN POP%",
+        "AVERAGE INCOME",
+    ];
+
+    const tableValues = [
+        data.state.toUpperCase(),
+        formatNumber(data.totalDistricts),
+        formatNumber(data.totalPopulation),
+        formatPercentage(data.demographics.white),
+        formatPercentage(data.demographics.black),
+        formatPercentage(data.demographics.asian),
+        formatPercentage(data.demographics.hispanic),
+        formatPercentage(data.demographics.americanIndian),
+        formatNumber(data.totalRepublicanVotes),
+        formatNumber(data.totalDemocraticVotes),
+        data.electionWinner,
+        formatPercentage(data.totalRuralPopulation),
+        formatPercentage(data.totalSuburbanPopulation),
+        formatPercentage(data.totalUrbanPopulation),
+        formatIncome(data.averageIncome),
+    ];
 
     return (
-        <div className="summaryTable">
-            <table 
-            style={{ 
-                    width: "98%", 
-                    border: "1px solid black", 
-                    borderCollapse: "collapse" 
-                }}
-            >
+            <div
+            className="summaryTable"
+            style={{
+                display: "flex",
+                justifyContent: "center",
+                overflowX: "auto",
+                paddingLeft: "2%",
+            }}
+        >
+            <table>
                 <thead>
                     <tr>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>STATE</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>District</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>TOT POP</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>WHITE</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>BLACK</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>ASIAN</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>HISPANIC</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>American Indian</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>REPUBLICAN</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>DEMOCRATIC</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>Election Winner</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>RURAL POP</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>SUBURBAN POP</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>URBAN POP</th>
-                        <th style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>AVERAGE INCOME</th>
-
+                        {tableHeaders.map((header, index) => (
+                            <th
+                                key={index}
+                                style={{
+                                    textAlign: "left",
+                                    border: "1px solid black",
+                                }}
+                            >
+                                {header}
+                            </th>
+                        ))}
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{data.state.toUpperCase()}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.totalDistricts)}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.totalPopulation)}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.demographics.white)}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.demographics.black)}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.demographics.asian)}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.demographics.hispanic)}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.demographics.americanIndian)}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.totalRepublicanVotes)}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.totalDemocraticVotes)}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{data.electionWinner}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.totalRuralPopulation)}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.totalSuburbanPopulation)}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatNumber(data.totalUrbanPopulation)}</td>
-                        <td style={{ padding: "8px", textAlign: "left", border: "1px solid black" }}>{formatIncome(data.averageIncome)}</td>
+                        {tableValues.map((value, index) => (
+                            <td
+                                key={index}
+                                style={{
+                                    paddingRight: "5px",
+                                    textAlign: "left",
+                                    border: "1px solid black",
+                                }}
+                            >
+                                {value}
+                            </td>
+                        ))}
                     </tr>
                 </tbody>
             </table>
         </div>
+
     );
 }
 

@@ -76,26 +76,8 @@ public class PrecinctsDemography {
     @Field("Percentage_Prominent_Race")
     private double percentageProminentRace;
 
-    // Normalized fields
-    @Field("White_normalized")
-    private double whiteNormalized;
-
-    @Field("Black_normalized")
-    private double blackNormalized;
-
-    @Field("American_Indian_normalized")
-    private double americanIndianNormalized;
-
-    @Field("Asian_normalized")
-    private double asianNormalized;
-
-    @Field("Hispanic_normalized")
-    private double hispanicNormalized;
-
-    // Default Constructor
     public PrecinctsDemography() {}
 
-    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -270,46 +252,6 @@ public class PrecinctsDemography {
 
     public void setPercentageProminentRace(double percentageProminentRace) {
         this.percentageProminentRace = percentageProminentRace;
-    }
-
-    public double getWhiteNormalized() {
-        return whiteNormalized;
-    }
-
-    public void setWhiteNormalized(double whiteNormalized) {
-        this.whiteNormalized = whiteNormalized;
-    }
-
-    public double getBlackNormalized() {
-        return blackNormalized;
-    }
-
-    public void setBlackNormalized(double blackNormalized) {
-        this.blackNormalized = blackNormalized;
-    }
-
-    public double getAmericanIndianNormalized() {
-        return americanIndianNormalized;
-    }
-
-    public void setAmericanIndianNormalized(double americanIndianNormalized) {
-        this.americanIndianNormalized = americanIndianNormalized;
-    }
-
-    public double getAsianNormalized() {
-        return asianNormalized;
-    }
-
-    public void setAsianNormalized(double asianNormalized) {
-        this.asianNormalized = asianNormalized;
-    }
-
-    public double getHispanicNormalized() {
-        return hispanicNormalized;
-    }
-
-    public void setHispanicNormalized(double hispanicNormalized) {
-        this.hispanicNormalized = hispanicNormalized;
     }
 
     public String getState() {

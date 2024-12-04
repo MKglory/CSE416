@@ -2,6 +2,7 @@ package com.spartans.Server.Controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.spartans.Server.Models.ElectionData;
+import com.spartans.Server.Services.DistrictsTableService;
 import com.spartans.Server.Services.ElectionDataService;
 import com.spartans.Server.Services.StateSummaryService;
 import org.slf4j.Logger;
@@ -49,11 +50,31 @@ public class DataController {
 
     @GetMapping("{type}/{state}Data")
     public ResponseEntity<Map<String, Object>> getStateElectionData(
-            @PathVariable String type,
             @PathVariable String state) {
 
         try {
             Map<String, Object> data = electionDataService.getElectionDataByState(state);
+            return ResponseEntity.ok().body(data);
+
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Election data not found for state: " + state, e
+            );
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while retrieving data.", e
+            );
+        }
+    }
+    @Autowired
+    private DistrictsTableService districtsTableService;
+
+    @GetMapping("/{state}/DistrictsTable")
+    public ResponseEntity<JsonNode> getDistrictsTable(
+            @PathVariable String state) {
+
+        try {
+            JsonNode data = districtsTableService.getDistrictsData(state);
             return ResponseEntity.ok().body(data);
 
         } catch (IllegalArgumentException e) {

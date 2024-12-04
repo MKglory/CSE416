@@ -34,13 +34,10 @@ public class DistrictIncome {
     @Field("Income_Mean")
     private double incomeMean;
 
-    @Field("Income_Mean_normalized")
-    private double incomeMeanNormalized;
-
-    @Field("Poverty_Households")
+    @Field("LESS_30K")
     private int povertyHouseholds;
 
-    @Field("Poverty_Percentage")
+    @Field("LESS_30K_Percent")
     private double povertyPercentage;
 
     // Default Constructor
@@ -109,14 +106,6 @@ public class DistrictIncome {
 
     public void setIncomeMean(double incomeMean) {
         this.incomeMean = incomeMean;
-    }
-
-    public double getIncomeMeanNormalized() {
-        return incomeMeanNormalized;
-    }
-
-    public void setIncomeMeanNormalized(double incomeMeanNormalized) {
-        this.incomeMeanNormalized = incomeMeanNormalized;
     }
 
     public int getCd() {
