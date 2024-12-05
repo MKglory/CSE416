@@ -8,6 +8,7 @@ import DistrictComparisonContent from './DistrictComparisonContent';
 import DistrictsTable from './districtsTable';
 import HouseholdIncomeContent from './HouseholdIncomeContent';
 import Gingles from './Gingles.js'
+import BoxAndWhiskerContent from './BoxAndWhiskerContent.js';
 import IE from './IE.js'
 
 function Sidebar({ handlePlotChange, selectedState, selectedContent }) {
@@ -32,6 +33,8 @@ function Sidebar({ handlePlotChange, selectedState, selectedContent }) {
           return <HouseholdIncomeContent selectedState={selectedState}/>; 
       case 'voteGapAnalysis':
         return <Gingles selectedState={selectedState}/>
+      case 'boxWhisker':
+        return <BoxAndWhiskerContent selectedState={selectedState}/>
     }
   };
 
@@ -52,7 +55,9 @@ function Sidebar({ handlePlotChange, selectedState, selectedContent }) {
               <option value="candidates">Candidates</option>
               {/* <option value="districtComparison">District Comparison</option> */}
               <option value="voteGapAnalysis">Gingles 2/3 Analysis</option>
-              <option value="householdIncome">Household Income</option> {/* New option added */}
+              <option value="householdIncome">Household Income</option>
+              <option value="boxWhisker">Box & Whisker</option>
+
             </select>
           </li>
         </ul>

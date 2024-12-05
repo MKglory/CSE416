@@ -28,6 +28,9 @@ npm install axios
 
 npm install regression
 
+npm install antd
+
+npm install react-plotly.js plotly.js
 
 https://mapshaper.org/
 
