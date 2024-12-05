@@ -74,7 +74,7 @@ function MapComponent({ selectedState }) {
   function selectedIncomeChangeHandler(incomeType){
     setSelectedIncome(incomeType);
   }
-  const getFillColor = (value, colors, selectedCatogory) => {
+  const getFillColor = (value, colors, selectedCatogory) => {  //The colorArray is gotten from the server side
     if (heatMap == 'Demography'){
       const thresholds = colors.demographicThreshold;
       const colorArray = colors[selectedCatogory];
@@ -136,7 +136,13 @@ function MapComponent({ selectedState }) {
             else if (selectedIncome === 'povertyLine'){
               value = matchingMapEntry.povertyPercentage;
             }
-            fillColor = getFillColor(value, colors, selectedIncome);
+            fillColor = getFillColor(value, colors, selectedIncome); //// Determines the fill color for a feature based on its value (income or poverty), the server-provided color mappings and thresholds, and the selected income category.
+
+
+
+
+
+
           }      
         }
       }
@@ -163,25 +169,35 @@ function MapComponent({ selectedState }) {
     `;
   }
   
-  function generateIncomePopup(matchingMapEntry) {
-    const formattedIncome = matchingMapEntry.incomeMean.toLocaleString('en-US', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-    const formattedPovertyHouseholds = matchingMapEntry.povertyHouseholds.toLocaleString('en-US', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-    const formattedPovertyPercentage = matchingMapEntry.povertyPercentage.toLocaleString('en-US', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-    return `
-      <p>Average Household Income: ${formattedIncome}</p>
-      <p>Poverty Household Number: ${formattedPovertyHouseholds}</p>
-      <p>Poverty Household Percentage: ${formattedPovertyPercentage}</p>
-    `;
-  }
+// Function to generate a popup with income-related data for a map feature
+function generateIncomePopup(matchingMapEntry) {
+  // Format the average household income with two decimal places and comma separators for better readability
+  const formattedIncome = matchingMapEntry.incomeMean.toLocaleString('en-US', {
+      minimumFractionDigits: 2, // Always display at least two decimal places
+      maximumFractionDigits: 2, // Limit the display to two decimal places
+  });
+
+  // Format the number of households below the poverty line with the same precision and separators
+  const formattedPovertyHouseholds = matchingMapEntry.povertyHouseholds.toLocaleString('en-US', {
+      minimumFractionDigits: 2, // Always display at least two decimal places
+      maximumFractionDigits: 2, // Limit the display to two decimal places
+  });
+
+  // Format the percentage of households below the poverty line for display
+  const formattedPovertyPercentage = matchingMapEntry.povertyPercentage.toLocaleString('en-US', {
+      minimumFractionDigits: 2, // Always display at least two decimal places
+      maximumFractionDigits: 2, // Limit the display to two decimal places
+  });
+
+  // Construct the HTML content for the popup, including all formatted values
+  return `
+    <p>Average Household Income: ${formattedIncome}</p> <!-- Displays average household income -->
+    <p>Poverty Household Number: ${formattedPovertyHouseholds}</p> <!-- Displays the number of households below the poverty line -->
+    <p>Poverty Household Percentage: ${formattedPovertyPercentage}</p> <!-- Displays the percentage of households below the poverty line -->
+  `;
+}
+
+
   
   function generateElectionPopup(matchingMapEntry) {
     return `

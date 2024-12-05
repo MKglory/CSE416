@@ -90,6 +90,7 @@ function SummaryTable({ selectedState }) {
                                 style={{
                                     textAlign: "left",
                                     border: "1px solid black",
+                                    padding: "10px"
                                 }}
                             >
                                 {header}
@@ -106,6 +107,7 @@ function SummaryTable({ selectedState }) {
                                     paddingRight: "5px",
                                     textAlign: "left",
                                     border: "1px solid black",
+                                    padding: "10px"
                                 }}
                             >
                                 {value}

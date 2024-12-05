@@ -107,21 +107,21 @@ public class HeatMapService {
 
     // Fetch heatmap data for a specific state, boundary type, and data type
     public Map<String, Object> getHeatMapData(String state, String boundary, String dataType) {
-        String cacheKey = generateCacheKey(state, boundary, dataType); // Generate unique cache key
+        String cacheKey = generateCacheKey(state, boundary, dataType); 
 
         // Check if data is already cached
         Map<String, Object> cachedData = (Map<String, Object>) caffeineCache.getIfPresent(cacheKey);
         if (cachedData != null) {
             logger.info("[HeatMapService] Cache hit for key: {}", cacheKey);
-            return cachedData; // Return cached data
+            return cachedData; 
         }
 
         logger.info("[HeatMapService] Cache miss for key: {}. Fetching data from database.", cacheKey);
 
         // Fetch data from the database based on boundary type
         List<?> data = switch (boundary.toLowerCase()) {
-            case "districts" -> getDistrictHeatMap(state, dataType); // Fetch district-level data
-            case "precincts" -> getPrecinctHeatMap(state, dataType); // Fetch precinct-level data
+            case "districts" -> getDistrictHeatMap(state, dataType); 
+            case "precincts" -> getPrecinctHeatMap(state, dataType); 
             default -> {
                 logger.error("[HeatMapService] Unsupported boundary type: {}", boundary);
                 throw new IllegalArgumentException("Unsupported boundary type: " + boundary);
