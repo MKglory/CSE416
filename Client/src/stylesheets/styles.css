@@ -24,9 +24,13 @@ footer {
   border-radius: 15px; /* Rounded edges for the map */
 }
 
-.summaryTable{
-  margin-left: 1%;
+.summaryTable {
+  width: 100%;  
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
 }
+
 .map-content {
   height: 95vh; /* Ensures the map takes up full height */
 }
@@ -55,7 +59,19 @@ footer {
   height: 20%; /* Sidebar takes 20% of the height */
 }
 
-
+.districtTable{
+  padding-left: 5px;
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-size: 10px;
+}
+.districtTable th,
+.districtTable td {
+  border: 2px solid black;
+  padding: 5px; /* 调整单元格内边距 */
+  text-align: left; /* 文本左对齐 */
+}
 
 .fade-in {
   opacity: 1;

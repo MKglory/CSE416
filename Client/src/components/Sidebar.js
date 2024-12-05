@@ -12,7 +12,6 @@ import IE from './IE.js'
 
 function Sidebar({ handlePlotChange, selectedState, selectedContent }) {
   const handleSelect = (event) => {
-    console.log(event.target.value)
     handlePlotChange(event.target.value);
   };
   const renderContent = () => {
@@ -21,7 +20,7 @@ function Sidebar({ handlePlotChange, selectedState, selectedContent }) {
         return <Elections selectedState={selectedState} selectedContent={selectedContent}/>; 
       case 'raceEthnicity':
         return <RaceEthnicityContent selectedState={selectedState} />; 
-      case 'electionVotes':
+      case 'districtsTable':
         return <DistrictsTable selectedState={selectedState} />; 
       case 'nyHouseEthnicity':
         return <NYHouseEthnicityContent selectedState={selectedState} />;
@@ -47,8 +46,8 @@ function Sidebar({ handlePlotChange, selectedState, selectedContent }) {
               value={selectedContent}
             >
               <option value="elections">Elections</option>
+              <option value="districtsTable">Districts Table</option>
               <option value="raceEthnicity">Race & Ethnicity</option>
-              <option value="electionVotes">Election Votes</option>
               <option value="nyHouseEthnicity">NY House of Representatives Ethnicity</option>
               <option value="candidates">Candidates</option>
               {/* <option value="districtComparison">District Comparison</option> */}

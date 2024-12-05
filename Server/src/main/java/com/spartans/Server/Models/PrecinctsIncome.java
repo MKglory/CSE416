@@ -40,13 +40,10 @@ public class PrecinctsIncome {
     @Field("Income_Mean")
     private Double incomeMean;
 
-    @Field("Income_Mean_normalized")
-    private Double incomeMeanNormalized;
-
-    @Field("Poverty_Households")
+    @Field("LESS_30K")
     private int povertyHouseholds;
 
-    @Field("Poverty_Percentage")
+    @Field("LESS_30K_Percent")
     private double povertyPercentage;
 
     // Default Constructor
@@ -124,14 +121,6 @@ public class PrecinctsIncome {
 
     public void setIncomeMean(Double incomeMean) {
         this.incomeMean = incomeMean;
-    }
-
-    public Double getIncomeMeanNormalized() {
-        return incomeMeanNormalized;
-    }
-
-    public void setIncomeMeanNormalized(Double incomeMeanNormalized) {
-        this.incomeMeanNormalized = incomeMeanNormalized;
     }
 
     public String getState() {
