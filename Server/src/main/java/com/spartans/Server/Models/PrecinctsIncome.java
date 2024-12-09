@@ -41,7 +41,7 @@ public class PrecinctsIncome {
     private Double incomeMean;
 
     @Field("LESS_30K")
-    private int povertyHouseholds;
+    private int povertyHouseholds; //To represent the poverty levels, LESS_30K is mapped to povertyHouseholds
 
     @Field("LESS_30K_Percent")
     private double povertyPercentage;

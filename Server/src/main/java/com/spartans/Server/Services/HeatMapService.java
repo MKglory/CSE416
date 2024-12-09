@@ -48,7 +48,7 @@ public class HeatMapService {
     private String povertyColors;
     @Value("${heatmap.povertyLine.threshold}")
     private String povertyThreshold;
-    @Value("${heatmap.povertyLine.labels}")
+    @Value("${heatmap.povertyLine.labels}")   
     private String povertyLabels;
     @Value("${heatmap.demographic.labels}")
     private String demographicColorLabels;
@@ -106,7 +106,7 @@ public class HeatMapService {
     }
 
     // Fetch heatmap data for a specific state, boundary type, and data type
-    public Map<String, Object> getHeatMapData(String state, String boundary, String dataType) {
+    public Map<String, Object> getHeatMapData(String state, String boundary, String dataType) { //Start
         String cacheKey = generateCacheKey(state, boundary, dataType); 
 
         // Check if data is already cached

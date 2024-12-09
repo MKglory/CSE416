@@ -103,9 +103,18 @@ function MapComponent({ selectedState }) {
         const cd = feature.properties.CD;
         matchingMapEntry = heatMapData.find((entry) => entry.cd === cd);
       }
-      else if (mapBoundary === "Precincts" && heatMapData != null){
+// Check if the map is displaying precinct-level data and ensure heatMapData is available
+      else if (mapBoundary === "Precincts" && heatMapData != null) {
+          
+        // Extract the unique identifier for the current precinct from the map feature properties
         const precinctID = feature.properties.PrecinctID;
+        
+        // Find the matching data entry in heatMapData that corresponds to the current precinct
+        // The match is based on the precinctID property from the map feature and the heatMapData entry
         matchingMapEntry = heatMapData.find((entry) => entry.precinctID === precinctID);
+        
+        // At this point, matchingMapEntry will contain the relevant data (e.g., poverty percentage,
+        // income mean, etc.) for the current precinct, or it will be null if no match is found.
       }
       let fillColor = "lightblue";
       if (heatMap === 'Election'){
@@ -300,8 +309,8 @@ function generateIncomePopup(matchingMapEntry) {
               <select className="form-select" value={heatMap} onChange={(e) => HeatMapChangeHandler(e.target.value)}>
                 <option value="None">None</option>
                 <option value="Demography">Demography</option>
-                <option value="Income">Income</option>
-                <option value="Election">Election</option>
+                <option value="Income">Income</option>  {/* Start */}
+                <option value="Election">Election</option> 
               </select>
             </li>
           </ul>
