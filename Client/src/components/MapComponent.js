@@ -11,7 +11,7 @@ const usBounds = [
   [49.384358, -66.885444],  // Northeast
 ];
 
-function MapComponent({ selectedState }) {
+function MapComponent({ selectedState, selectedId, setSelectedId }) {
   const [boundaryData, setBoundaryData] = useState(null);
   const [heatMapData, setHeatMapData] = useState(null);
   const [mapBoundary, setMapBoundary] = useState("Districts");
@@ -22,7 +22,7 @@ function MapComponent({ selectedState }) {
   const [selectedRace, setSelectedRace] = useState('white')
   const [selectedIncome, setSelectedIncome] = useState('income')
 
-  const [selectedId, setSelectedId] = useState(null);
+  // const [selectedId, setSelectedId] = useState(null);
   const layerRefs = useRef({});
 
   const mapDataRequest = async () => {
@@ -55,7 +55,7 @@ function MapComponent({ selectedState }) {
     const map = useMap();
     const previousState = useRef(selectedState);
     useEffect(() => {
-      map.flyTo(center, 7);
+      map.flyTo(center, 6.7);
       previousState.current = selectedState;
 
     }, [selectedState]);

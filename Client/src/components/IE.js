@@ -1,76 +1,92 @@
-import React from "react";
-import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
-import votingData from "../data/ar_EI_White_Republican.json";
+import React, { useState } from "react";
+import IE_Analysis from './IE_analysis.js'
+import IE_polarization from './IE_polarization.js'
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const KDEPlot = () => {
-  // Helper function to compute KDE
-  const computeKDE = (samples, bandwidth = 0.02, range = [0, 1], steps = 100) => {
-    if (!Array.isArray(samples) || samples.length === 0) {
-      return { xValues: [], yValues: [] };
+const KDEPlotChartJS = () => {
+  // State for selected region
+  const [selectedRegion, setSelectedRegion] = useState("Urban");
+  const [selectedDataType, setSelectedDataType] = useState("Demography");
+  const [selectedRace, setSelectedRace] = useState("Black");
+  const [selectedGraph, setSelectedGraph] = useState("EI");
+  const [selectedCandidate, setSelectedCandidate] = useState("Trump");
+
+  const selectedDataTypeChangeHanlder = (type) =>{
+    setSelectedDataType(type);
+  }
+  const selectedGraphChangeHanlder = (graph) => {
+    setSelectedGraph(graph);
+  }
+  const selectedRaceChangeHanlder = (race) =>{
+    setSelectedRace(race)
+  }
+  const selectedRegioneChangeHanlder = (region) =>{
+    setSelectedRegion(region);
+  }
+  const selectedCandidateChangeHandler = (candidate)=> {
+    setSelectedCandidate(candidate);
+  }
+
+  const render = () =>{
+    if (selectedGraph === 'EI'){
+        return <IE_Analysis
+                selectedRegion={selectedRegion}
+                selectedCandidate={selectedCandidate}/>
     }
+    else if (selectedGraph === "Polarization"){
+        return <IE_polarization/>
+    }
+  }
+     
+  return (
+    <div>
+        <div style={{ display: 'flex', width: '100%'}}>
+            <ul className="list-group">
+                <li className="list-group-item">
+                    <select className="form-select" value={selectedGraph} onChange={(e) => selectedGraphChangeHanlder(e.target.value)}>
+                        <option value="EI">EI Analysis</option>
+                        <option value="Polarization">KDE Polarization</option>
+                    </select>
+                </li>
+            </ul>
+            <ul className="list-group">
+                <li className="list-group-item">
+                    <select className="form-select" value={selectedRegion} onChange={(e) => selectedRegioneChangeHanlder(e.target.value)}>
+                        <option value="Urban">Urban</option>
+                        <option value="Suburban">Suburban</option>
+                        <option value="Rural">Rural</option>
+                        <option value="All">All</option>
 
-    const gaussianKernel = (x) => Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI);
-    const stepSize = (range[1] - range[0]) / steps;
-    const xValues = Array.from({ length: steps }, (_, i) => range[0] + i * stepSize); // X-axis range
-    const yValues = xValues.map((x) =>
-      samples.reduce((sum, sample) => sum + gaussianKernel((x - sample) / bandwidth), 0) / (samples.length * bandwidth)
-    );
-    return { xValues, yValues };
-  };
-
-  // Safeguard against undefined data
-  const targetRaceSamples = votingData?.voting_rate_target_race || [];
-  const otherRaceSamples = votingData?.voting_rate_other_race || [];
-  console.log(targetRaceSamples)
-  // Compute KDE for both datasets
-  const targetKDE = computeKDE(targetRaceSamples);
-  const otherKDE = computeKDE(otherRaceSamples);
-
-  // Chart data
-  const data = {
-    labels: targetKDE.xValues.map((x) => (x * 100).toFixed(1)), // Convert X-axis values to percentages
-    datasets: [
-      {
-        label: "Target Race",
-        data: targetKDE.yValues, // KDE Y values
-        borderColor: "teal",
-        backgroundColor: "rgba(0, 128, 128, 0.4)",
-        fill: true,
-      },
-      {
-        label: "Other Race",
-        data: otherKDE.yValues, // KDE Y values
-        borderColor: "orange",
-        backgroundColor: "rgba(255, 165, 0, 0.4)",
-        fill: true,
-      },
-    ],
-  };
-
-  // Chart options
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: { display: true, position: "top" },
-      title: { display: true, text: "Support for Hardy" },
-      tooltip: { enabled: false },
-      datalabels: { display: false }
-    },
-    scales: {
-      x: {
-        title: { display: true, text: "Percentage of Group Voting for Candidate" },
-        ticks: { callback: (value) => `${value}%` }, // Format X-axis labels as percentages
-      },
-      y: {
-        title: { display: true, text: "Probability Density" },
-      },
-    },
-  };
-  return null;
-  return <Line data={data} options={options} />;
+                    </select>
+                </li>
+            </ul>
+            <ul className="list-group">
+                <li className="list-group-item">
+                    <select className="form-select" value={selectedDataType} onChange={(e) => selectedDataTypeChangeHanlder(e.target.value)}>
+                        <option value="Demography">Demography</option>
+                        <option value="Income">Income</option>
+                    </select>
+                </li>
+            </ul>
+            {
+            selectedDataType === "Demography"
+            ? <ul className="list-group">
+                <li className="list-group-item">
+                  <select className="form-select" value={selectedRace} onChange={(e) => selectedRaceChangeHanlder(e.target.value)}>
+                    <option value="black">Black</option>
+                    <option value="white">White</option>
+                    <option value="americanIndian">American Indian</option>
+                    <option value="hispanic">Hispanic</option>
+                    <option value="asian">Asian</option>
+                  </select>
+                </li>
+              </ul>
+            : null
+          }
+        </div>
+        {render()}
+    </div>
+  );
 };
 
-export default KDEPlot;
+export default KDEPlotChartJS;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function CongressionalTable({ selectedState }) {
+function CongressionalTable({ selectedState, setSelectedId }) {
   const [districtData, setDistrictData] = useState(null);
   const [loading, setLoading] = useState(false); 
 
@@ -80,7 +80,11 @@ function CongressionalTable({ selectedState }) {
             </thead>
             <tbody>
               {currentDistricts.map((district, index) => (
-                <tr key={index}>
+                <tr 
+                  key={index}
+                  onClick={() => setSelectedId(district.district)}
+                  style={{ cursor: "pointer" }}
+                >
                   <td>{district.district}</td>
                   <td>{district.representative}</td>
                   <td>{district.racialEthnicity}</td>

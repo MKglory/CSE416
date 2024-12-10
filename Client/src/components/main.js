@@ -14,6 +14,7 @@ import '../stylesheets/styles.css'; // Import your custom styles
 function Main() {
   const [selectedState, setSelectedState] = useState('NY');
   const [selectedContent, setSelectedContent] = useState('elections');
+  const [selectedId, setSelectedId] = useState(null);
 
   const handleStateChange = (state) => {
     setSelectedState(state); 
@@ -34,13 +35,17 @@ function Main() {
             <Sidebar 
             handlePlotChange={handlePlotChange}
             selectedContent={selectedContent}
-            selectedState={selectedState}/>
+            selectedState={selectedState}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}/>
           </div>
 
           <div className="col-md-6 map-content rounded-section" >
             <MapComponent
             selectedState={selectedState}
-            handlePlotChange={handlePlotChange}/>
+            handlePlotChange={handlePlotChange}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}/>
           </div>
         </div>
       </div>

@@ -9,9 +9,10 @@ import DistrictsTable from './districtsTable';
 import HouseholdIncomeContent from './HouseholdIncomeContent';
 import Gingles from './Gingles.js'
 import BoxAndWhiskerContent from './BoxAndWhiskerContent.js';
-import IE from './IE.js'
+import IE from "./IE.js"
+// import IE from './IE.js'
 
-function Sidebar({ handlePlotChange, selectedState, selectedContent }) {
+function Sidebar({ handlePlotChange, selectedState, selectedContent, selectedId, setSelectedId }) {
   const handleSelect = (event) => {
     handlePlotChange(event.target.value);
   };
@@ -22,7 +23,10 @@ function Sidebar({ handlePlotChange, selectedState, selectedContent }) {
       case 'raceEthnicity':
         return <RaceEthnicityContent selectedState={selectedState} />; 
       case 'districtsTable':
-        return <DistrictsTable selectedState={selectedState} />; 
+        return <DistrictsTable 
+                  selectedState={selectedState}
+                  selectedId={selectedId}
+                  setSelectedId={setSelectedId}/>; 
       case 'nyHouseEthnicity':
         return <NYHouseEthnicityContent selectedState={selectedState} />;
       case 'candidates':
@@ -35,6 +39,8 @@ function Sidebar({ handlePlotChange, selectedState, selectedContent }) {
         return <Gingles selectedState={selectedState}/>
       case 'boxWhisker':
         return <BoxAndWhiskerContent selectedState={selectedState}/>
+      case 'IE':
+        return <IE/>
     }
   };
 
@@ -49,15 +55,15 @@ function Sidebar({ handlePlotChange, selectedState, selectedContent }) {
               value={selectedContent}
             >
               <option value="elections">Elections</option>
-              <option value="districtsTable">Districts Table</option>
-              <option value="raceEthnicity">Race & Ethnicity</option>
+              <option value="districtsTable">District Details</option>
+              <option value="IE">Ecological Inference</option>
+              {/* <option value="raceEthnicity">Race & Ethnicity</option>
               <option value="nyHouseEthnicity">NY House of Representatives Ethnicity</option>
-              <option value="candidates">Candidates</option>
+              <option value="candidates">Candidates</option> */}
               {/* <option value="districtComparison">District Comparison</option> */}
               <option value="voteGapAnalysis">Gingles 2/3 Analysis</option>
-              <option value="householdIncome">Household Income</option>
+              {/* <option value="householdIncome">Household Income</option> */}
               <option value="boxWhisker">Box & Whisker</option>
-
             </select>
           </li>
         </ul>

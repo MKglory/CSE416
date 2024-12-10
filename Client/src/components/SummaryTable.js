@@ -74,12 +74,12 @@ function SummaryTable({ selectedState }) {
     return (
             <div
             className="summaryTable"
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                overflowX: "auto",
-                paddingLeft: "2%",
-            }}
+            // style={{
+            //     display: "flex",
+            //     justifyContent: "center",
+            //     overflowX: "auto",
+            //     paddingLeft: "2%",
+            // }}
         >
             <table>
                 <thead>
