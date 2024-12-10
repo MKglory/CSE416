@@ -63,9 +63,14 @@ public class HeatMapService {
     @Value("${heatmap.colors.republican}")
     private String republicanColor;
 
+    /*
+     * Input: "FF0000, 00FF00, 0000FF, FFFFFF, 000000"
+     * Output: ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF", "#000000"]
+     */
+    // Parse a comma-separated string of colors into a list of formatted color codes
     private List<String> parseColors(String colorConfig) {
         return Stream.of(colorConfig.split(","))
-                .map(color -> "#" + color.trim())
+                .map(color -> "#" + color.trim()) // Add "#" to each trimmed color value
                 .collect(Collectors.toList());
     }
 
@@ -100,40 +105,44 @@ public class HeatMapService {
         return colorMap;
     }
 
+    // Fetch heatmap data for a specific state, boundary type, and data type
     public Map<String, Object> getHeatMapData(String state, String boundary, String dataType) {
-        String cacheKey = generateCacheKey(state, boundary, dataType);
+        String cacheKey = generateCacheKey(state, boundary, dataType); // Generate unique cache key
 
+        // Check if data is already cached
         Map<String, Object> cachedData = (Map<String, Object>) caffeineCache.getIfPresent(cacheKey);
         if (cachedData != null) {
             logger.info("[HeatMapService] Cache hit for key: {}", cacheKey);
-            return cachedData; // Return cached result
+            return cachedData; // Return cached data
         }
 
         logger.info("[HeatMapService] Cache miss for key: {}. Fetching data from database.", cacheKey);
 
-        // Fetch data if not in cache
+        // Fetch data from the database based on boundary type
         List<?> data = switch (boundary.toLowerCase()) {
-            case "districts" -> getDistrictHeatMap(state, dataType);
-            case "precincts" -> getPrecinctHeatMap(state, dataType);
+            case "districts" -> getDistrictHeatMap(state, dataType); // Fetch district-level data
+            case "precincts" -> getPrecinctHeatMap(state, dataType); // Fetch precinct-level data
             default -> {
                 logger.error("[HeatMapService] Unsupported boundary type: {}", boundary);
                 throw new IllegalArgumentException("Unsupported boundary type: " + boundary);
             }
         };
 
+        // Build a result map with data and color configurations
         Map<String, Object> colorsByType = getColors();
         Map<String, Object> result = Map.of(
                 "data", data,
                 "colors", colorsByType
         );
 
-        // Store result in cache
+        // Cache the result
         caffeineCache.put(cacheKey, result);
         logger.info("[HeatMapService] Data cached for key: {}", cacheKey);
 
         return result;
     }
 
+    // Fetch district-level heatmap data based on state and data type
     public List<?> getDistrictHeatMap(String state, String dataType) {
         logger.debug("[HeatMapService] Fetching district heatmap data for state: {}, dataType: {}", state, dataType);
         return switch (dataType.toLowerCase()) {
@@ -147,6 +156,7 @@ public class HeatMapService {
         };
     }
 
+    // Fetch precinct-level heatmap data based on state and data type
     public List<?> getPrecinctHeatMap(String state, String dataType) {
         logger.debug("[HeatMapService] Fetching precinct heatmap data for state: {}, dataType: {}", state, dataType);
         return switch (dataType.toLowerCase()) {
@@ -160,6 +170,7 @@ public class HeatMapService {
         };
     }
 
+    // Generate a unique cache key for the given parameters
     private String generateCacheKey(String state, String boundary, String dataType) {
         return "HeatMapService:" + state.toLowerCase() + ":" + boundary.toLowerCase() + ":" + dataType.toLowerCase();
     }
