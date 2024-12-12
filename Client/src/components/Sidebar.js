@@ -40,7 +40,7 @@ function Sidebar({ handlePlotChange, selectedState, selectedContent, selectedId,
       case 'boxWhisker':
         return <BoxAndWhiskerContent selectedState={selectedState}/>
       case 'IE':
-        return <IE/>
+        return <IE selectedState={selectedState}/>
     }
   };
 

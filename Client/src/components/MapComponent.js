@@ -21,8 +21,6 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
   const [colors, setColors] = useState(null);
   const [selectedRace, setSelectedRace] = useState('white')
   const [selectedIncome, setSelectedIncome] = useState('income')
-
-  // const [selectedId, setSelectedId] = useState(null);
   const layerRefs = useRef({});
 
   const mapDataRequest = async () => {
@@ -145,8 +143,8 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
   
       return {
         fillColor: fillColor,
-        color: isSelected ? '#ff0000' : 'black', // Red if selected, default blue otherwise
-        weight: isSelected ? 4 : 0.7,               // Thicker border if selected
+        color: 'black',
+        weight: 0.7, // Thicker border if selected
         opacity: 1,
         fillOpacity: 0.5,
       };
@@ -233,7 +231,7 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
       if (layer) {
         layer.setStyle({
           color: '#black', // Default border color
-          weight: 0.7,         // Default border thickness
+          weight: 0.7, // Default border thickness
         });
       }
     });
@@ -244,11 +242,9 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
         weight: 4,         // Highlight border thickness
       });
 
-      // **Bring the selected layer to front**
+      // Bring the selected layer to front**
       layerRefs.current[selectedId].bringToFront();
-
-      // **Optionally, open the popup**
-      layerRefs.current[selectedId].openPopup();
+      // layerRefs.current[selectedId].openPopup();
     }
   }, [selectedId]);
 

@@ -3,7 +3,7 @@ import IE_Analysis from './IE_analysis.js'
 import IE_polarization from './IE_polarization.js'
 
 
-const KDEPlotChartJS = () => {
+const KDEPlotChartJS = ({ selectedState }) => {
   // State for selected region
   const [selectedRegion, setSelectedRegion] = useState("Urban");
   const [selectedDataType, setSelectedDataType] = useState("Demography");
@@ -31,10 +31,12 @@ const KDEPlotChartJS = () => {
     if (selectedGraph === 'EI'){
         return <IE_Analysis
                 selectedRegion={selectedRegion}
-                selectedCandidate={selectedCandidate}/>
+                selectedCandidate={selectedCandidate}
+                selectedState={selectedState}/>
     }
     else if (selectedGraph === "Polarization"){
-        return <IE_polarization/>
+        return <IE_polarization
+                selectedState={selectedState}/>
     }
   }
      

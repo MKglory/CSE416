@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface DistrictDemographyRepository extends MongoRepository<DistrictDemography, String> {
     List<DistrictDemography> findByState(String state);
+
 }

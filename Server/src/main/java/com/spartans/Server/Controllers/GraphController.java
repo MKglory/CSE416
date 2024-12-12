@@ -8,6 +8,7 @@ import com.spartans.Server.Models.PrecinctsDemography;
 import com.spartans.Server.Models.PrecinctsElection;
 import com.spartans.Server.Repositories.PrecinctsDemographyRepository;
 import com.spartans.Server.Repositories.PrecinctsElectionRepository;
+import com.spartans.Server.Services.BoxWhiskerService;
 import com.spartans.Server.Services.GingleService;
 import com.spartans.Server.Services.HeatMapService;
 import org.slf4j.Logger;
@@ -51,6 +52,24 @@ public class GraphController {
             logger.error("Error occurred while retrieving data", e);
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while retrieving map data.", e
+            );
+        }
+    }
+
+    @Autowired
+    private BoxWhiskerService boxWhiskerService;
+    @GetMapping("/{state}/BoxWhisker")
+    public ResponseEntity<Map<String, Object>> getBoxWhiskerData(
+            @PathVariable String state){
+        try {
+            Map<String, Object> dataCollection =
+                    boxWhiskerService.getBoxWhiskerByState(state);
+            return ResponseEntity.ok()
+                    .body(dataCollection);
+        } catch (Exception e) {
+            logger.error("Error occurred while retrieving data", e);
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while retrieving box & whisker data.", e
             );
         }
     }

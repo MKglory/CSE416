@@ -1,36 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import { Select, Checkbox, Spin } from 'antd';
+import axios from "axios";
 import 'antd/dist/reset.css';
 import ny_enactedPlan from '../data/ny_enacted_plan_percentages.json';
 import ny_districtPlan from '../data/ny_district_plan_percentages.json';
 import ar_enactedPlan from '../data/ar_enacted_plan_percentages.json';
 import ar_districtPlan from '../data/ar_district_plan_percentages.json';
 function BoxAndWhiskerContent({ selectedState }) {
-  const [selectedGroup, setSelectedGroup] = useState('population_White');
+  const [selectedGroup, setSelectedGroup] = useState('populationWhite');
   const [selectedRegions, setSelectedRegions] = useState(['rural', 'urban', 'suburban']);
+  const [chartData, setChartData] = useState(null);
   const [plotData, setPlotData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const racialGroups = selectedState === 'NY' ? Object.keys(ny_districtPlan) : Object.keys(ar_districtPlan);
-  const districtPlan = selectedState === 'NY' ? ny_districtPlan : ar_districtPlan;
-  const enactedPlan = selectedState === 'NY' ? ny_enactedPlan : ar_enactedPlan;
-  const colors = {
-    rural: '#2ca02c',
-    urban:  '#1f77b4',
-    suburban: '#ff7f0e' 
+  useEffect(() => {
+    setLoading(true);
+    fetchData();
+  },[selectedState])
+
+  const fetchData = async () => {
+    const response = await axios.get(`http://localhost:8080/${selectedState}/BoxWhisker`);
+    setChartData(response.data);
+    console.log(response.data);
+    setLoading(false);
+  }
+
+  const filterData = (data) => {
+    if (!data) return null;
+
+    const toFilteredDictionary = (object) =>
+      Object.entries(object)
+        .filter(([key]) => key !== 'id' && key !== 'state')
+        .reduce((acc, [key, value]) => {
+          acc[key] = value;
+          return acc;
+        }, {});
+
+    return {
+      racialGroups: Object.keys(data.partitions).filter(
+        key => key !== 'id' && key !== 'state'
+      ),
+      districtPlan: toFilteredDictionary(data.partitions),
+      enactedPlan: toFilteredDictionary(data.enacted),
+    };
   };
+  
+  const processedData = chartData ? filterData(chartData) : null;
+  const { racialGroups, districtPlan, enactedPlan } = processedData || {};
 
   useEffect(() => {
-    if (selectedGroup && selectedRegions.length > 0) {
+    if (!loading && chartData && selectedGroup && selectedRegions.length > 0) {
+      console.log(enactedPlan);
       processData();
     }
-  }, [selectedGroup, selectedRegions, selectedState]);
+  }, [selectedGroup, selectedRegions, selectedState, chartData]);
 
   const processData = () => {
-    setLoading(true);
     let traces = [];
-
     const enactedData = [];
     selectedRegions.forEach(region => {
       const Enacted = enactedPlan[selectedGroup][region] ;
@@ -63,7 +90,11 @@ function BoxAndWhiskerContent({ selectedState }) {
     });
     showLegendEnacted = false;
 
-
+    const colors = {
+      rural: chartData.colors.rural,
+      urban:  chartData.colors.urban,
+      suburban: chartData.colors.suburban 
+    };
 
     const districtData = districtPlan[selectedGroup] ;
     const showLegendDistrict = new Set();
@@ -93,7 +124,6 @@ function BoxAndWhiskerContent({ selectedState }) {
       });
    
     setPlotData(traces);
-    setLoading(false);
   };
 
   const handleGroupChange = value => {
@@ -104,6 +134,7 @@ function BoxAndWhiskerContent({ selectedState }) {
     console.log(checkedValues);
     setSelectedRegions(checkedValues);
   };
+  if (!chartData || loading) return <div> Loading... </div>
 
   return (
     <div style={{ padding: '20px' }}>
@@ -117,7 +148,7 @@ function BoxAndWhiskerContent({ selectedState }) {
         >
           {racialGroups.map(group => (
             <Select.Option key={group} value={group}>
-              {group.replace('population_', '')}
+              {group.replace('population', '')}
             </Select.Option>
           ))}
         </Select>
