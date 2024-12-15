@@ -87,8 +87,18 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
       const colorArray = colors[selectedCatogory];
       if (value <= thresholds[0]) return colorArray[0];
       for (let i = 0; i < thresholds.length - 1; i++) {
-        if (value > thresholds[i] && value <= thresholds[i + 1]) return colorArray[i + 1]
+        if (value > thresholds[i] && value <= thresholds[i + 1]) {
+          console.log(colorArray);
+          console.log(value)
+          console.log(i);
+          console.log(thresholds[i])
+          console.log(thresholds[i + 1])
+          console.log(colorArray[i])
+          console.log(colorArray[i + 1])
+          return colorArray[i];
+        }
       }
+      console.log('outside')
       return colorArray[colorArray.length - 1];
     }
   }

@@ -148,8 +148,12 @@ function BoxAndWhiskerContent({ selectedState }) {
         >
           {racialGroups.map(group => (
             <Select.Option key={group} value={group}>
-              {group.replace('population', '')}
-            </Select.Option>
+              {group === 'populationIndian' 
+                ? 'American Indian' 
+                : group === 'averageIncome' 
+                ? 'Average Income' 
+                : group.replace('population', '').replace('_', ' ')
+            }            </Select.Option>
           ))}
         </Select>
 
