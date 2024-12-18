@@ -5,7 +5,7 @@ function GinglesTable({ selectedState, selectedId }) {
   const [data, setData] = useState([]); // Fetched data
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1); // Current page
-  const itemsPerPage = 5; // Number of items per page
+  const itemsPerPage = 8; // Number of items per page
   const [manualPage, setManualPage] = useState(""); // For manual input
 
   useEffect(() => {

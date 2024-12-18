@@ -5,11 +5,11 @@ import IE_polarization from './IE_polarization.js'
 
 const KDEPlotChartJS = ({ selectedState }) => {
   // State for selected region
-  const [selectedRegion, setSelectedRegion] = useState("Urban");
-  const [selectedDataType, setSelectedDataType] = useState("Demography");
-  const [selectedRace, setSelectedRace] = useState("Black");
+  const [selectedRegion, setSelectedRegion] = useState("All");
+  const [selectedDataType, setSelectedDataType] = useState("None");
+  const [selectedRace, setSelectedRace] = useState("None");
   const [selectedGraph, setSelectedGraph] = useState("EI");
-  const [selectedCandidate, setSelectedCandidate] = useState("Trump");
+  const [selectedCandidate, setSelectedCandidate] = useState("None");
 
   const selectedDataTypeChangeHanlder = (type) =>{
     setSelectedDataType(type);
@@ -46,6 +46,7 @@ const KDEPlotChartJS = ({ selectedState }) => {
             <ul className="list-group">
                 <li className="list-group-item">
                     <select className="form-select" value={selectedGraph} onChange={(e) => selectedGraphChangeHanlder(e.target.value)}>
+                         <option value="None">None</option>
                         <option value="EI">EI Analysis</option>
                         <option value="Polarization">KDE Polarization</option>
                     </select>
@@ -53,18 +54,8 @@ const KDEPlotChartJS = ({ selectedState }) => {
             </ul>
             <ul className="list-group">
                 <li className="list-group-item">
-                    <select className="form-select" value={selectedRegion} onChange={(e) => selectedRegioneChangeHanlder(e.target.value)}>
-                        <option value="Urban">Urban</option>
-                        <option value="Suburban">Suburban</option>
-                        <option value="Rural">Rural</option>
-                        <option value="All">All</option>
-
-                    </select>
-                </li>
-            </ul>
-            <ul className="list-group">
-                <li className="list-group-item">
                     <select className="form-select" value={selectedDataType} onChange={(e) => selectedDataTypeChangeHanlder(e.target.value)}>
+                        <option value="None">None</option>
                         <option value="Demography">Demography</option>
                         <option value="Income">Income</option>
                     </select>
@@ -75,6 +66,7 @@ const KDEPlotChartJS = ({ selectedState }) => {
             ? <ul className="list-group">
                 <li className="list-group-item">
                   <select className="form-select" value={selectedRace} onChange={(e) => selectedRaceChangeHanlder(e.target.value)}>
+                    <option value="None">None</option>
                     <option value="black">Black</option>
                     <option value="white">White</option>
                     <option value="americanIndian">American Indian</option>
@@ -84,7 +76,27 @@ const KDEPlotChartJS = ({ selectedState }) => {
                 </li>
               </ul>
             : null
-          }
+            }
+            <ul className="list-group">
+                <li className="list-group-item">
+                    <select className="form-select" onChange={(e) => selectedCandidateChangeHandler(e.target.value)}>
+                        <option value="None">None</option>
+                        <option value="Trump">Trump</option>
+                        <option value="Biden">Biden</option>
+                    </select>
+                </li>
+            </ul>
+            <ul className="list-group">
+                <li className="list-group-item">
+                    <select className="form-select" value={selectedRegion} onChange={(e) => selectedRegioneChangeHanlder(e.target.value)}>
+                      <option value="All">All</option>
+                        <option value="Urban">Urban</option>
+                        <option value="Suburban">Suburban</option>
+                        <option value="Rural">Rural</option>
+                    </select>
+                </li>
+            </ul>
+
         </div>
         {render()}
     </div>
