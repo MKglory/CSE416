@@ -37,7 +37,8 @@ function Sidebar({ handlePlotChange, selectedState, selectedContent, selectedId,
 
   return (
     <div>
-      <EnsemblePlan/>
+      <EnsemblePlan
+      selectedState={selectedState}/>
       <div className="sidebar">
         <ul className="list-group">
           <li className="list-group-item d-flex flex-row align-items-center justify-content-between">

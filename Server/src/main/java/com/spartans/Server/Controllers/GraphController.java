@@ -4,13 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.spartans.Server.Models.EIPolarizationData;
 import com.spartans.Server.Models.PrecinctsDemography;
 import com.spartans.Server.Models.PrecinctsElection;
 import com.spartans.Server.Repositories.PrecinctsDemographyRepository;
 import com.spartans.Server.Repositories.PrecinctsElectionRepository;
-import com.spartans.Server.Services.BoxWhiskerService;
-import com.spartans.Server.Services.GingleService;
-import com.spartans.Server.Services.HeatMapService;
+import com.spartans.Server.Services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +69,46 @@ public class GraphController {
             logger.error("Error occurred while retrieving data", e);
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while retrieving box & whisker data.", e
+            );
+        }
+    }
+
+    @Autowired
+    private EIAnalysisDataService eiAnalysisDataService;
+    @GetMapping("/ecological_inference/{state}/{regionType}/{candidate}/{targetData}/analysis")
+    public ResponseEntity<Map<String, Object>> getEIAnalysisGraph(
+            @PathVariable String state,
+            @PathVariable String regionType,
+            @PathVariable String candidate,
+            @PathVariable String targetData){
+        try {
+            Map<String, Object> dataCollection = eiAnalysisDataService.getEIAnalysis(state, regionType, candidate, targetData);
+            return ResponseEntity.ok()
+                    .body(dataCollection);
+        } catch (Exception e) {
+            logger.error("Error occurred while retrieving data", e);
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while retrieving map data.", e
+            );
+        }
+    }
+
+    @Autowired
+    private EIPolarizationService eiPolarizationService;
+    @GetMapping("/ecological_inference/{state}/{group0}/{group1}/{candidate}/polarization")
+    public ResponseEntity<List<EIPolarizationData>> getEIPolarizationGraph(
+            @PathVariable String state,
+            @PathVariable String group0,
+            @PathVariable String group1,
+            @PathVariable String candidate){
+        try {
+            List<EIPolarizationData> data = eiPolarizationService.getByStateGroupsAndCandidate(state, group0, group1, candidate);
+            return ResponseEntity.ok()
+                    .body(data);
+        } catch (Exception e) {
+            logger.error("Error occurred while retrieving data", e);
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while retrieving map data.", e
             );
         }
     }

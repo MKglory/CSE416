@@ -1,36 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import jsonData from '../data/ny_polarization_Asian_American_Indian_Trump.json';  // Assuming the JSON file is in the same directory
+import axios from 'axios';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const PolarizationPlot = () => {
+const PolarizationPlot = ({ state, group0, group1, candidate }) => {
   const [plotData, setPlotData] = useState(null);
   const [percentiles, setPercentiles] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set the plot data once the component mounts
-    const dataEntry = jsonData[0];
-    if (dataEntry) {
-      setPlotData(dataEntry);
+    const fetchData = async () => {
+      try {
+        console.log(state, group0, group1, candidate)
+        const url = `http://localhost:8080/ecological_inference/${state}/${group0}/${group1}/${candidate}/polarization`;
+        const response = await axios.get(url);
+        console.log(response.data)
+        const dataEntry = response.data[0];
+        setPlotData(dataEntry);
 
-      // Calculate the 2nd and 98th percentiles
-      if (dataEntry.x_values) {
-        const lowerPercentile = percentile(dataEntry.x_values, 2.5);
-        const upperPercentile = percentile(dataEntry.x_values, 97.5);
-        setPercentiles({ lowerPercentile, upperPercentile });
+        // Calculate the percentiles if x_values exist
+        if (dataEntry && dataEntry.xValues) {
+          const lowerPercentile = percentile(dataEntry.xValues, 2.5);
+          const upperPercentile = percentile(dataEntry.xValues, 97.5);
+          setPercentiles({ lowerPercentile, upperPercentile });
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
-    }
-  }, []);
+    };
 
-  if (!plotData) {
-    return <div>Loading...</div>;
-  }
+    fetchData();
+  }, [state, group0, group1, candidate]);
 
-  if (!percentiles) {
-    return <div>Calculating percentiles...</div>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (!plotData) return <div>No data available.</div>;
 
   // Helper function to calculate percentile
   function percentile(arr, p) {
@@ -40,15 +47,15 @@ const PolarizationPlot = () => {
   }
 
   // Extract the data from the JSON entry
-  const { title, x_label, y_label, x_values, y_values } = plotData;
+  const { title, xLabel, yLabel, xValues, yValues } = plotData;
 
   // Chart.js data configuration
   const data = {
-    labels: x_values,
+    labels: xValues,
     datasets: [
       {
         label: 'KDE Curve',
-        data: y_values,
+        data: yValues,
         fill: true,
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -71,7 +78,7 @@ const PolarizationPlot = () => {
       },
       tooltip: {
         callbacks: {
-          label: (context) => `${y_label}: ${context.raw}`,
+          label: (context) => `${yLabel}: ${context.raw}`,
         },
       },
     },
@@ -79,19 +86,18 @@ const PolarizationPlot = () => {
       x: {
         title: {
           display: true,
-          text: x_label,
+          text: xLabel,
         },
         ticks: {
-          // Display x_values as they are without modification
           callback: function (value, index) {
-            return parseFloat(x_values[index]).toFixed(3); // Round to 1 decimal
+            return parseFloat(xValues[index]).toFixed(3); // Round to 3 decimals
           },
         },
       },
       y: {
         title: {
           display: true,
-          text: y_label,
+          text: yLabel,
         },
       },
     },

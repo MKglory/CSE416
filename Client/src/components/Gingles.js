@@ -9,7 +9,7 @@ function Gingles({ selectedState, selectedId, setSelectedId }) {
   const [dataType, setDataType] = useState('Null')
   const [regionType, setRegionType] = useState('All')
   const [loading, setLoading] = useState(true);
-  const [gingleAnalysisTarget, setGingleAnalysisTarget] = useState('race')
+  const [gingleAnalysisTarget, setGingleAnalysisTarget] = useState('None')
   const fetchData = async () => {
     const response = await axios.get(`http://localhost:8080/${selectedState}/Gingles/${dataType}/${regionType}`);
     setChartData(response.data.gingleData);
