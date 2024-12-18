@@ -7,7 +7,7 @@ function CongressionalTable({ selectedState, setSelectedId }) {
 
   // Pagination States
   const [currentPage, setCurrentPage] = useState(1);
-  const districtsPerPage = 10; 
+  const districtsPerPage = 7; 
 
   useEffect(() => {
     if (!selectedState) return;

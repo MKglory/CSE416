@@ -15,10 +15,14 @@ import java.util.Map;
 @Service
 public class GingleService {
 
-    @Value("${heatmap.colors.democratic}")
-    private String democraticColor;
-    @Value("${heatmap.colors.republican}")
-    private String republicanColor;
+    @Value("${heatmap.colors.democratic.scatter}")
+    private String democraticColorScatter;
+    @Value("${heatmap.colors.republican.scatter}")
+    private String republicanColorScatter;
+    @Value("${heatmap.colors.democratic.trend}")
+    private String democraticColorTrend;
+    @Value("${heatmap.colors.republican.trend}")
+    private String republicanColorTrend;
     @Autowired
     private GingleScatterRepository gingleScatterRepository;
 
@@ -34,8 +38,10 @@ public class GingleService {
         return Map.of(
                 "gingleData", gingleData,
                 "colors", Map.of(
-                        "democraticColor", democraticColor,
-                        "republicanColor", republicanColor
+                        "democraticColorScatter", democraticColorScatter,
+                        "republicanColorScatter", republicanColorScatter,
+                        "democraticColorTrend", democraticColorTrend,
+                        "republicanColorTrend", republicanColorTrend
                 )
         );
     }
@@ -49,8 +55,10 @@ public class GingleService {
         return Map.of(
                 "gingleData", gingleData,
                 "colors", Map.of(
-                        "democraticColor", democraticColor,
-                        "republicanColor", republicanColor
+                        "democraticColorScatter", democraticColorScatter,
+                        "republicanColorScatter", republicanColorScatter,
+                        "democraticColorTrend", democraticColorTrend,
+                        "republicanColorTrend", republicanColorTrend
                 )
         );
     }

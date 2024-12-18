@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.spartans.Server.Models.ElectionData;
 import com.spartans.Server.Services.DistrictsTableService;
 import com.spartans.Server.Services.ElectionDataService;
+import com.spartans.Server.Services.PrecinctsTableService;
 import com.spartans.Server.Services.StateSummaryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,9 +82,22 @@ public class DataController {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Election data not found for state: " + state, e
             );
-        } catch (Exception e) {
+        }
+    }
+
+    @Autowired
+    private PrecinctsTableService precinctsTableService;
+    @GetMapping("/{state}/PrecinctsTable")
+    public ResponseEntity<JsonNode> getPrecinctsTable(
+            @PathVariable String state) {
+
+        try {
+            JsonNode data = precinctsTableService.getPrecinctsData(state);
+            return ResponseEntity.ok().body(data);
+
+        } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred while retrieving data.", e
+                    HttpStatus.NOT_FOUND, "Election data not found for state: " + state, e
             );
         }
     }

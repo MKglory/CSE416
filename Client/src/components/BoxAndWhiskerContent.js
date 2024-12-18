@@ -137,9 +137,9 @@ function BoxAndWhiskerContent({ selectedState }) {
   if (!chartData || loading) return <div> Loading... </div>
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Box & Whisker Plot for {selectedState}</h2>
-      <div style={{ marginBottom: '20px' }}>
+    <div>
+      {/* <h2>Box & Whisker Plot for {selectedState}</h2> */}
+      <div>
         <Select
           style={{ width: 200, marginRight: '20px' }}
           placeholder="Select Racial/Ethnic Group"

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import SummaryTable from "./SummaryTable";
+import GingleTable from "./GingleTable"
 
 // real data
 import CountiesRaceEthnicity from './counties_raceEthnicity'
@@ -39,13 +40,17 @@ function Main() {
             selectedId={selectedId}
             setSelectedId={setSelectedId}/>
           </div>
-
-          <div className="col-md-6 map-content rounded-section" >
+        <div className="col-md-6 map-content rounded-section" >
+        {selectedContent === "Gingles" ?
+            <GingleTable
+            selectedState={selectedState}
+            selectedId={selectedId}/>:
             <MapComponent
             selectedState={selectedState}
             handlePlotChange={handlePlotChange}
             selectedId={selectedId}
             setSelectedId={setSelectedId}/>
+        }
           </div>
         </div>
       </div>

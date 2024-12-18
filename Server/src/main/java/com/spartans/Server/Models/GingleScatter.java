@@ -28,6 +28,9 @@ public class GingleScatter {
     @Field("vote_share_republican")
     private double voteShareRepublican;
 
+    @Field("PrecinctID")
+    private String precinctID;
+
     public String getId() {
         return id;
     }
@@ -82,5 +85,13 @@ public class GingleScatter {
 
     public void setVoteShareRepublican(double voteShareRepublican) {
         this.voteShareRepublican = voteShareRepublican;
+    }
+
+    public String getPrecinctID() {
+        return precinctID;
+    }
+
+    public void setPrecinctID(String precinctID) {
+        this.precinctID = precinctID;
     }
 }

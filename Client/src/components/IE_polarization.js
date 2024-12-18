@@ -1,87 +1,77 @@
-import React from "react";
-import { Line } from "react-chartjs-2";
-import polarizationKDEData from "../data/polarization_kde.json";
+import React, { useEffect, useState } from 'react';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import jsonData from '../data/ny_polarization_Asian_American_Indian_Trump.json';  // Assuming the JSON file is in the same directory
 
-// Import Chart.js modules
-import {
-  Chart as ChartJS,
-  LineElement,
-  PointElement,
-  LinearScale,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-  CategoryScale,
-} from "chart.js";
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-// Register Chart.js modules
-ChartJS.register(
-  LineElement,
-  PointElement,
-  LinearScale,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-  CategoryScale
-);
+const PolarizationPlot = () => {
+  const [plotData, setPlotData] = useState(null);
+  const [percentiles, setPercentiles] = useState(null);
 
-const PolarizationKDEChart = () => {
-  // Extract data and confidence interval
-  const labels = polarizationKDEData.x.map((val) => parseFloat(val.toFixed(2))); // X-axis
-  const density = polarizationKDEData.density;
-  const ciLower = polarizationKDEData.ci_lower;
-  const ciUpper = polarizationKDEData.ci_upper;
+  useEffect(() => {
+    // Set the plot data once the component mounts
+    const dataEntry = jsonData[0];
+    if (dataEntry) {
+      setPlotData(dataEntry);
 
-  // Prepare datasets
+      // Calculate the 2nd and 98th percentiles
+      if (dataEntry.x_values) {
+        const lowerPercentile = percentile(dataEntry.x_values, 2.5);
+        const upperPercentile = percentile(dataEntry.x_values, 97.5);
+        setPercentiles({ lowerPercentile, upperPercentile });
+      }
+    }
+  }, []);
+
+  if (!plotData) {
+    return <div>Loading...</div>;
+  }
+
+  if (!percentiles) {
+    return <div>Calculating percentiles...</div>;
+  }
+
+  // Helper function to calculate percentile
+  function percentile(arr, p) {
+    const sortedArr = [...arr].sort((a, b) => a - b);
+    const index = Math.floor((p / 100) * (sortedArr.length - 1));
+    return sortedArr[index];
+  }
+
+  // Extract the data from the JSON entry
+  const { title, x_label, y_label, x_values, y_values } = plotData;
+
+  // Chart.js data configuration
   const data = {
-    labels: labels,
+    labels: x_values,
     datasets: [
       {
-        label: "Polarization KDE",
-        data: density,
-        borderColor: "rgba(54, 162, 235, 1)", // Blue line
-        backgroundColor: "rgba(54, 162, 235, 0.2)", // Blue fill
+        label: 'KDE Curve',
+        data: y_values,
         fill: true,
-        tension: 0.4,
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        tension: 0.4, // Add tension for smoother lines
         borderWidth: 2,
-        pointRadius: 0,
-      },
-      {
-        label: "Confidence Interval",
-        data: labels.map(
-          (x) =>
-            x >= ciLower && x <= ciUpper ? density[labels.indexOf(x)] : null // Shade CI region
-        ),
-        borderColor: "rgba(0, 0, 0, 0)", // No line
-        backgroundColor: "rgba(0, 0, 0, 0.1)", // Gray fill for CI
-        fill: true,
-        pointRadius: 0,
       },
     ],
   };
 
+  // Chart.js options configuration
   const options = {
     responsive: true,
-    maintainAspectRatio: false,
     plugins: {
-      legend: {
-        display: true,
-        position: "top",
-        labels: {
-          font: {
-            size: 14,
-          },
-        },
-      },
       title: {
         display: true,
-        text: `Polarization KDE for Trump: Prob(difference in [${ciLower.toFixed(
-          2
-        )}, ${ciUpper.toFixed(2)}]) = 95.0%`,
-        font: {
-          size: 18,
+        text: title,
+      },
+      legend: {
+        position: 'top',
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${y_label}: ${context.raw}`,
         },
       },
     },
@@ -89,44 +79,34 @@ const PolarizationKDEChart = () => {
       x: {
         title: {
           display: true,
-          text: "(Black - non-Black) support for Trump",
-          font: {
-            size: 14,
-          },
+          text: x_label,
         },
         ticks: {
-          font: {
-            size: 12,
+          // Display x_values as they are without modification
+          callback: function (value, index) {
+            return parseFloat(x_values[index]).toFixed(3); // Round to 1 decimal
           },
-          maxTicksLimit: 10,
         },
       },
       y: {
         title: {
           display: true,
-          text: "Density",
-          font: {
-            size: 14,
-          },
+          text: y_label,
         },
-        ticks: {
-          font: {
-            size: 12,
-          },
-        },
-        min: 0,
       },
     },
   };
 
   return (
-    <div style={{ padding: "10px" }}>
-      <h2 style={{ fontSize: "24px", textAlign: "center" }}>Polarization KDE</h2>
-      <div style={{ height: "400px", width: "100%" }}>
-        <Line data={data} options={options} />
+    <div>
+      <Line data={data} options={options} />
+      <div>
+        <p>
+          prob( difference in [{percentiles.lowerPercentile.toFixed(2)}, {percentiles.upperPercentile.toFixed(2)}] ) = 95%
+        </p>
       </div>
     </div>
   );
 };
 
-export default PolarizationKDEChart;
+export default PolarizationPlot;
