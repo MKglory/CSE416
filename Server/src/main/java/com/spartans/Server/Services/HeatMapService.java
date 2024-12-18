@@ -62,7 +62,14 @@ public class HeatMapService {
     private String democraticColor;
     @Value("${heatmap.colors.republican}")
     private String republicanColor;
-
+    @Value("${heatmap.colors.income.democratic}")
+    private String incomeDemocraticColor;
+    @Value("${heatmap.colors.income.republican}")
+    private String incomeRepublicanColor;
+    @Value("${heatmap.regionType.labels}")
+    private String regionTypeLabels;
+    @Value("${heatmap.regionType.colors}")
+    private String regionTypeColors;
     /*
      * Input: "FF0000, 00FF00, 0000FF, FFFFFF, 000000"
      * Output: ["#FF0000", "#00FF00", "#0000FF", "#FFFFFF", "#000000"]
@@ -102,6 +109,11 @@ public class HeatMapService {
         colorMap.put("povertyLineLabels", parseConfigString(povertyLabels));
         colorMap.put("democratic", democraticColor);
         colorMap.put("republican", republicanColor);
+        colorMap.put("incomeDemocratic", parseColors(incomeDemocraticColor));
+        colorMap.put("incomeRepublican", parseColors(incomeRepublicanColor));
+        colorMap.put("regionType", parseColors(regionTypeColors));
+        colorMap.put("regionTypeLabels", parseConfigString(regionTypeLabels));
+
         return colorMap;
     }
 
@@ -163,6 +175,7 @@ public class HeatMapService {
             case "demography" -> precinctsDemographyRepository.findByState(state.toLowerCase());
             case "income" -> precinctsIncomeRepository.findByState(state.toLowerCase());
             case "election" -> precinctsElectionRepository.findByState(state.toLowerCase());
+            case "regiontype" -> precinctsElectionRepository.findByState(state.toLowerCase());
             default -> {
                 logger.error("[HeatMapService] Unsupported data type: {}", dataType);
                 throw new IllegalArgumentException("Unsupported data type: " + dataType);

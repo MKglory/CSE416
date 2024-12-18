@@ -42,6 +42,10 @@ public class StateSummaryService {
         double totalIncome = 0.0;
         int totalDemocraticVotes = 0;
         int totalRepublicanVotes = 0;
+        int less_30k = 0;
+        int from_30K_75K = 0;
+        int from_75K_150K = 0;
+        int more_150K = 0;
         String electionWinner = "";
 
         // Process demographic data
@@ -59,6 +63,10 @@ public class StateSummaryService {
         }
         for (DistrictIncome income : incomes) {
             totalIncome += income.getIncomeMean();
+            less_30k += income.getFrom_30K_75K();
+            from_30K_75K += income.getFrom_30K_75K();
+            from_75K_150K += income.getFrom_75K_150K();
+            more_150K += income.getMore_150K();
         }
         for (DistrictElection election : elections) {
             totalDemocraticVotes += election.getDemocraticVotes();
@@ -86,6 +94,12 @@ public class StateSummaryService {
         summary.put("totalRuralPopulation", totalRuralPopulation);
         summary.put("totalSuburbanPopulation", totalSuburbanPopulation);
         summary.put("totalUrbanPopulation", totalUrbanPopulation);
+        double totalHouseHold = less_30k + from_30K_75K + from_75K_150K + more_150K;
+        summary.put("Less_30K_percent", (double)less_30k/totalHouseHold);
+        summary.put("30K_75K_percent", (double)from_30K_75K/totalHouseHold);
+        summary.put("75K_150K_percent", (double)from_75K_150K/totalHouseHold);
+        summary.put("150K_More_percent", (double)more_150K/totalHouseHold);
+
 
         // Add demographic breakdown
         ObjectNode demographics = mapper.createObjectNode();

@@ -2,10 +2,7 @@ package com.spartans.Server.Controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.spartans.Server.Models.ElectionData;
-import com.spartans.Server.Services.DistrictsTableService;
-import com.spartans.Server.Services.ElectionDataService;
-import com.spartans.Server.Services.PrecinctsTableService;
-import com.spartans.Server.Services.StateSummaryService;
+import com.spartans.Server.Services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,5 +99,19 @@ public class DataController {
         }
     }
 
+    @Autowired
+    private EnsembleSummaryService ensembleSummaryService;
+    @GetMapping("/{state}/ensemble/summary")
+    public ResponseEntity<Map<String, Object>> getEnsembleSummary(
+            @PathVariable String state){
+        try{
+            Map<String, Object> data = ensembleSummaryService.getEnsembleSummary(state);
+            return ResponseEntity.ok().body(data);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Election data not found for state: " + state, e
+            );
+        }
+    }
 
 }

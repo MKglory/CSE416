@@ -19,7 +19,7 @@ function Navbar({ onStateChange, onTabChange }) {
           style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.25rem' }} 
           onClick={() => navigate('/')} // Navigate to the Welcome page
         >
-          project
+          CSE416 Spartans
         </button>
         <button
           className="navbar-toggler"

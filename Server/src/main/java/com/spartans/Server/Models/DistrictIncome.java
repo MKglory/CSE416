@@ -40,6 +40,15 @@ public class DistrictIncome {
     @Field("LESS_30K_Percent")
     private double povertyPercentage;
 
+    @Field("30K_75K")
+    private int from_30K_75K;
+
+    @Field("75K_150K")
+    private int from_75K_150K;
+
+    @Field("150K_MORE")
+    private int more_150K;
+
     // Default Constructor
     public DistrictIncome() {}
 
@@ -130,5 +139,29 @@ public class DistrictIncome {
 
     public void setPovertyPercentage(double povertyPercentage) {
         this.povertyPercentage = povertyPercentage;
+    }
+
+    public int getFrom_30K_75K() {
+        return from_30K_75K;
+    }
+
+    public void setFrom_30K_75K(int from_30K_75K) {
+        this.from_30K_75K = from_30K_75K;
+    }
+
+    public int getFrom_75K_150K() {
+        return from_75K_150K;
+    }
+
+    public void setFrom_75K_150K(int from_75K_150K) {
+        this.from_75K_150K = from_75K_150K;
+    }
+
+    public int getMore_150K() {
+        return more_150K;
+    }
+
+    public void setMore_150K(int more_150K) {
+        this.more_150K = more_150K;
     }
 }

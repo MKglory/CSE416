@@ -33,7 +33,10 @@ function SummaryTable({ selectedState }) {
     const formatPercentage = (value) => {
         if (data.totalPopulation === 0) return "0.00%";
         return ((value / data.totalPopulation) * 100).toFixed(2) + "%";
-      };
+    };
+    const formatIncomeLevelPercentage = (value) => {
+        return (value * 100).toFixed(0) + "%";
+    };
 
       const tableHeaders = [
         "STATE",
@@ -51,6 +54,10 @@ function SummaryTable({ selectedState }) {
         "SUBURBAN POP%",
         "URBAN POP%",
         "AVERAGE INCOME",
+        "LESS 30K",
+        "30K to 75K",
+        "75K to 150K",
+        "150K MORE"
     ];
 
     const tableValues = [
@@ -69,19 +76,17 @@ function SummaryTable({ selectedState }) {
         formatPercentage(data.totalSuburbanPopulation),
         formatPercentage(data.totalUrbanPopulation),
         formatIncome(data.averageIncome),
+        formatIncomeLevelPercentage(data["Less_30K_percent"]),
+        formatIncomeLevelPercentage(data["30K_75K_percent"]),
+        formatIncomeLevelPercentage(data["75K_150K_percent"]),
+        formatIncomeLevelPercentage(data["150K_More_percent"])
     ];
 
     return (
             <div
             className="summaryTable"
-            // style={{
-            //     display: "flex",
-            //     justifyContent: "center",
-            //     overflowX: "auto",
-            //     paddingLeft: "2%",
-            // }}
         >
-            <table>
+            <table style={{ width:"100%"}}>
                 <thead>
                     <tr>
                         {tableHeaders.map((header, index) => (

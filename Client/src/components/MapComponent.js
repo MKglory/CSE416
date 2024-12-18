@@ -21,7 +21,9 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
   const [colors, setColors] = useState(null);
   const [selectedRace, setSelectedRace] = useState('white')
   const [selectedIncome, setSelectedIncome] = useState('income')
+  const [incomeData, setIncomeData] = useState(null);
   const layerRefs = useRef({});
+  const previousState = useRef(null);
 
   const mapDataRequest = async () => {
     const response = await axios.get(`http://localhost:8080/maps/${selectedState}/${mapBoundary}`);
@@ -33,14 +35,26 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
     const response = await axios.get(`http://localhost:8080/heatmaps/${selectedState}/${mapBoundary}/${heatMap}`);
     setHeatMapData(response.data.data);
     setColors(response.data.colors);
-    console.log(response.data)
-    setHeatMapDataLoading(false);
+    console.log(response.data);
+    setHeatMapDataLoading(false)
   }
+  const incomeRequest = async () => {
+    const response = await axios.get(`http://localhost:8080/heatmaps/${selectedState}/${mapBoundary}/Income`);
+    setIncomeData(response.data.data);
+    console.log("income", response.data.data);
+    setHeatMapDataLoading(false)
+
+  }
+  useEffect(() => {
+    setHeatMapDataLoading(true);
+    setMapLoading(true);
+    incomeRequest()
+  },[selectedState, mapBoundary])
 
   useEffect(() => {
     setMapLoading(true);
     mapDataRequest();
-  }, [selectedState, mapBoundary]);
+  }, [selectedState, mapBoundary, heatMap]);
 
   useEffect(() => {
     if (heatMap !== "None"){
@@ -49,16 +63,17 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
     }
   }, [selectedState, mapBoundary, heatMap]);
 
-  function ChangeMapView({ center, selectedState }) {
+  function ChangeMapView({ center, selectedState, previousState  }) {
     const map = useMap();
-    const previousState = useRef(selectedState);
     useEffect(() => {
-      map.flyTo(center, 6.7);
-      previousState.current = selectedState;
-
+      if (previousState.current !== selectedState) {
+        map.flyTo(center, 6.7);
+        previousState.current = selectedState; 
+      }
     }, [selectedState]);
     return null;
   }
+
   function MapBoundaryChangeHandler(type){
     setMapBoundary(type);
   }
@@ -91,7 +106,24 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
           return colorArray[i];
         }
       }
-      console.log('outside')
+      return colorArray[colorArray.length - 1];
+    }
+    else if (heatMap == 'RegionType'){
+      const labels = colors[selectedCatogory + "Labels"];
+      for (let i = 0; i < labels.length; i++){
+        if (value === labels[i])
+          return colors[selectedCatogory][i]
+      }
+      return colors[selectedCatogory][2];
+    }else if (heatMap == "Election"){
+      const thresholds = colors["incomeThreshold"];
+      const colorArray = colors[selectedCatogory];
+      if (value <= thresholds[0]) return colorArray[0];
+      for (let i = 0; i < thresholds.length - 1; i++) {
+        if (value > thresholds[i] && value <= thresholds[i + 1]) {
+          return colorArray[i];
+        }
+      }
       return colorArray[colorArray.length - 1];
     }
   }
@@ -100,21 +132,28 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
   const style = (
     (feature) => {
       let matchingMapEntry = null;
-      if (mapBoundary === 'Districts' && heatMapData != null){
+      let income = null;
+      if (mapBoundary === 'Districts' && heatMapData != null && incomeData != null){
         const cd = feature.properties.CD;
         matchingMapEntry = heatMapData.find((entry) => entry.cd === cd);
+        income = incomeData.find((entry) => entry.cd === cd);
       }
-      else if (mapBoundary === "Precincts" && heatMapData != null){
+      else if (mapBoundary === "Precincts" && heatMapData != null && incomeData != null){
         const precinctID = feature.properties.PrecinctID;
         matchingMapEntry = heatMapData.find((entry) => entry.precinctID === precinctID);
+        income = incomeData.find((entry) => entry.precinctID === precinctID);
       }
       let fillColor = "lightblue";
       if (heatMap === 'Election'){
         if (heatMapData != null && colors != null){
           if (matchingMapEntry) {
             let winner = (matchingMapEntry.democraticVotes > matchingMapEntry.republicanVotes)
-            ? "democratic" : "republican";
-            fillColor = colors[winner];
+            ? "Democratic" : "Republican";
+            console.log("generateElectionPopup", income);
+            const incomeMean = income['incomeMean'];
+            fillColor = getFillColor(incomeMean, colors, "income"+winner)
+            console.log(fillColor);
+            // fillColor = colors[winner];
           }      
         }
       }
@@ -141,6 +180,12 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
           }      
         }
       }
+      else if (heatMap === "RegionType"){
+        if (heatMapData != null && colors != null){ 
+          const regionType = matchingMapEntry.regionType;
+          fillColor = getFillColor(regionType, colors, "regionType");
+        }
+      }
       const uniqueId = mapBoundary === 'Districts' ? feature.properties.CD : feature.properties.PrecinctID;
       const isSelected = uniqueId === selectedId;
   
@@ -149,7 +194,7 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
         color: 'black',
         weight: 0.7, // Thicker border if selected
         opacity: 1,
-        fillOpacity: 0.5,
+        fillOpacity: 1,
       };
     }
    );
@@ -188,9 +233,13 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
     return `
       <p>Democratic votes: ${matchingMapEntry.democraticVotes}</p>
       <p>Republican votes: ${matchingMapEntry.republicanVotes}</p>
+
     `;
   }
-  
+  const formatIncome = (income) => {
+    const inThousands = income / 1000; // Convert to thousands
+    return `$${Math.round(inThousands).toLocaleString('en-US')}K`;
+  };
   const onEachFeature = (
     (feature, layer) => {
       // Restrieve a unique id for current layer
@@ -198,15 +247,18 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
       layerRefs.current[uniqueId] = layer;
       let popupContent = "";
       let matchingMapEntry = null;
-      if (mapBoundary === 'Districts' && heatMapData != null){
+      let income = null;
+      if (mapBoundary === 'Districts' && heatMapData != null && incomeData != null){
         const cd = feature.properties.CD;
         matchingMapEntry = heatMapData.find((entry) => entry.cd === cd);
+        income = incomeData.find((entry) => entry.cd === cd);
       }
-      else if (mapBoundary === "Precincts" && heatMapData != null){
+      else if (mapBoundary === "Precincts" && heatMapData != null && incomeData != null){
         const precinctID = feature.properties.PrecinctID;
         matchingMapEntry = heatMapData.find((entry) => entry.precinctID === precinctID);
+        income = incomeData.find((entry) => entry.precinctID === precinctID);
       }
-      if (mapBoundary === 'Districts' || mapBoundary === 'Precincts') {
+      if ((mapBoundary === 'Districts' || mapBoundary === 'Precincts') && heatMapData != null && incomeData != null) {
         popupContent = mapBoundary === 'Districts' 
           ? `<p>${feature.properties.NAME}</p>` 
           : `<p>Precinct: ${feature.properties.PRECINCT}</p>`;
@@ -218,6 +270,7 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
             popupContent += generateIncomePopup(matchingMapEntry);
           } else if (heatMap === 'Election') {
             popupContent += generateElectionPopup(matchingMapEntry);
+            popupContent += `<p>Average Income ${formatIncome(income['incomeMean'])}`;
           }
         }
       }
@@ -285,6 +338,7 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
                 <option value="Demography">Demography</option>
                 <option value="Income">Income</option>
                 <option value="Election">Election</option>
+                {mapBoundary==='Precincts' && <option value="RegionType">Region Type</option>}
               </select>
             </li>
           </ul>
@@ -321,25 +375,25 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
         <MapContainer
           center={mapCenter}
           bounds={usBounds}
-          maxZoom={12}
+          maxZoom={20}
           minZoom={5}
           scrollWheelZoom={true}
           preferCanvas={true}
         >
-        <ChangeMapView center={mapCenter} selectedState={selectedState} />
+        <ChangeMapView center={mapCenter} selectedState={selectedState} previousState={previousState} />
         <TileLayer
             url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+            maxZoom={20}
           />
           {(heatMapDataLoading || mapLoading) ? null : geoJsonComponent}
         </MapContainer>
       </div>
-      <Legend colors={colors} selectedRace={selectedRace} heatMap={heatMap} selectedIncome={selectedIncome}/>
-
+      <Legend colors={colors} selectedRace={selectedRace} heatMap={heatMap} selectedIncome={selectedIncome} extraForElection="incomeDemocratic"/>
     </div>
   );
 }
 const Legend = ({ colors, selectedRace, heatMap, selectedIncome }) => {
-  if (!colors || heatMap === "None" || heatMap === 'Election') return null;
+  if (!colors || heatMap === "None") return null;
   let legandColors = null;
   // if (heatMap == 'Demography')  ? colors[selectedRace]: colors['income']);
   let labels = null;
@@ -351,6 +405,15 @@ const Legend = ({ colors, selectedRace, heatMap, selectedIncome }) => {
     labels = colors[selectedIncome + "Labels"];
     legandColors = colors[selectedIncome];
   }
+  else if (heatMap === 'RegionType'){
+    labels = colors["regionTypeLabels"];
+    legandColors = colors["regionType"];
+  }
+  else if (heatMap == "Election"){
+    labels = [...colors["incomeLabels"], ...colors["incomeLabels"]];
+    legandColors = [...colors["incomeDemocratic"], ...colors["incomeRepublican"]];
+  }
+
 
   if (!legandColors || !labels) return;
   return (

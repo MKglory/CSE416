@@ -9,30 +9,18 @@ public class EnsembleSummary {
     @Id
     private String id;
 
+    @Field("STATE")
     private String state;
 
-    @Field("number_of_plans")
-    private int numberOfPlans;
+    @Field("tolerant")
+    private String tolerant;
 
-    @Field("average_income_deviation")
-    private double averageIncomeDeviation;
+    @Field("ideal_population")
+    private String idealPopulation;
 
-    @Field("std_income_deviation")
-    private double stdIncomeDeviation;
+    @Field("total_plans")
+    private String totalPlans;
 
-    @Field("average_dem_districts")
-    private double averageDemDistricts;
-
-    @Field("std_dem_districts")
-    private double stdDemDistricts;
-
-    @Field("average_rep_districts")
-    private double averageRepDistricts;
-
-    @Field("std_rep_districts")
-    private double stdRepDistricts;
-
-    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -49,59 +37,27 @@ public class EnsembleSummary {
         this.state = state;
     }
 
-    public int getNumberOfPlans() {
-        return numberOfPlans;
+    public String getTolerant() {
+        return tolerant;
     }
 
-    public void setNumberOfPlans(int numberOfPlans) {
-        this.numberOfPlans = numberOfPlans;
+    public void setTolerant(String tolerant) {
+        this.tolerant = tolerant;
     }
 
-    public double getAverageIncomeDeviation() {
-        return averageIncomeDeviation;
+    public String getIdealPopulation() {
+        return idealPopulation;
     }
 
-    public void setAverageIncomeDeviation(double averageIncomeDeviation) {
-        this.averageIncomeDeviation = averageIncomeDeviation;
+    public void setIdealPopulation(String idealPopulation) {
+        this.idealPopulation = idealPopulation;
     }
 
-    public double getStdIncomeDeviation() {
-        return stdIncomeDeviation;
+    public String getTotalPlans() {
+        return totalPlans;
     }
 
-    public void setStdIncomeDeviation(double stdIncomeDeviation) {
-        this.stdIncomeDeviation = stdIncomeDeviation;
-    }
-
-    public double getAverageDemDistricts() {
-        return averageDemDistricts;
-    }
-
-    public void setAverageDemDistricts(double averageDemDistricts) {
-        this.averageDemDistricts = averageDemDistricts;
-    }
-
-    public double getStdDemDistricts() {
-        return stdDemDistricts;
-    }
-
-    public void setStdDemDistricts(double stdDemDistricts) {
-        this.stdDemDistricts = stdDemDistricts;
-    }
-
-    public double getAverageRepDistricts() {
-        return averageRepDistricts;
-    }
-
-    public void setAverageRepDistricts(double averageRepDistricts) {
-        this.averageRepDistricts = averageRepDistricts;
-    }
-
-    public double getStdRepDistricts() {
-        return stdRepDistricts;
-    }
-
-    public void setStdRepDistricts(double stdRepDistricts) {
-        this.stdRepDistricts = stdRepDistricts;
+    public void setTotalPlans(String totalPlans) {
+        this.totalPlans = totalPlans;
     }
 }
