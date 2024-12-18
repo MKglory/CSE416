@@ -21,7 +21,6 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
   const [colors, setColors] = useState(null);
   const [selectedRace, setSelectedRace] = useState('white')
   const [selectedIncome, setSelectedIncome] = useState('income')
-  const [incomeData, setIncomeData] = useState(null);
   const layerRefs = useRef({});
   const previousState = useRef(null);
 
@@ -38,18 +37,6 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
     console.log(response.data);
     setHeatMapDataLoading(false)
   }
-  const incomeRequest = async () => {
-    const response = await axios.get(`http://localhost:8080/heatmaps/${selectedState}/${mapBoundary}/Income`);
-    setIncomeData(response.data.data);
-    console.log("income", response.data.data);
-    setHeatMapDataLoading(false)
-
-  }
-  useEffect(() => {
-    setHeatMapDataLoading(true);
-    setMapLoading(true);
-    incomeRequest()
-  },[selectedState, mapBoundary])
 
   useEffect(() => {
     setMapLoading(true);
@@ -132,16 +119,13 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
   const style = (
     (feature) => {
       let matchingMapEntry = null;
-      let income = null;
-      if (mapBoundary === 'Districts' && heatMapData != null && incomeData != null){
+      if (mapBoundary === 'Districts' && heatMapData != null){
         const cd = feature.properties.CD;
         matchingMapEntry = heatMapData.find((entry) => entry.cd === cd);
-        income = incomeData.find((entry) => entry.cd === cd);
       }
-      else if (mapBoundary === "Precincts" && heatMapData != null && incomeData != null){
+      else if (mapBoundary === "Precincts" && heatMapData != null){
         const precinctID = feature.properties.PrecinctID;
         matchingMapEntry = heatMapData.find((entry) => entry.precinctID === precinctID);
-        income = incomeData.find((entry) => entry.precinctID === precinctID);
       }
       let fillColor = "lightblue";
       if (heatMap === 'Election'){
@@ -149,10 +133,10 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
           if (matchingMapEntry) {
             let winner = (matchingMapEntry.democraticVotes > matchingMapEntry.republicanVotes)
             ? "Democratic" : "Republican";
-            console.log("generateElectionPopup", income);
-            const incomeMean = income['incomeMean'];
+            // console.log("generateElectionPopup", income);
+            const incomeMean = matchingMapEntry['incomeMean'];
             fillColor = getFillColor(incomeMean, colors, "income"+winner)
-            console.log(fillColor);
+            // console.log(fillColor);
             // fillColor = colors[winner];
           }      
         }
@@ -200,12 +184,12 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
    );
    function generateDemographyPopup(matchingMapEntry) {
     return `
-      <p>Population: ${matchingMapEntry.total}</p>
-      <p>White: ${matchingMapEntry.white}</p>
-      <p>Black: ${matchingMapEntry.black}</p>
-      <p>Asian: ${matchingMapEntry.asian}</p>
-      <p>Hispanic: ${matchingMapEntry.hispanic}</p>
-      <p>American Indian: ${matchingMapEntry.americanIndian}</p>
+      <p>Population: ${matchingMapEntry.total.toLocaleString('en-US')}</p>
+      <p>White: ${matchingMapEntry.white.toLocaleString('en-US')}</p>
+      <p>Black: ${matchingMapEntry.black.toLocaleString('en-US')}</p>
+      <p>Asian: ${matchingMapEntry.asian.toLocaleString('en-US')}</p>
+      <p>Hispanic: ${matchingMapEntry.hispanic.toLocaleString('en-US')}</p>
+      <p>American Indian: ${matchingMapEntry.americanIndian.toLocaleString('en-US')}</p>
     `;
   }
   
@@ -225,15 +209,15 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
     return `
       <p>Average Household Income: ${formattedIncome}</p>
       <p>Poverty Household Number: ${formattedPovertyHouseholds}</p>
-      <p>Poverty Household Percentage: ${formattedPovertyPercentage}</p>
+      <p>Poverty Household Percentage: ${formattedPovertyPercentage}%</p>
     `;
   }
   
   function generateElectionPopup(matchingMapEntry) {
     return `
-      <p>Democratic votes: ${matchingMapEntry.democraticVotes}</p>
-      <p>Republican votes: ${matchingMapEntry.republicanVotes}</p>
-
+      <p>Democratic votes: ${matchingMapEntry.democraticVotes.toLocaleString('en-US')}</p>
+      <p>Republican votes: ${matchingMapEntry.republicanVotes.toLocaleString('en-US')}</p>
+      <p>Average Income: ${formatIncome(matchingMapEntry.incomeMean)}</P>
     `;
   }
   const formatIncome = (income) => {
@@ -247,18 +231,16 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
       layerRefs.current[uniqueId] = layer;
       let popupContent = "";
       let matchingMapEntry = null;
-      let income = null;
-      if (mapBoundary === 'Districts' && heatMapData != null && incomeData != null){
+      // let income = null;
+      if (mapBoundary === 'Districts' && heatMapData != null){
         const cd = feature.properties.CD;
         matchingMapEntry = heatMapData.find((entry) => entry.cd === cd);
-        income = incomeData.find((entry) => entry.cd === cd);
       }
-      else if (mapBoundary === "Precincts" && heatMapData != null && incomeData != null){
+      else if (mapBoundary === "Precincts" && heatMapData != null){
         const precinctID = feature.properties.PrecinctID;
         matchingMapEntry = heatMapData.find((entry) => entry.precinctID === precinctID);
-        income = incomeData.find((entry) => entry.precinctID === precinctID);
       }
-      if ((mapBoundary === 'Districts' || mapBoundary === 'Precincts') && heatMapData != null && incomeData != null) {
+      if (mapBoundary === 'Districts' || mapBoundary === 'Precincts') {
         popupContent = mapBoundary === 'Districts' 
           ? `<p>${feature.properties.NAME}</p>` 
           : `<p>Precinct: ${feature.properties.PRECINCT}</p>`;
@@ -270,7 +252,6 @@ function MapComponent({ selectedState, selectedId, setSelectedId }) {
             popupContent += generateIncomePopup(matchingMapEntry);
           } else if (heatMap === 'Election') {
             popupContent += generateElectionPopup(matchingMapEntry);
-            popupContent += `<p>Average Income ${formatIncome(income['incomeMean'])}`;
           }
         }
       }

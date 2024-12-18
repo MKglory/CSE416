@@ -58,6 +58,9 @@ public class PrecinctsElection {
     @Field("Other_votes")
     private int otherVotes;
 
+    @Field("Income_Mean")
+    private int incomeMean;
+
     // Default Constructor
     public PrecinctsElection() {}
 
@@ -196,5 +199,13 @@ public class PrecinctsElection {
 
     public void setCd(String cd) {
         this.cd = cd;
+    }
+
+    public int getIncomeMean() {
+        return incomeMean;
+    }
+
+    public void setIncomeMean(int incomeMean) {
+        this.incomeMean = incomeMean;
     }
 }

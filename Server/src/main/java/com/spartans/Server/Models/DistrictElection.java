@@ -55,6 +55,9 @@ public class DistrictElection {
     @Field("Democratic_candidate")
     private String democraticPresidentCandidate;
 
+    @Field("Income_Mean")
+    private int incomeMean;
+
     // Getters and Setters
     public String getId() {
         return id;
@@ -182,5 +185,13 @@ public class DistrictElection {
 
     public void setRepresentativeRace(String representativeRace) {
         this.representativeRace = representativeRace;
+    }
+
+    public int getIncomeMean() {
+        return incomeMean;
+    }
+
+    public void setIncomeMean(int incomeMean) {
+        this.incomeMean = incomeMean;
     }
 }
